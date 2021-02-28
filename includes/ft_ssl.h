@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 22:14:49 by sschmele          #+#    #+#             */
-/*   Updated: 2021/02/23 22:51:53 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/02/28 14:45:33 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # define PROGRAM_NAME "./ft_ssl"
 # define OPTIONS_NUM 4
 # define PROGRAM_OPTIONS "pqrs"
+
+# define STDIN_BUFFER 2
 
 # define FLAG_P 0x1
 # define FLAG_Q 0x2
@@ -39,6 +41,13 @@ typedef enum
 	sha256,
 }		t_algtype;
 
-int		parse_arguments(int argc, char **argv);
+char	*ssl_read_from_stdin(void);
+int		ssl_stdout_data(char *data, int data_size);
+
+/*
+** File ssl_parsing.c
+*/
+
+int		ssl_parse_arguments(int argc, char **argv);
 
 #endif

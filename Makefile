@@ -11,7 +11,8 @@ FLAGS += -g
 
 PRINT_FUNCTIONS_DIR := print_functions
 PRINT_FUNCTIONS := \
-			$(PRINT_FUNCTIONS_DIR)/print_options.c
+			$(PRINT_FUNCTIONS_DIR)/print_options.c \
+			$(PRINT_FUNCTIONS_DIR)/print_bits.c
 
 MD5_DIR := md5
 MD5 := \
@@ -22,6 +23,7 @@ SHA256 := \
 			$(SHA256_DIR)/sha256_start.c
 
 SOURCES := main.c \
+			ssl_parsing.c \
 			$(MD5) \
 			$(SHA256) \
 			$(PRINT_FUNCTIONS)

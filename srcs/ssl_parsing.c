@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_functions.h                                  :+:      :+:    :+:   */
+/*   ssl_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/23 22:40:12 by sschmele          #+#    #+#             */
-/*   Updated: 2021/02/28 14:05:09 by sschmele         ###   ########.fr       */
+/*   Created: 2021/02/28 14:44:10 by sschmele          #+#    #+#             */
+/*   Updated: 2021/02/28 14:44:34 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PRINT_FUNCTIONS_H
-# define PRINT_FUNCTIONS_H
+#include "ft_ssl.h"
 
-void		print_options(int flags);
-void        print_bits(char *str);
-
-#endif
+int		ssl_parse_arguments(int argc, char **argv)
+{
+	return (0);
+}
