@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 22:14:49 by sschmele          #+#    #+#             */
-/*   Updated: 2021/02/28 14:45:33 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/03/01 11:21:23 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <unistd.h>
 
 #include "print_functions.h"
+#include "md5.h"
 #include "libft.h"
 
 # define PROGRAM_NAME "./ft_ssl"

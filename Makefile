@@ -16,7 +16,9 @@ PRINT_FUNCTIONS := \
 
 MD5_DIR := md5
 MD5 := \
-			$(MD5_DIR)/md5_start.c
+			$(MD5_DIR)/md5_start.c \
+			$(MD5_DIR)/md5_fun_functions.c \
+			$(MD5_DIR)/md5_logic_operations.c
 
 SHA256_DIR := sha256
 SHA256 := \
