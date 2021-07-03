@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 22:40:12 by sschmele          #+#    #+#             */
-/*   Updated: 2021/02/28 14:05:09 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/07/03 20:50:51 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,6 @@
 
 void		print_options(int flags);
 void        print_bits(char *str);
+void		print_bits_as_32uint(uint32_t number);
 
 #endif

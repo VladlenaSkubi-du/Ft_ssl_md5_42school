@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 22:14:49 by sschmele          #+#    #+#             */
-/*   Updated: 2021/07/03 17:18:10 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/07/03 18:45:13 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,10 @@
 
 typedef enum
 {
-	False = 0,
-	True = 1,
-}		t_bool;
-
-typedef enum
-{
 	md5 = 1,
 	sha256,
 }		t_algtype;
 
-char	*ssl_read_from_stdin(int *data_size_final);
-int		ssl_stdout_data(char *data, int data_size);
 
 /*
 ** File ssl_parsing.c
