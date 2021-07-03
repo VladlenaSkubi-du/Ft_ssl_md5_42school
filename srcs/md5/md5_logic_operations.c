@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   md5_start.c                                        :+:      :+:    :+:   */
+/*   md5_logic_operations.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/01 11:07:56 by sschmele          #+#    #+#             */
-/*   Updated: 2021/07/03 17:18:26 by sschmele         ###   ########.fr       */
+/*   Created: 2021/03/01 11:25:41 by sschmele          #+#    #+#             */
+/*   Updated: 2021/03/01 11:25:43 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
 #include "md5.h"
 
-int			md5_algorithm_start(char *data, int data_size)
+// Move to libft
+
+int		ssl_bit_and(int x, int y)
 {
-	int		bit_length;
-	int		result;
-		
-	result = 0;
-	ssl_stdout_data(data, data_size);
-	bit_length = data_size * 8;
-	prepare_512_blocks(data, bit_length);
-	return (result);
+	return (x & y);
+}
+
+int		ssl_bit_or(int x, int y)
+{
+	return (x | y);
+}
+
+int		ssl_bit_xor(int x, int y)
+{
+	return (x ^ y);
 }
