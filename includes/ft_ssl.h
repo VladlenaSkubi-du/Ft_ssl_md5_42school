@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 22:14:49 by sschmele          #+#    #+#             */
-/*   Updated: 2021/02/28 14:45:33 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/04/04 17:17:42 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include <unistd.h>
 
+#include "md5.h"
 #include "print_functions.h"
 #include "libft.h"
 
@@ -41,7 +42,7 @@ typedef enum
 	sha256,
 }		t_algtype;
 
-char	*ssl_read_from_stdin(void);
+char	*ssl_read_from_stdin(int *data_size_final);
 int		ssl_stdout_data(char *data, int data_size);
 
 /*
