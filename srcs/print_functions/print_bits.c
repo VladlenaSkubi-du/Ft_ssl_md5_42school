@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/28 14:04:41 by sschmele          #+#    #+#             */
-/*   Updated: 2021/07/03 22:46:49 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/07/19 23:06:51 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ void		print_bits(char *str)
 ** allocated for uint32_t
 */
 
-void		print_bits_as_32uint(uint32_t number)
+void		print_bits_as_32uint_little_endian(uint32_t number)
 {
-	uint32_t	bit;
+	int		bit;
 	uint32_t	i;
 
 	i = 0x80000000;
@@ -57,6 +57,25 @@ void		print_bits_as_32uint(uint32_t number)
 	{
 		ft_putchar_fd((number & i) ? '1' : '0', STDOUT_FILENO);
 		i = i / 2;
+		bit++;
+		if (bit % 8 == 0)
+			ft_putchar(' ');
+	}
+	ft_putchar('\n');
+}
+
+void		print_bits_as_32uint_big_endian(uint32_t number)
+{
+	int		bit;
+	uint32_t	i;
+
+	i = 0x0;
+	bit = 0;
+	while (i < sizeof(number) * 8)
+	{
+		ft_putchar_fd((number & 0x01) ? '1' : '0', STDOUT_FILENO);
+		i++;
+		number = number >> 1;
 		bit++;
 		if (bit % 8 == 0)
 			ft_putchar(' ');
