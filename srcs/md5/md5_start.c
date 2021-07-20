@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 11:07:56 by sschmele          #+#    #+#             */
-/*   Updated: 2021/07/19 23:30:07 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/07/20 21:57:22 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,26 +95,93 @@ static int	md5_full_algo(char *data, size_t data_size)
     //end future loop
 
     printf("%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x\n", a0&0xff, (a0>>8)&0xff, (a0>>16)&0xff, (a0>>24)&0xff, b0&0xff, (b0>>8)&0xff, (b0>>16)&0xff, (b0>>24)&0xff, c0&0xff, (c0>>8)&0xff, (c0>>16)&0xff, (c0>>24)&0xff, d0&0xff, (d0>>8)&0xff, (d0>>16)&0xff, (d0>>24)&0xff);
+	return (0);
 }
 	
-static uint32_t *md5_make_padded_message(char *data, size_t data_size,
+static uint32_t *md5_get_64bit_mlength_of_message(uint64_t mlength_bits_original,
+					int	uint32_blocks_in_message_add)
+{
+	uint32_t	*mlength_bits_add;
+	int			index_of_byte;
+	int			bit;
+	uint64_t	i;
+
+	if (mlength_bits_original + 1 < mlength_bits_original)
+		return (NULL);
+	mlength_bits_add = (uint32_t*)ft_xmalloc(sizeof(uint32_t) * (uint32_blocks_in_message_add + 1));
+	index_of_byte = 0;
+	i = 0x8000000000000000;
+	bit = 0;
+	while (i > 0)
+	{
+		if (mlength_bits_original & i)
+		{
+			index_of_byte = bit / 32;
+			mlength_bits_add[index_of_byte] |= 1UL << (bit % 32);
+		}
+		i = i / 2;
+		bit++;
+	}
+	ft_putendl("we add 64bit representation:");
+	print_bits_as_32uint_string_big_endian(mlength_bits_add, 2);
+	// print_bits_as_32uint_big_endian(mlength_bits_add[0]);
+	// print_bits_as_32uint_big_endian(mlength_bits_add[1]);
+	return (mlength_bits_add);
+}
+
+static uint32_t *md5_add_64bit_mlength_to_message(uint32_t *message,
 					int mlength_bits_original, 
+					int *mlength_bits_padded)
+{
+	uint32_t	*message_new;
+	uint32_t	*mlength_bits_add;
+	int			uint32_blocks_in_message_before;
+	int			uint32_blocks_in_message_add;
+
+	uint32_blocks_in_message_add = 2; //there are 2 blocks with 32 bits in 64bit representation
+	uint32_blocks_in_message_before = (*mlength_bits_padded) / 8 / 4;
+	message_new = (uint32_t*)ft_xmalloc(sizeof(uint32_t) *
+		(uint32_blocks_in_message_before + uint32_blocks_in_message_add + 1));
+	ft_memcpy(message_new, message, uint32_blocks_in_message_before);
+	free(message);
+	mlength_bits_add = md5_get_64bit_mlength_of_message((uint64_t)mlength_bits_original,
+		uint32_blocks_in_message_add);
+	if (mlength_bits_add == NULL)
+	{
+		free(message_new);
+		return (NULL);
+	}
+	ft_memcpy(message_new + uint32_blocks_in_message_before,
+		mlength_bits_add, (size_t)uint32_blocks_in_message_add);
+			ft_putendl("full message");
+			print_bits_as_32uint_string_big_endian(message_new, uint32_blocks_in_message_before + uint32_blocks_in_message_add);
+	return (message_new);
+}
+
+static uint32_t *md5_make_padded_message(char *data, size_t data_size,
 					int mlength_bits_padded)
 {
 	uint32_t	*message;
-	int			uint8_in_uint32;
+	int			uint32_blocks_in_message;
 	int			index_of_byte;
 	int			index_of_bit;
 
-	uint8_in_uint32 = mlength_bits_padded / 8 / 4;
-				printf("uint8_in_uint32 = %d\n", uint8_in_uint32); // = 30 for "echo -n 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' | ./ft_ssl"
-	message = (uint32_t*)ft_xmalloc(sizeof(uint32_t) * uint8_in_uint32);
+	uint32_blocks_in_message = mlength_bits_padded / 8 / 4;
+				printf("uint8_in_uint32 = %d\n", uint32_blocks_in_message); // = 30 for "echo -n 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' | ./ft_ssl"
+	message = (uint32_t*)ft_xmalloc(sizeof(uint32_t) * (uint32_blocks_in_message + 1));
 	ft_memcpy(message, data, data_size); //number of bytes to copy;
+				print_bits_as_32uint_string_big_endian(message, data_size);
 	index_of_byte = data_size / 4;
-				printf("find_index_of_byte = %d\n", index_of_byte);
+				ft_putendl("before we add 1 bit:");
 				print_bits_as_32uint_big_endian(message[index_of_byte]);
-	index_of_bit = (data_size - index_of_byte * 4) * 8;
+	index_of_bit = ((int)data_size - index_of_byte * 4) * 8;
+				ft_putstr("find_index_of_byte = ");
+				ft_putnbr(index_of_byte);
+				ft_putstr("; find_index_of_bit = ");
+				ft_putnbr(index_of_bit);
+				ft_putchar('\n');
 	message[index_of_byte] |= 1UL << index_of_bit;
+				ft_putendl("after we add 1 bit:");
 				print_bits_as_32uint_big_endian(message[index_of_byte]);
 	return (message);
 }
@@ -123,8 +190,7 @@ static uint32_t *md5_make_padded_message(char *data, size_t data_size,
 ** when we add one we add 1 bit to the end of the message in bits
 */
 
-static int		md5_count_message_length_bits_padded(size_t data_size,
-					int mlength_bits_original)
+static int		md5_count_message_length_bits_padded(int mlength_bits_original)
 {
 	int			mlength_bits_padded;
 
@@ -155,10 +221,15 @@ int				md5_algorithm_start(char *data, size_t data_size)
 	mlength_bits_original = md5_count_message_length_bits(data_size);
 	if (mlength_bits_original < 0)
 		return (-1);
-	mlength_bits_padded = md5_count_message_length_bits_padded(data_size, mlength_bits_original);
+	mlength_bits_padded = md5_count_message_length_bits_padded(mlength_bits_original);
 	if (mlength_bits_padded < 0)
 		return (-1);
-	message = md5_make_padded_message(data, data_size, mlength_bits_original, mlength_bits_padded);
+	message = md5_make_padded_message(data, data_size, mlength_bits_padded);
+	if (message == NULL)
+		return (-1);
+	message = md5_add_64bit_mlength_to_message(message, mlength_bits_original, &mlength_bits_padded);
+	if (message == NULL)
+		return (-1);
 	// md5_full_algo(data, data_size);
 	// message = (uint32_t*)ft_xmalloc(sizeof(uint32_t) * mlength_bits); //мы должны один байт uint8 из char записать в виде uint32 или должны все сообщение записать в виде uint32?
 	// prepare_512_blocks(data, bit_length);

@@ -6,16 +6,16 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/28 14:04:41 by sschmele          #+#    #+#             */
-/*   Updated: 2021/07/19 23:06:51 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/07/20 21:44:30 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
 #include "print_functions.h"
 
-static void	char_to_bit(char c)
+static void		char_to_bit(char c)
 {
-	int		i;
+	int			i;
 	
 	i = 7;
 	while (i >= 0)
@@ -26,9 +26,9 @@ static void	char_to_bit(char c)
 	ft_putchar(' ');
 }
 
-void		print_bits(char *str)
+void			print_bits(char *str)
 {
-	int		i;
+	int			i;
 
 	i = 0;
 	while (str[i])
@@ -46,9 +46,9 @@ void		print_bits(char *str)
 ** allocated for uint32_t
 */
 
-void		print_bits_as_32uint_little_endian(uint32_t number)
+void			print_bits_as_32uint_little_endian(uint32_t number)
 {
-	int		bit;
+	int			bit;
 	uint32_t	i;
 
 	i = 0x80000000;
@@ -64,9 +64,9 @@ void		print_bits_as_32uint_little_endian(uint32_t number)
 	ft_putchar('\n');
 }
 
-void		print_bits_as_32uint_big_endian(uint32_t number)
+void			print_bits_as_32uint_big_endian(uint32_t number)
 {
-	int		bit;
+	int			bit;
 	uint32_t	i;
 
 	i = 0x0;
@@ -81,4 +81,16 @@ void		print_bits_as_32uint_big_endian(uint32_t number)
 			ft_putchar(' ');
 	}
 	ft_putchar('\n');
+}
+
+void		print_bits_as_32uint_string_big_endian(uint32_t *message, int uint32_blocks)
+{
+	int		i;
+
+	i = 0;
+	while (i < uint32_blocks)
+	{
+		print_bits_as_32uint_big_endian(message[i]);
+		i++;
+	}
 }
