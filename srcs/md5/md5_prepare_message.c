@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/24 09:41:38 by sschmele          #+#    #+#             */
-/*   Updated: 2021/07/25 20:53:52 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/07/25 21:36:36 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,13 @@
 /*
 ** Here we create a uint32_t array with the length 2 to write message length
 ** in bits representation.
-** We check each bit from the most significant one because
-** numbers are saved in little endian
+** We check each bit from the least significant one because
+** numbers are saved in little-endian
 ** And activate those bits in the string to write the number
 ** in a uint32_t string
 **
 ** For debug:
+** Tried big-endian before
 ** 	// i = 0x8000000000000000;
 **	// bit = 0;
 **	// while (i > 0)

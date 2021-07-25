@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 11:20:43 by sschmele          #+#    #+#             */
-/*   Updated: 2021/07/24 09:46:57 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/07/25 22:40:55 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,41 @@ uint32_t 	*md5_get_64bit_mlength_of_message(
 				size_t uint32_blocks_in_message_add);
 
 /*
+** File md5_init_variables_functions.c
+*/
+
+int			init_buffer_variables(void);
+
+/*
+** File md5_svariables_methods.c
+*/
+
+int			save_buffer_variables(uint32_t value, int flag);
+int			add_to_buffer_variables(uint32_t value, int flag);
+int			get_buffer_variables(int flag);
+
+/*
 ** File md5_fun_functions.c
 */
 
-int		ssl_fun_first_play(int x, int y, int z);
-int		ssl_fun_second_play(int x, int y, int z);
-int		ssl_fun_third_play(int x, int y, int z);
-int		ssl_fun_forth_play(int x, int y, int z);
+uint32_t	md5_fun_first_play(uint32_t x, uint32_t y, uint32_t z);
+uint32_t	md5_fun_second_play(uint32_t x, uint32_t y, uint32_t z);
+uint32_t	md5_fun_third_play(uint32_t x, uint32_t y, uint32_t z);
+uint32_t	md5_fun_forth_play(uint32_t x, uint32_t y, uint32_t z);
 
 /*
-** File md5_logic_operations.c
+** File md5_logic_bit_operations.c
 */
 
-int		ssl_bit_and(int x, int y);
-int		ssl_bit_or(int x, int y);
-int		ssl_bit_xor(int x, int y);
+uint32_t	md5_bit_and(uint32_t x, uint32_t y);
+uint32_t	md5_bit_or(uint32_t x, uint32_t y);
+uint32_t	md5_bit_xor(uint32_t x, uint32_t y);
+
+/*
+** File md5_sconst_and_shift_methods.c
+*/
+
+uint32_t	get_shift_value(size_t index);
+uint32_t	get_const_table_sin_value(size_t index);
 
 # endif

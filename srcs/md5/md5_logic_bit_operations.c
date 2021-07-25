@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   md5_logic_operations.c                             :+:      :+:    :+:   */
+/*   md5_logic_bit_operations.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 11:25:41 by sschmele          #+#    #+#             */
-/*   Updated: 2021/03/01 11:25:43 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/07/25 22:38:29 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
 #include "md5.h"
 
-// Move to libft
-
-int		ssl_bit_and(int x, int y)
+uint32_t		md5_bit_and(uint32_t x, uint32_t y)
 {
 	return (x & y);
 }
 
-int		ssl_bit_or(int x, int y)
+uint32_t		md5_bit_or(uint32_t x, uint32_t y)
 {
 	return (x | y);
 }
 
-int		ssl_bit_xor(int x, int y)
+uint32_t		md5_bit_xor(uint32_t x, uint32_t y)
 {
 	return (x ^ y);
 }

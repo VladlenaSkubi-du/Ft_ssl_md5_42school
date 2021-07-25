@@ -18,8 +18,10 @@ MD5_DIR := md5
 MD5 := \
 			$(MD5_DIR)/md5_start.c \
 			$(MD5_DIR)/md5_prepare_message.c \
-			$(MD5_DIR)/md5_fun_functions.c \
-			$(MD5_DIR)/md5_logic_operations.c
+			$(MD5_DIR)/md5_svariables_methods.c \
+			$(MD5_DIR)/md5_init_fun_functions.c \
+			$(MD5_DIR)/md5_logic_bit_operations.c \
+			$(MD5_DIR)/md5_sconst_and_shift_methods.c
 
 SHA256_DIR := sha256
 SHA256 := \
