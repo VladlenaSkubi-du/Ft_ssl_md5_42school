@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 11:20:43 by sschmele          #+#    #+#             */
-/*   Updated: 2021/07/03 18:45:38 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/07/24 09:46:57 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,24 @@
 */
 
 int			md5_algorithm_start(char *data, size_t data_size);
+
+/*
+** File md5_prepare_message.c
+*/
+
+uint32_t	*md5_prepare_message_for_algo(char *data, size_t data_size,
+				size_t *message_size_uint32, size_t *mlength_bits_padded);
+size_t		md5_count_message_length_bits_padded(size_t mlength_bits_original);
+uint32_t 	*md5_make_padded_message(char *data, size_t data_size,
+				size_t *message_size_uint32,
+				size_t mlength_bits_padded);
+uint32_t 	*md5_add_64bit_mlength_to_message(uint32_t *message,
+				size_t *message_size_uint32,
+				size_t mlength_bits_original, 
+				size_t *mlength_bits_padded);
+uint32_t 	*md5_get_64bit_mlength_of_message(
+				uint64_t mlength_bits_original,
+				size_t uint32_blocks_in_message_add);
 
 /*
 ** File md5_fun_functions.c

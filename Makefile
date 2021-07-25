@@ -17,6 +17,7 @@ PRINT_FUNCTIONS := \
 MD5_DIR := md5
 MD5 := \
 			$(MD5_DIR)/md5_start.c \
+			$(MD5_DIR)/md5_prepare_message.c \
 			$(MD5_DIR)/md5_fun_functions.c \
 			$(MD5_DIR)/md5_logic_operations.c
 
