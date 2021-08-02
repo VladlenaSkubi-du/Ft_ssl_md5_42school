@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 11:07:56 by sschmele          #+#    #+#             */
-/*   Updated: 2021/07/25 20:49:54 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/02 17:31:00 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,36 @@ static int	md5_full_algo(unsigned int *message)
 	return (0);
 }
 
+/*
+** 
+*/
+
+static int		calculate_with_fun_functions(uint32_t *message_512bit_block)
+{
+	size_t		round_index;
+	size_t		number_of_rounds;
+
+	i = 1;
+	number_of_rounds = 64;
+	while (i < (number_of_rounds + 1))
+	{
+		if (i >= 0 && i < 16)
+			
+	}
+}
+
+/*
+** @index_of_512bit_block makes a step of 16 because we need to
+** send each 512-bit block where 512 / 8 = 64 bytes or 64 uint8_t blocks
+** but 64 / 4 = 16 uint32_t blocks
+*/
+
 int				md5_algorithm_start(char *data, size_t data_size)
 {
 	uint32_t	*message;
 	size_t		message_size_uint32;
 	size_t		mlength_bits_padded;
+	size_t		index_of_512bit_block;
 	
 	// md5_full_algo();
 	message_size_uint32 = 0;
@@ -118,8 +143,13 @@ int				md5_algorithm_start(char *data, size_t data_size)
 			// ft_putnbr(mlength_bits_padded);
 			// ft_putchar('\n');
 			// print_bits_as_32uint_string_little_endian(message, message_size_uint32);
-	md5_full_algo((unsigned int*)message);
-
+	// md5_full_algo((unsigned int*)message);
+	index_of_512bit_block = 0;
+	while (index_of_512bit_block < message_size_uint32)
+	{
+		calculate_with_fun_functions(message + index_of_512bit_block);
+		index_of_512bit_block += 16;
+	}
 	// size_t i = 0;
 	// while (i < message_size_uint32)
 	// {

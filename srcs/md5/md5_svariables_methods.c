@@ -6,24 +6,38 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 21:49:01 by sschmele          #+#    #+#             */
-/*   Updated: 2021/07/25 22:40:49 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/02 15:48:42 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
 #include "md5.h"
 
+static uint32_t	a0;
+static uint32_t	b0;
+static uint32_t	c0;
+static uint32_t	d0;
+
 static uint32_t	a_buffer;
 static uint32_t	b_buffer;
 static uint32_t	c_buffer;
 static uint32_t	d_buffer;
 
+int			init_buffer0_variables(void) // add another const for big-endian
+{
+	a0 = 0x67452301;
+	b0 = 0xEFCDAB89;
+	c0 = 0x98BADCFE;
+	d0 = 0x10325476;
+	return (0);
+}
+
 int			init_buffer_variables(void)
 {
-	a_buffer = 0x67452301;
-	b_buffer = 0xEFCDAB89;
-	c_buffer = 0x98BADCFE;
-	d_buffer = 0x10325476;
+	a_buffer = a0;
+	b_buffer = b0;
+	c_buffer = c0;
+	d_buffer = d0;
 	return (0);
 }
 

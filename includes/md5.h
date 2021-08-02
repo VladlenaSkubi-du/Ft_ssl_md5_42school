@@ -6,12 +6,21 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 11:20:43 by sschmele          #+#    #+#             */
-/*   Updated: 2021/07/25 22:40:55 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/02 17:55:53 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_MD5_H
 # define FT_MD5_H
+
+# define	MD5_first_play_min	1
+# define	MD5_first_play_max	16
+# define	MD5_second_play_min	17
+# define	MD5_second_play_max	32
+# define	MD5_third_play_min	33
+# define	MD5_third_play_max	48
+# define	MD5_fourth_play_min	49
+# define	MD5_fourth_play_max	64
 
 /*
 ** File md5_start.c
@@ -72,7 +81,10 @@ uint32_t	md5_bit_xor(uint32_t x, uint32_t y);
 ** File md5_sconst_and_shift_methods.c
 */
 
-uint32_t	get_shift_value(size_t index);
+uint32_t	get_shift_first_play_value(size_t index);
+uint32_t	get_shift_second_play_value(size_t index);
+uint32_t	get_shift_third_play_value(size_t index);
+uint32_t	get_shift_fourth_play_value(size_t index);
 uint32_t	get_const_table_sin_value(size_t index);
 
 # endif
