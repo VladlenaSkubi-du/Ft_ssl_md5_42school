@@ -6,13 +6,14 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 11:20:43 by sschmele          #+#    #+#             */
-/*   Updated: 2021/08/02 17:55:53 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/06 15:56:26 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_MD5_H
 # define FT_MD5_H
 
+# define	NUMBER_OF_ROUNDS	64
 # define	MD5_first_play_min	1
 # define	MD5_first_play_max	16
 # define	MD5_second_play_min	17
@@ -67,7 +68,7 @@ int			get_buffer_variables(int flag);
 uint32_t	md5_fun_first_play(uint32_t x, uint32_t y, uint32_t z);
 uint32_t	md5_fun_second_play(uint32_t x, uint32_t y, uint32_t z);
 uint32_t	md5_fun_third_play(uint32_t x, uint32_t y, uint32_t z);
-uint32_t	md5_fun_forth_play(uint32_t x, uint32_t y, uint32_t z);
+uint32_t	md5_fun_fourth_play(uint32_t x, uint32_t y, uint32_t z);
 
 /*
 ** File md5_logic_bit_operations.c
@@ -86,5 +87,14 @@ uint32_t	get_shift_second_play_value(size_t index);
 uint32_t	get_shift_third_play_value(size_t index);
 uint32_t	get_shift_fourth_play_value(size_t index);
 uint32_t	get_const_table_sin_value(size_t index);
+
+/*
+** File md5_smessage_block_methods.c
+*/
+
+int			init_new_message_block_512bit(uint32_t *message_block,
+				size_t block_size);
+uint32_t	*get_message_512bit_block(void);
+int			free_new_message_block_512bit(void);
 
 # endif

@@ -6,74 +6,74 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 21:49:01 by sschmele          #+#    #+#             */
-/*   Updated: 2021/08/02 15:48:42 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/06 11:36:39 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
 #include "md5.h"
 
-static uint32_t	a0;
-static uint32_t	b0;
-static uint32_t	c0;
-static uint32_t	d0;
+static uint32_t	g_a0;
+static uint32_t	g_b0;
+static uint32_t	g_c0;
+static uint32_t	g_d0;
 
-static uint32_t	a_buffer;
-static uint32_t	b_buffer;
-static uint32_t	c_buffer;
-static uint32_t	d_buffer;
+static uint32_t	g_a_buffer;
+static uint32_t	g_b_buffer;
+static uint32_t	g_c_buffer;
+static uint32_t	g_d_buffer;
 
 int			init_buffer0_variables(void) // add another const for big-endian
 {
-	a0 = 0x67452301;
-	b0 = 0xEFCDAB89;
-	c0 = 0x98BADCFE;
-	d0 = 0x10325476;
+	g_a0 = 0x67452301;
+	g_b0 = 0xEFCDAB89;
+	g_c0 = 0x98BADCFE;
+	g_d0 = 0x10325476;
 	return (0);
 }
 
 int			init_buffer_variables(void)
 {
-	a_buffer = a0;
-	b_buffer = b0;
-	c_buffer = c0;
-	d_buffer = d0;
+	g_a_buffer = g_a0;
+	g_b_buffer = g_b0;
+	g_c_buffer = g_c0;
+	g_d_buffer = g_d0;
 	return (0);
 }
 
-int			save_buffer_variables(uint32_t value, int flag)
-{
-	if (flag == 'a')
-		a_buffer = value;
-	else if (flag == 'b')
-		b_buffer = value;
-	else if (flag == 'c')
-		c_buffer = value;
-	else
-		d_buffer = value;
-	return (0);
-}
+// int			save_buffer_variables(uint32_t value, int flag)
+// {
+// 	if (flag == 'a')
+// 		g_a_buffer = value;
+// 	else if (flag == 'b')
+// 		g_b_buffer = value;
+// 	else if (flag == 'c')
+// 		g_c_buffer = value;
+// 	else
+// 		g_d_buffer = value;
+// 	return (0);
+// }
 
 int			add_to_buffer_variables(uint32_t value, int flag)
 {
 	if (flag == 'a')
-		a_buffer += value;
+		g_a_buffer += value;
 	else if (flag == 'b')
-		b_buffer += value;
+		g_b_buffer += value;
 	else if (flag == 'c')
-		c_buffer += value;
+		g_c_buffer += value;
 	else
-		d_buffer += value;
+		g_d_buffer += value;
 	return (0);
 }
 
 int			get_buffer_variables(int flag)
 {
 	if (flag == 'a')
-		return (a_buffer);
+		return (g_a_buffer);
 	else if (flag == 'b')
-		return (b_buffer);
+		return (g_b_buffer);
 	else if (flag == 'c')
-		return (c_buffer);
-	return (d_buffer);
+		return (g_c_buffer);
+	return (g_d_buffer);
 }

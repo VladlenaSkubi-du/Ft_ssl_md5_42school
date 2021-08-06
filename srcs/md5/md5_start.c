@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 11:07:56 by sschmele          #+#    #+#             */
-/*   Updated: 2021/08/02 17:31:00 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/06 16:01:21 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,22 +99,152 @@ static int	md5_full_algo(unsigned int *message)
 	return (0);
 }
 
+static uint32_t	rotate_left_in_play(uint32_t value, uint32_t s_shift)
+{
+	uint32_t	rotation_done;
+
+	rotation_done = (value << s_shift) | (value >> (32 - s_shift));
+	return (rotation_done);
+}
+
+static int		play_the_round(uint32_t T_const_by_index,
+					uint32_t k_round_dependent,
+					uint32_t s_shift,
+					uint32_t (*F_fun_function)(uint32_t, uint32_t, uint32_t))
+{
+	uint32_t	*message_512bit_block;
+	uint32_t	a;
+	uint32_t	b;
+	uint32_t	c;
+	uint32_t	d;
+
+	message_512bit_block = get_message_512bit_block();
+	a = get_buffer_variables('a');
+	b = get_buffer_variables('b');
+	c = get_buffer_variables('c');
+	d = get_buffer_variables('d');
+	a += F_fun_function(b, c, d) +
+		message_512bit_block[k_round_dependent] +
+		T_const_by_index;
+	a = rotate_left_in_play(a, s_shift);
+	a += b;
+	//сохранить значения
+	return (0);
+}
+
 /*
-** 
+** For @s_shit we need always to get index 1, 2, 3 or 4 according to
+** the architecture in the code designed
+** For numbers 4, 8, 12, 16 and so on we will have 0 after round_index % 4
+** That is why we add +4 to get index 4.
 */
 
-static int		calculate_with_fun_functions(uint32_t *message_512bit_block)
+static int		initiate_first_play_with_16_rounds(uint32_t round_index)
 {
-	size_t		round_index;
-	size_t		number_of_rounds;
+	uint32_t	k_round_dependent;
+	uint32_t	s_shift_index;
+	uint32_t	(*F_fun_function)(uint32_t, uint32_t, uint32_t);
 
-	i = 1;
-	number_of_rounds = 64;
-	while (i < (number_of_rounds + 1))
+	if (round_index + 1 < round_index)
+		return (0);
+	k_round_dependent = round_index - 1;
+	s_shift_index = round_index % 4;
+	if (s_shift_index == 0)
+		s_shift_index += 4;
+	F_fun_function = md5_fun_first_play;
+	play_the_round(
+		get_const_table_sin_value(round_index),
+		k_round_dependent,
+		get_shift_first_play_value(s_shift_index),
+		F_fun_function);
+	return (0);
+}
+
+static int		initiate_second_play_with_16_rounds(uint32_t round_index)
+{
+	uint32_t	k_round_dependent;
+	uint32_t	s_shift_index;
+	uint32_t	(*F_fun_function)(uint32_t, uint32_t, uint32_t);
+
+	if (round_index + 1 < round_index)
+		return (0);
+	k_round_dependent = ((round_index - 1) * 5 + 1) % 16;
+	s_shift_index = round_index % 4;
+	if (s_shift_index == 0)
+		s_shift_index += 4;
+	F_fun_function = md5_fun_second_play;
+	play_the_round(
+		get_const_table_sin_value(round_index),
+		k_round_dependent, 
+		get_shift_second_play_value(s_shift_index),
+		F_fun_function);
+	return (0);
+}
+
+static int		initiate_third_play_with_16_rounds(uint32_t round_index)
+{
+	uint32_t	k_round_dependent;
+	uint32_t	s_shift_index;
+	uint32_t	(*F_fun_function)(uint32_t, uint32_t, uint32_t);
+
+	if (round_index + 1 < round_index)
+		return (0);
+	k_round_dependent = ((round_index - 1) * 3 + 5) % 16;
+	s_shift_index = round_index % 4;
+	if (s_shift_index == 0)
+		s_shift_index += 4;
+	F_fun_function = md5_fun_third_play;
+	play_the_round(
+		get_const_table_sin_value(round_index),
+		k_round_dependent,
+		get_shift_third_play_value(s_shift_index),
+		F_fun_function);
+	return (0);
+}
+
+static int		initiate_fourth_play_with_16_rounds(uint32_t round_index)
+{
+	uint32_t	k_round_dependent;
+	uint32_t	s_shift_index;
+	uint32_t	(*F_fun_function)(uint32_t, uint32_t, uint32_t);
+
+	if (round_index + 1 < round_index)
+		return (0);
+	k_round_dependent = ((round_index - 1) * 7) % 16;
+	s_shift_index = round_index % 4;
+	if (s_shift_index == 0)
+		s_shift_index += 4;
+	F_fun_function = md5_fun_fourth_play;
+	play_the_round(
+		get_const_table_sin_value(round_index),
+		k_round_dependent,
+		get_shift_fourth_play_value(s_shift_index),
+		F_fun_function);
+	return (0);
+}
+
+static int		calculate_with_fun_functions(void)
+{
+	uint32_t	round_index;
+
+	round_index = 1;
+	while (round_index < (NUMBER_OF_ROUNDS + 1))
 	{
-		if (i >= 0 && i < 16)
-			
+		if (round_index >= MD5_first_play_min &&
+				round_index <= MD5_first_play_max)
+			initiate_first_play_with_16_rounds(round_index);
+		// else if (round_index >= MD5_second_play_min &&
+		// 		round_index <= MD5_second_play_max)
+		// 	initiate_second_play_with_16_rounds(round_index);
+		// else if (round_index >= MD5_third_play_min &&
+		// 		round_index <= MD5_third_play_max)
+		// 	initiate_third_play_with_16_rounds(round_index);
+		// else if (round_index >= MD5_fourth_play_min &&
+		// 		round_index <= MD5_fourth_play_max)
+		// 	initiate_fourth_play_with_16_rounds(round_index);
+		round_index++;
 	}
+	return (0);
 }
 
 /*
@@ -147,7 +277,9 @@ int				md5_algorithm_start(char *data, size_t data_size)
 	index_of_512bit_block = 0;
 	while (index_of_512bit_block < message_size_uint32)
 	{
-		calculate_with_fun_functions(message + index_of_512bit_block);
+		init_new_message_block_512bit(message + index_of_512bit_block, 16);
+		calculate_with_fun_functions();
+		free_new_message_block_512bit();
 		index_of_512bit_block += 16;
 	}
 	// size_t i = 0;

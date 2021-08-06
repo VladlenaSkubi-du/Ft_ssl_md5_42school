@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 11:21:58 by sschmele          #+#    #+#             */
-/*   Updated: 2021/07/25 22:15:23 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/06 15:56:20 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ uint32_t		md5_fun_third_play(uint32_t x, uint32_t y, uint32_t z)
 	return (md5_bit_xor(step1, z));
 }
 
-uint32_t		md5_fun_forth_play(uint32_t x, uint32_t y, uint32_t z)
+uint32_t		md5_fun_fourth_play(uint32_t x, uint32_t y, uint32_t z)
 {
 	uint32_t	step1;
 
