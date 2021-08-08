@@ -6,13 +6,14 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 11:20:43 by sschmele          #+#    #+#             */
-/*   Updated: 2021/08/06 15:56:26 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/08 11:51:46 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_MD5_H
 # define FT_MD5_H
 
+# define	SIZEOF_UINT32_BIT	32
 # define	NUMBER_OF_ROUNDS	64
 # define	MD5_first_play_min	1
 # define	MD5_first_play_max	16
@@ -48,18 +49,25 @@ uint32_t 	*md5_get_64bit_mlength_of_message(
 				size_t uint32_blocks_in_message_add);
 
 /*
-** File md5_init_variables_functions.c
+** File md5_svariables_buffer_methods.c
 */
 
+int			init_buffer0_variables(void);
 int			init_buffer_variables(void);
-
-/*
-** File md5_svariables_methods.c
-*/
-
 int			save_buffer_variables(uint32_t value, int flag);
 int			add_to_buffer_variables(uint32_t value, int flag);
-int			get_buffer_variables(int flag);
+uint32_t	get_buffer_variables(int flag);
+
+/*
+** File md5_svariables_block_methods.c
+*/
+
+int			save_buffer_before_block(void);
+uint32_t	get_buffer_before_block(int flag);
+
+// int			init_block_variables(void);
+// int			save_block_variable_a(uint32_t a);
+// uint32_t	get_block_variables(int flag);
 
 /*
 ** File md5_fun_functions.c

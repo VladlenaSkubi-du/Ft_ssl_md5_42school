@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 11:07:56 by sschmele          #+#    #+#             */
-/*   Updated: 2021/08/06 16:01:21 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/08 11:54:27 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <stdio.h>
 
 static unsigned int leftRotate(unsigned int x, unsigned int n){
-    return (x << n) | (x >> (32 - n));
+    return (x << n) | (x >> (SIZEOF_UINT32_BIT - n));
 }
 
 static int	md5_full_algo(unsigned int *message)
@@ -103,7 +103,7 @@ static uint32_t	rotate_left_in_play(uint32_t value, uint32_t s_shift)
 {
 	uint32_t	rotation_done;
 
-	rotation_done = (value << s_shift) | (value >> (32 - s_shift));
+	rotation_done = (value << s_shift) | (value >> (SIZEOF_UINT32_BIT - s_shift));
 	return (rotation_done);
 }
 
@@ -113,22 +113,22 @@ static int		play_the_round(uint32_t T_const_by_index,
 					uint32_t (*F_fun_function)(uint32_t, uint32_t, uint32_t))
 {
 	uint32_t	*message_512bit_block;
-	uint32_t	a;
-	uint32_t	b;
-	uint32_t	c;
-	uint32_t	d;
+	uint32_t	aa;
+	uint32_t	bb;
+	uint32_t	cc;
+	uint32_t	dd;
 
 	message_512bit_block = get_message_512bit_block();
-	a = get_buffer_variables('a');
-	b = get_buffer_variables('b');
-	c = get_buffer_variables('c');
-	d = get_buffer_variables('d');
-	a += F_fun_function(b, c, d) +
+	aa = get_buffer_variables('a');
+	bb = get_buffer_variables('b');
+	cc = get_buffer_variables('c');
+	dd = get_buffer_variables('d');
+	aa += F_fun_function(bb, cc, dd) +
 		message_512bit_block[k_round_dependent] +
 		T_const_by_index;
-	a = rotate_left_in_play(a, s_shift);
-	a += b;
-	//сохранить значения
+	aa = rotate_left_in_play(aa, s_shift);
+	aa += bb;
+	save_buffer_variables(aa, 'a');
 	return (0);
 }
 
@@ -233,20 +233,37 @@ static int		calculate_with_fun_functions(void)
 		if (round_index >= MD5_first_play_min &&
 				round_index <= MD5_first_play_max)
 			initiate_first_play_with_16_rounds(round_index);
-		// else if (round_index >= MD5_second_play_min &&
-		// 		round_index <= MD5_second_play_max)
-		// 	initiate_second_play_with_16_rounds(round_index);
-		// else if (round_index >= MD5_third_play_min &&
-		// 		round_index <= MD5_third_play_max)
-		// 	initiate_third_play_with_16_rounds(round_index);
-		// else if (round_index >= MD5_fourth_play_min &&
-		// 		round_index <= MD5_fourth_play_max)
-		// 	initiate_fourth_play_with_16_rounds(round_index);
+		else if (round_index >= MD5_second_play_min &&
+				round_index <= MD5_second_play_max)
+			initiate_second_play_with_16_rounds(round_index);
+		else if (round_index >= MD5_third_play_min &&
+				round_index <= MD5_third_play_max)
+			initiate_third_play_with_16_rounds(round_index);
+		else if (round_index >= MD5_fourth_play_min &&
+				round_index <= MD5_fourth_play_max)
+			initiate_fourth_play_with_16_rounds(round_index);
 		round_index++;
 	}
 	return (0);
 }
 
+static int		save_buffer_after_block(void)
+{
+	uint32_t	aa;
+	uint32_t	bb;
+	uint32_t	cc;
+	uint32_t	dd;
+
+	aa = get_buffer_before_block('a');
+	bb = get_buffer_before_block('b');
+	cc = get_buffer_before_block('c');
+	dd = get_buffer_before_block('d');
+	add_to_buffer_variables(aa, 'a');
+	add_to_buffer_variables(bb, 'b');
+	add_to_buffer_variables(cc, 'c');
+	add_to_buffer_variables(dd, 'd');
+	return (0);
+}
 /*
 ** @index_of_512bit_block makes a step of 16 because we need to
 ** send each 512-bit block where 512 / 8 = 64 bytes or 64 uint8_t blocks
@@ -274,12 +291,16 @@ int				md5_algorithm_start(char *data, size_t data_size)
 			// ft_putchar('\n');
 			// print_bits_as_32uint_string_little_endian(message, message_size_uint32);
 	// md5_full_algo((unsigned int*)message);
+	init_buffer0_variables();
+	init_buffer_variables();
 	index_of_512bit_block = 0;
 	while (index_of_512bit_block < message_size_uint32)
 	{
+		save_buffer_before_block();
 		init_new_message_block_512bit(message + index_of_512bit_block, 16);
 		calculate_with_fun_functions();
 		free_new_message_block_512bit();
+		save_buffer_after_block();
 		index_of_512bit_block += 16;
 	}
 	// size_t i = 0;

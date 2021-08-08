@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   md5_svariables_methods.c                           :+:      :+:    :+:   */
+/*   md5_svariables_buffer_methods.c                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 21:49:01 by sschmele          #+#    #+#             */
-/*   Updated: 2021/08/06 11:36:39 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/08 11:52:27 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,18 @@ int			init_buffer_variables(void)
 	return (0);
 }
 
-// int			save_buffer_variables(uint32_t value, int flag)
-// {
-// 	if (flag == 'a')
-// 		g_a_buffer = value;
-// 	else if (flag == 'b')
-// 		g_b_buffer = value;
-// 	else if (flag == 'c')
-// 		g_c_buffer = value;
-// 	else
-// 		g_d_buffer = value;
-// 	return (0);
-// }
+int			save_buffer_variables(uint32_t value, int flag)
+{
+	if (flag == 'a')
+		g_a_buffer = value;
+	else if (flag == 'b')
+		g_b_buffer = value;
+	else if (flag == 'c')
+		g_c_buffer = value;
+	else
+		g_d_buffer = value;
+	return (0);
+}
 
 int			add_to_buffer_variables(uint32_t value, int flag)
 {
@@ -67,7 +67,7 @@ int			add_to_buffer_variables(uint32_t value, int flag)
 	return (0);
 }
 
-int			get_buffer_variables(int flag)
+uint32_t	get_buffer_variables(int flag)
 {
 	if (flag == 'a')
 		return (g_a_buffer);
