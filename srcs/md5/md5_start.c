@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 11:07:56 by sschmele          #+#    #+#             */
-/*   Updated: 2021/08/08 22:40:42 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/08 22:59:30 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,184 +99,6 @@ static int	md5_full_algo(unsigned int *message)
 	return (0);
 }
 
-static uint32_t	rotate_left_in_play(uint32_t value, uint32_t s_shift)
-{
-	uint32_t	rotation_done;
-
-	rotation_done = (value << s_shift) | (value >> (SIZEOF_UINT32_BIT - s_shift));
-	return (rotation_done);
-}
-
-static int		play_the_round(uint32_t T_const_by_index,
-					uint32_t k_round_dependent,
-					uint32_t s_shift,
-					uint32_t (*F_fun_function)(uint32_t, uint32_t, uint32_t))
-{
-	uint32_t	*message_512bit_block;
-	uint32_t	aa;
-	uint32_t	bb;
-	uint32_t	cc;
-	uint32_t	dd;
-
-	message_512bit_block = get_message_512bit_block();
-	aa = get_buffer_variables('a');
-	bb = get_buffer_variables('b');
-	cc = get_buffer_variables('c');
-	dd = get_buffer_variables('d');
-	aa += F_fun_function(bb, cc, dd) +
-		message_512bit_block[k_round_dependent] +
-		T_const_by_index;
-	aa = rotate_left_in_play(aa, s_shift);
-	aa += bb;
-	save_buffer_variables(aa, 'a');
-	return (0);
-}
-
-/*
-** For @s_shit we need always to get index 1, 2, 3 or 4 according to
-** the architecture in the code designed
-** For numbers 4, 8, 12, 16 and so on we will have 0 after round_index % 4
-** That is why we add +4 to get index 4.
-*/
-
-static int		initiate_first_play_with_16_rounds(uint32_t round_index)
-{
-	uint32_t	k_round_dependent;
-	uint32_t	s_shift_index;
-	uint32_t	(*F_fun_function)(uint32_t, uint32_t, uint32_t);
-
-	if (round_index + 1 < round_index)
-		return (0);
-	k_round_dependent = round_index - 1;
-	s_shift_index = round_index % 4;
-	if (s_shift_index == 0)
-		s_shift_index += 4;
-	F_fun_function = md5_fun_first_play;
-	
-	play_the_round(
-		get_const_table_sin_value(round_index),
-		k_round_dependent,
-		get_shift_first_play_value(s_shift_index),
-		F_fun_function);
-				md5_print_ksi(k_round_dependent,
-					get_shift_first_play_value(s_shift_index),
-					round_index);
-	return (0);
-}
-
-static int		initiate_second_play_with_16_rounds(uint32_t round_index)
-{
-	uint32_t	k_round_dependent;
-	uint32_t	s_shift_index;
-	uint32_t	(*F_fun_function)(uint32_t, uint32_t, uint32_t);
-
-	if (round_index + 1 < round_index)
-		return (0);
-	k_round_dependent = ((round_index - 1) * 5 + 1) % 16;
-	s_shift_index = round_index % 4;
-	if (s_shift_index == 0)
-		s_shift_index += 4;
-	F_fun_function = md5_fun_second_play;
-	play_the_round(
-		get_const_table_sin_value(round_index),
-		k_round_dependent, 
-		get_shift_second_play_value(s_shift_index),
-		F_fun_function);
-				md5_print_ksi(k_round_dependent,
-					get_shift_second_play_value(s_shift_index),
-					round_index);
-	return (0);
-}
-
-static int		initiate_third_play_with_16_rounds(uint32_t round_index)
-{
-	uint32_t	k_round_dependent;
-	uint32_t	s_shift_index;
-	uint32_t	(*F_fun_function)(uint32_t, uint32_t, uint32_t);
-
-	if (round_index + 1 < round_index)
-		return (0);
-	k_round_dependent = ((round_index - 1) * 3 + 5) % 16;
-	s_shift_index = round_index % 4;
-	if (s_shift_index == 0)
-		s_shift_index += 4;
-	F_fun_function = md5_fun_third_play;
-	play_the_round(
-		get_const_table_sin_value(round_index),
-		k_round_dependent,
-		get_shift_third_play_value(s_shift_index),
-		F_fun_function);
-				md5_print_ksi(k_round_dependent,
-					get_shift_third_play_value(s_shift_index),
-					round_index);
-	return (0);
-}
-
-static int		initiate_fourth_play_with_16_rounds(uint32_t round_index)
-{
-	uint32_t	k_round_dependent;
-	uint32_t	s_shift_index;
-	uint32_t	(*F_fun_function)(uint32_t, uint32_t, uint32_t);
-
-	if (round_index + 1 < round_index)
-		return (0);
-	k_round_dependent = ((round_index - 1) * 7) % 16;
-	s_shift_index = round_index % 4;
-	if (s_shift_index == 0)
-		s_shift_index += 4;
-	F_fun_function = md5_fun_fourth_play;
-	play_the_round(
-		get_const_table_sin_value(round_index),
-		k_round_dependent,
-		get_shift_fourth_play_value(s_shift_index),
-		F_fun_function);
-				md5_print_ksi(k_round_dependent,
-					get_shift_fourth_play_value(s_shift_index),
-					round_index);
-	return (0);
-}
-
-static int		calculate_with_fun_functions(void)
-{
-	uint32_t	round_index;
-
-	round_index = 1;
-	while (round_index < (NUMBER_OF_ROUNDS + 1))
-	{
-		if (round_index >= MD5_first_play_min &&
-				round_index <= MD5_first_play_max)
-			initiate_first_play_with_16_rounds(round_index);
-		else if (round_index >= MD5_second_play_min &&
-				round_index <= MD5_second_play_max)
-			initiate_second_play_with_16_rounds(round_index);
-		else if (round_index >= MD5_third_play_min &&
-				round_index <= MD5_third_play_max)
-			initiate_third_play_with_16_rounds(round_index);
-		else if (round_index >= MD5_fourth_play_min &&
-				round_index <= MD5_fourth_play_max)
-			initiate_fourth_play_with_16_rounds(round_index);
-		round_index++;
-	}
-	return (0);
-}
-
-static int		save_buffer_after_block(void)
-{
-	uint32_t	aa;
-	uint32_t	bb;
-	uint32_t	cc;
-	uint32_t	dd;
-
-	aa = get_buffer_before_block('a');
-	bb = get_buffer_before_block('b');
-	cc = get_buffer_before_block('c');
-	dd = get_buffer_before_block('d');
-	add_to_buffer_variables(aa, 'a');
-	add_to_buffer_variables(bb, 'b');
-	add_to_buffer_variables(cc, 'c');
-	add_to_buffer_variables(dd, 'd');
-	return (0);
-}
 /*
 ** @index_of_512bit_block makes a step of 16 because we need to
 ** send each 512-bit block where 512 / 8 = 64 bytes or 64 uint8_t blocks
@@ -288,7 +110,6 @@ int				md5_algorithm_start(char *data, size_t data_size)
 	uint32_t	*message;
 	size_t		message_size_uint32;
 	size_t		mlength_bits_padded;
-	size_t		index_of_512bit_block;
 	
 	// md5_full_algo();
 	message_size_uint32 = 0;
@@ -298,20 +119,6 @@ int				md5_algorithm_start(char *data, size_t data_size)
 	if (message == NULL)
 		return (1);
 	// md5_full_algo((unsigned int*)message);
-	init_buffer0_variables();
-	init_buffer_variables();
-	index_of_512bit_block = 0;
-	while (index_of_512bit_block < message_size_uint32)
-	{
-		save_buffer_before_block();
-				md5_print_abcd();
-		init_new_message_block_512bit(message + index_of_512bit_block, 16);
-		calculate_with_fun_functions();
-		free_new_message_block_512bit();
-		save_buffer_after_block();
-				md5_print_abcd();
-		index_of_512bit_block += 16;
-		increase_block_number();
-	}
+	md5_calculate_hash_by_algo(message, message_size_uint32);
 	return (0);
 }

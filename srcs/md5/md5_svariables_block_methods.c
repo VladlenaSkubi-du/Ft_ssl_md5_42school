@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/08 11:22:48 by sschmele          #+#    #+#             */
-/*   Updated: 2021/08/08 11:56:34 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/08 22:52:41 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,25 @@ int			save_buffer_before_block(void)
 	return (0);
 }
 
-uint32_t	get_buffer_before_block(int flag)
+int			save_buffer_after_block(void)
 {
-	if (flag == 'a')
-		return (g_a_before_block);
-	else if (flag == 'b')
-		return (g_b_before_block);
-	else if (flag == 'c')
-		return (g_c_before_block);
-	return (g_d_before_block);
+	add_to_buffer_variables(g_a_before_block, 'a');
+	add_to_buffer_variables(g_b_before_block, 'b');
+	add_to_buffer_variables(g_c_before_block, 'c');
+	add_to_buffer_variables(g_d_before_block, 'd');
+	return (0);
 }
+
+// uint32_t	get_buffer_before_block(int flag)
+// {
+// 	if (flag == 'a')
+// 		return (g_a_before_block);
+// 	else if (flag == 'b')
+// 		return (g_b_before_block);
+// 	else if (flag == 'c')
+// 		return (g_c_before_block);
+// 	return (g_d_before_block);
+// }
 
 // int			init_block_variables(void)
 // {

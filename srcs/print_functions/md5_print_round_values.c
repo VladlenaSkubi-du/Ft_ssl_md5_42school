@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/08 21:28:30 by sschmele          #+#    #+#             */
-/*   Updated: 2021/08/08 22:19:37 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/08 22:44:07 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ void		md5_print_description(void)
 	ft_printf("There are 64 rounds with 4 plays and 16 rounds in it\n");
 	ft_printf("Round formula is: a += function(b, c, d) + block[k] + T[i], ");
 	ft_printf("a <<<= s, a += b\n");
-	ft_printf("	   where a, b, c, d - uint32_t buffers,\n");
-	ft_printf("	   k - uint32_t number dependent on round index,\n");
-	ft_printf("	   block[k] - uint32_t number from");
-	ft_printf("    uint32_t array with length 16 (or 512 bit block),\n");
-	ft_printf("	   i - uint32_t number from 1 to 64 or round_index\n");
-	ft_printf("	   T[i] - uint32_t number from the table of constant values\n");
+	ft_printf("    where a, b, c, d - uint32_t buffers,\n");
+	ft_printf("    k - uint32_t number dependent on round index,\n");
+	ft_printf("    block[k] - uint32_t number from");
+	ft_printf(" uint32_t array with length 16 (or 512 bit block),\n");
+	ft_printf("    i - uint32_t number from 1 to 64 or round_index\n");
+	ft_printf("    T[i] - uint32_t number from the table of constant values\n");
 	ft_printf("    s - uint32_t shift dependent on round index,");
-	ft_printf("    in each of 4 plays shift values repeat\n");
+	ft_printf(" in each of 4 plays shift values repeat\n");
 }
 
 void		md5_print_ksi(uint32_t k_round_dependent,

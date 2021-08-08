@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 11:20:43 by sschmele          #+#    #+#             */
-/*   Updated: 2021/08/08 22:18:30 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/08 23:02:05 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,25 +49,25 @@ uint32_t 	*md5_get_64bit_mlength_of_message(
 				size_t uint32_blocks_in_message_add);
 
 /*
-** File md5_svariables_buffer_methods.c
+** File md5_calculation_algo.c
 */
 
-int			init_buffer0_variables(void);
-int			init_buffer_variables(void);
-int			save_buffer_variables(uint32_t value, int flag);
-int			add_to_buffer_variables(uint32_t value, int flag);
-uint32_t	get_buffer_variables(int flag);
+int			md5_calculate_hash_by_algo(uint32_t *message,
+				size_t message_size_uint32);
+int			calculate_with_fun_functions(void);
+int			play_the_round(uint32_t T_const_by_index,
+				uint32_t k_round_dependent,
+				uint32_t s_shift,
+				uint32_t (*F_fun_function)(uint32_t, uint32_t, uint32_t));
 
 /*
-** File md5_svariables_block_methods.c
+** File md5_init_plays.c
 */
 
-int			save_buffer_before_block(void);
-uint32_t	get_buffer_before_block(int flag);
-
-// int			init_block_variables(void);
-// int			save_block_variable_a(uint32_t a);
-// uint32_t	get_block_variables(int flag);
+int			init_first_play_with_16_rounds(uint32_t round_index);
+int			init_second_play_with_16_rounds(uint32_t round_index);
+int			init_third_play_with_16_rounds(uint32_t round_index);
+int			init_fourth_play_with_16_rounds(uint32_t round_index);
 
 /*
 ** File md5_fun_functions.c
@@ -85,6 +85,28 @@ uint32_t	md5_fun_fourth_play(uint32_t x, uint32_t y, uint32_t z);
 uint32_t	md5_bit_and(uint32_t x, uint32_t y);
 uint32_t	md5_bit_or(uint32_t x, uint32_t y);
 uint32_t	md5_bit_xor(uint32_t x, uint32_t y);
+
+/*
+** File md5_svariables_buffer_methods.c
+*/
+
+int			init_buffer0_variables(void);
+int			init_buffer_variables(void);
+int			save_buffer_variables(uint32_t value, int flag);
+int			add_to_buffer_variables(uint32_t value, int flag);
+uint32_t	get_buffer_variables(int flag);
+
+/*
+** File md5_svariables_block_methods.c
+*/
+
+int			save_buffer_before_block(void);
+int			save_buffer_after_block(void);
+
+// uint32_t	get_buffer_before_block(int flag);
+// int			init_block_variables(void);
+// int			save_block_variable_a(uint32_t a);
+// uint32_t	get_block_variables(int flag);
 
 /*
 ** File md5_sconst_and_shift_methods.c
