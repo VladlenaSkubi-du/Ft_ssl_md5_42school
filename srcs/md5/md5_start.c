@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 11:07:56 by sschmele          #+#    #+#             */
-/*   Updated: 2021/08/08 11:54:27 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/08 22:40:42 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,11 +152,15 @@ static int		initiate_first_play_with_16_rounds(uint32_t round_index)
 	if (s_shift_index == 0)
 		s_shift_index += 4;
 	F_fun_function = md5_fun_first_play;
+	
 	play_the_round(
 		get_const_table_sin_value(round_index),
 		k_round_dependent,
 		get_shift_first_play_value(s_shift_index),
 		F_fun_function);
+				md5_print_ksi(k_round_dependent,
+					get_shift_first_play_value(s_shift_index),
+					round_index);
 	return (0);
 }
 
@@ -178,6 +182,9 @@ static int		initiate_second_play_with_16_rounds(uint32_t round_index)
 		k_round_dependent, 
 		get_shift_second_play_value(s_shift_index),
 		F_fun_function);
+				md5_print_ksi(k_round_dependent,
+					get_shift_second_play_value(s_shift_index),
+					round_index);
 	return (0);
 }
 
@@ -199,6 +206,9 @@ static int		initiate_third_play_with_16_rounds(uint32_t round_index)
 		k_round_dependent,
 		get_shift_third_play_value(s_shift_index),
 		F_fun_function);
+				md5_print_ksi(k_round_dependent,
+					get_shift_third_play_value(s_shift_index),
+					round_index);
 	return (0);
 }
 
@@ -220,6 +230,9 @@ static int		initiate_fourth_play_with_16_rounds(uint32_t round_index)
 		k_round_dependent,
 		get_shift_fourth_play_value(s_shift_index),
 		F_fun_function);
+				md5_print_ksi(k_round_dependent,
+					get_shift_fourth_play_value(s_shift_index),
+					round_index);
 	return (0);
 }
 
@@ -284,12 +297,6 @@ int				md5_algorithm_start(char *data, size_t data_size)
 		&message_size_uint32, &mlength_bits_padded);
 	if (message == NULL)
 		return (1);
-			// ft_putstr("full message with message_size_uint32 = ");
-			// ft_putnbr(message_size_uint32);
-			// ft_putstr(" and bits padded mlength_bits_padded = ");
-			// ft_putnbr(mlength_bits_padded);
-			// ft_putchar('\n');
-			// print_bits_as_32uint_string_little_endian(message, message_size_uint32);
 	// md5_full_algo((unsigned int*)message);
 	init_buffer0_variables();
 	init_buffer_variables();
@@ -297,18 +304,14 @@ int				md5_algorithm_start(char *data, size_t data_size)
 	while (index_of_512bit_block < message_size_uint32)
 	{
 		save_buffer_before_block();
+				md5_print_abcd();
 		init_new_message_block_512bit(message + index_of_512bit_block, 16);
 		calculate_with_fun_functions();
 		free_new_message_block_512bit();
 		save_buffer_after_block();
+				md5_print_abcd();
 		index_of_512bit_block += 16;
+		increase_block_number();
 	}
-	// size_t i = 0;
-	// while (i < message_size_uint32)
-	// {
-	// 	printf("%d - ", message[i]);
-	// 	i++;
-	// }
-	// printf("\n");
 	return (0);
 }

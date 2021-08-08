@@ -12,7 +12,10 @@ FLAGS += -g
 PRINT_FUNCTIONS_DIR := print_functions
 PRINT_FUNCTIONS := \
 			$(PRINT_FUNCTIONS_DIR)/print_options.c \
-			$(PRINT_FUNCTIONS_DIR)/print_bits.c
+			$(PRINT_FUNCTIONS_DIR)/print_bits_little_endian.c \
+			$(PRINT_FUNCTIONS_DIR)/print_bits_big_endian.c \
+			$(PRINT_FUNCTIONS_DIR)/md5_print_round_values.c \
+			$(PRINT_FUNCTIONS_DIR)/md5_print_algo_values.c
 
 MD5_DIR := md5
 MD5 := \

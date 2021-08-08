@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 22:21:35 by sschmele          #+#    #+#             */
-/*   Updated: 2021/08/06 15:57:24 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/08 22:38:35 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,32 +51,28 @@ static uint32_t	g_const_table_sin[65] = { 0,
 
 uint32_t		get_shift_first_play_value(size_t index)
 {
-	if ((index < MD5_first_play_min || index > MD5_first_play_max) ||
-			(index + 1 < index))
+	if (index + 1 < index)
 		return (0);
 	return (g_shifts_first_play[index]);
 }
 
 uint32_t		get_shift_second_play_value(size_t index)
 {
-	if ((index < MD5_second_play_min || index > MD5_second_play_max) ||
-			(index + 1 < index))
+	if (index + 1 < index)
 		return (0);
 	return (g_shifts_second_play[index]);
 }
 
 uint32_t		get_shift_third_play_value(size_t index)
 {
-	if ((index < MD5_third_play_min || index > MD5_third_play_max) ||
-			(index + 1 < index))
+	if (index + 1 < index)
 		return (0);
 	return (g_shifts_third_play[index]);
 }
 
 uint32_t		get_shift_fourth_play_value(size_t index)
 {
-	if ((index < MD5_fourth_play_min || index > MD5_fourth_play_max) ||
-			(index + 1 < index))
+	if (index + 1 < index)
 		return (0);
 	return (g_shifts_fourth_play[index]);
 }
