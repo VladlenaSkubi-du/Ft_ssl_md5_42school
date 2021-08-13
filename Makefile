@@ -25,6 +25,7 @@ MD5 := \
 			$(MD5_DIR)/md5_init_plays.c \
 			$(MD5_DIR)/md5_init_fun_functions.c \
 			$(MD5_DIR)/md5_logic_bit_operations.c \
+			$(MD5_DIR)/md5_output_hash.c \
 			$(MD5_DIR)/md5_smessage_block_methods.c \
 			$(MD5_DIR)/md5_sconst_and_shift_methods.c \
 			$(MD5_DIR)/md5_svariables_buffer_methods.c \

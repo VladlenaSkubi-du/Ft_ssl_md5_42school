@@ -6,15 +6,23 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/08 22:45:25 by sschmele          #+#    #+#             */
-/*   Updated: 2021/08/08 23:00:46 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/14 01:09:38 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
 #include "md5.h"
 
-int				md5_calculate_hash_by_algo(uint32_t *message,
-					size_t message_size_uint32)
+/*
+** Here we init all the variables needed for calculations,
+** Save a 512bit part of the message, save variables before
+** calculations for this 512bit block
+** After calculations we add values abcd variable had before
+** the clock calculations started.
+*/
+
+int	md5_calculate_hash_by_algo(uint32_t *message,
+		size_t message_size_uint32)
 {
 	size_t		index_of_512bit_block;
 
@@ -24,37 +32,42 @@ int				md5_calculate_hash_by_algo(uint32_t *message,
 	while (index_of_512bit_block < message_size_uint32)
 	{
 		save_buffer_before_block();
-				md5_print_abcd();
 		init_new_message_block_512bit(message + index_of_512bit_block, 16);
 		calculate_with_fun_functions();
 		free_new_message_block_512bit();
 		save_buffer_after_block();
-				md5_print_abcd();
 		index_of_512bit_block += 16;
 		increase_block_number();
 	}
 	return (0);
 }
 
-int				calculate_with_fun_functions(void)
+/*
+** There are 4 fun functions that is why it is easier to
+** combine each 16 rounds with 1 fun function in a function
+*/
+
+int	calculate_with_fun_functions(void)
 {
+	uint32_t	*message_512bit_block;
 	uint32_t	round_index;
 
+	message_512bit_block = get_message_512bit_block();
 	round_index = 1;
 	while (round_index < (NUMBER_OF_ROUNDS + 1))
 	{
 		if (round_index >= MD5_first_play_min &&
 				round_index <= MD5_first_play_max)
-			init_first_play_with_16_rounds(round_index);
+			init_first_play_with_16_rounds(round_index, message_512bit_block);
 		else if (round_index >= MD5_second_play_min &&
 				round_index <= MD5_second_play_max)
-			init_second_play_with_16_rounds(round_index);
+			init_second_play_with_16_rounds(round_index, message_512bit_block);
 		else if (round_index >= MD5_third_play_min &&
 				round_index <= MD5_third_play_max)
-			init_third_play_with_16_rounds(round_index);
+			init_third_play_with_16_rounds(round_index, message_512bit_block);
 		else if (round_index >= MD5_fourth_play_min &&
 				round_index <= MD5_fourth_play_max)
-			init_fourth_play_with_16_rounds(round_index);
+			init_fourth_play_with_16_rounds(round_index, message_512bit_block);
 		round_index++;
 	}
 	return (0);
@@ -69,27 +82,52 @@ static uint32_t	rotate_left_in_play(uint32_t value, uint32_t s_shift)
 	return (rotation_done);
 }
 
-int				play_the_round(uint32_t T_const_by_index,
-					uint32_t k_round_dependent,
-					uint32_t s_shift,
-					uint32_t (*F_fun_function)(uint32_t, uint32_t, uint32_t))
+/*
+** Main formula here consist of 3 lines started with aa
+** But the point is that each of 4 rounds we change the order
+** of the real values saved in aa, bb, cc and dd variables - they
+** are usually like: aa not equal a_buffer, bb not equal b_buffer
+** and so on.
+** Example: first 5 rounds should look like that if we
+** write them manually:
+** round(a, b, c, d, 0, 7, 1, F);
+** round(d, a, b, c, 1, 12, 2, F);
+** round(c, d, a, b, 2, 17, 3, F);
+** round(b, c, d, a, 3, 22, 4, F);
+** round(a, b, c, d, 4, 7, 5, F);
+** where the values mean: 
+**	round(uint32_t& a,
+**      uint32_t b,
+**		uint32_t c,
+**		uint32_t d,
+**		uint32_t k (k_round_dependent),
+**		uint32_t s (s_shift),
+**		uint32_t i (round_index),
+**		uint32_t(*function)(uint32_t, uint32_t, uint32_t))
+*/
+
+int	play_the_round(uint32_t sum_T_message_by_k,
+		uint32_t s_shift,
+		uint32_t (*F_fun_function)(uint32_t, uint32_t, uint32_t),
+		uint32_t s_shift_index)
 {
-	uint32_t	*message_512bit_block;
 	uint32_t	aa;
 	uint32_t	bb;
 	uint32_t	cc;
 	uint32_t	dd;
+	char		values_orders_vars[9] = "0abcdabcd";
 
-	message_512bit_block = get_message_512bit_block();
-	aa = get_buffer_variables('a');
-	bb = get_buffer_variables('b');
-	cc = get_buffer_variables('c');
-	dd = get_buffer_variables('d');
-	aa += F_fun_function(bb, cc, dd) +
-		message_512bit_block[k_round_dependent] +
-		T_const_by_index;
+	if (s_shift_index == 4)
+		s_shift_index = 2;
+	else if (s_shift_index == 2)
+		s_shift_index = 4;
+	aa = get_buffer_variables(values_orders_vars[s_shift_index]);
+	bb = get_buffer_variables(values_orders_vars[s_shift_index + 1]);
+	cc = get_buffer_variables(values_orders_vars[s_shift_index + 2]);
+	dd = get_buffer_variables(values_orders_vars[s_shift_index + 3]);
+	aa += F_fun_function(bb, cc, dd) + sum_T_message_by_k;
 	aa = rotate_left_in_play(aa, s_shift);
 	aa += bb;
-	save_buffer_variables(aa, 'a');
+	save_buffer_variables(aa, values_orders_vars[s_shift_index]);
 	return (0);
 }

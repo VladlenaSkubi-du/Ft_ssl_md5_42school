@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/24 09:41:38 by sschmele          #+#    #+#             */
-/*   Updated: 2021/07/25 21:36:36 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/10 21:27:34 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@
 **	// }
 */
 
-uint32_t 		*md5_get_64bit_mlength_of_message(
-					uint64_t mlength_bits_original,
-					size_t uint32_blocks_in_message_add)
+uint32_t 	*md5_get_64bit_mlength_of_message(
+				uint64_t mlength_bits_original,
+				size_t uint32_blocks_in_message_add)
 {
 	uint32_t	*mlength_bits_add;
 	size_t		index_of_byte;
@@ -80,17 +80,17 @@ uint32_t 		*md5_get_64bit_mlength_of_message(
 ** Copy this array to the new memory after the message
 */
 
-uint32_t 		*md5_add_64bit_mlength_to_message(uint32_t *message,
-					size_t *message_size_uint32,
-					size_t mlength_bits_original, 
-					size_t *mlength_bits_padded)
+uint32_t 	*md5_add_64bit_mlength_to_message(uint32_t *message,
+				size_t *message_size_uint32,
+				size_t mlength_bits_original, 
+				size_t *mlength_bits_padded)
 {
 	uint32_t	*message_new;
 	uint32_t	*mlength_bits_add;
 	size_t		uint32_blocks_in_message_add;
 
 	uint32_blocks_in_message_add = 2;
-	message_new = (uint32_t*)ft_xmalloc(sizeof(uint32_t) *
+	message_new = (uint32_t *)ft_xmalloc(sizeof(uint32_t) *
 		(*message_size_uint32 + uint32_blocks_in_message_add + 1));
 	ft_memcpy(message_new, message, sizeof(uint32_t) * (*message_size_uint32));
 	free(message);
@@ -105,6 +105,7 @@ uint32_t 		*md5_add_64bit_mlength_to_message(uint32_t *message,
 		mlength_bits_add, (sizeof(uint32_t) * uint32_blocks_in_message_add));
 	*message_size_uint32 += uint32_blocks_in_message_add;
 	*mlength_bits_padded += 64;
+	free(mlength_bits_add);
 	return (message_new);
 }
 
@@ -142,9 +143,9 @@ uint32_t 		*md5_add_64bit_mlength_to_message(uint32_t *message,
 **	// print_bits_as_32uint_little_endian(message[index_of_byte]);
 */
 
-uint32_t 		*md5_make_padded_message(char *data, size_t data_size,
-					size_t *message_size_uint32,
-					size_t mlength_bits_padded)
+uint32_t 	*md5_make_padded_message(char *data, size_t data_size,
+				size_t *message_size_uint32,
+				size_t mlength_bits_padded)
 {
 	uint32_t	*message;
 	size_t		uint32_blocks_in_message;
@@ -153,7 +154,7 @@ uint32_t 		*md5_make_padded_message(char *data, size_t data_size,
 
 	uint32_blocks_in_message = mlength_bits_padded / 8 / 4;
 				// printf("uint32_blocks_in_message = %d\n", uint32_blocks_in_message); // = 30 for "echo -n 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' | ./ft_ssl"
-	message = (uint32_t*)ft_xmalloc(sizeof(uint32_t) * (uint32_blocks_in_message + 1));
+	message = (uint32_t *)ft_xmalloc(sizeof(uint32_t) * (uint32_blocks_in_message + 1));
 	ft_memcpy(message, data, sizeof(char) * data_size);
 				// print_bits_as_32uint_string_little_endian(message, data_size);
 	index_of_uint32_block = data_size / 4;
@@ -180,7 +181,7 @@ uint32_t 		*md5_make_padded_message(char *data, size_t data_size,
 ** printf("mlength_bits_padded = %zu\n", mlength_bits_padded);
 */
 
-size_t			md5_count_message_length_bits_padded(size_t mlength_bits_original)
+size_t	md5_count_message_length_bits_padded(size_t mlength_bits_original)
 {
 	size_t		mlength_bits_padded;
 
@@ -198,8 +199,8 @@ size_t			md5_count_message_length_bits_padded(size_t mlength_bits_original)
 ** printf("mlength_bits_original = %zu\n", mlength_bits_original);
 */
 
-uint32_t		*md5_prepare_message_for_algo(char *data, size_t data_size,
-					size_t *message_size_uint32, size_t *mlength_bits_padded)
+uint32_t	*md5_prepare_message_for_algo(char *data, size_t data_size,
+				size_t *message_size_uint32, size_t *mlength_bits_padded)
 {
 	uint32_t	*message;
 	size_t		mlength_bits_original;

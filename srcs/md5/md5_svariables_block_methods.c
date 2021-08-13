@@ -6,17 +6,12 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/08 11:22:48 by sschmele          #+#    #+#             */
-/*   Updated: 2021/08/08 22:52:41 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/14 01:11:20 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
 #include "md5.h"
-
-// static uint32_t	g_a_block;
-// static uint32_t	g_b_block;
-// static uint32_t	g_c_block;
-// static uint32_t	g_d_block;
 
 static uint32_t	g_a_before_block;
 static uint32_t	g_b_before_block;
@@ -49,40 +44,3 @@ int			save_buffer_after_block(void)
 	add_to_buffer_variables(g_d_before_block, 'd');
 	return (0);
 }
-
-// uint32_t	get_buffer_before_block(int flag)
-// {
-// 	if (flag == 'a')
-// 		return (g_a_before_block);
-// 	else if (flag == 'b')
-// 		return (g_b_before_block);
-// 	else if (flag == 'c')
-// 		return (g_c_before_block);
-// 	return (g_d_before_block);
-// }
-
-// int			init_block_variables(void)
-// {
-// 	g_a_block = get_buffer_variables('a');
-// 	g_b_block = get_buffer_variables('b');
-// 	g_c_block = get_buffer_variables('c');
-// 	g_d_block = get_buffer_variables('d');
-// 	return (0);
-// }
-
-// int			save_block_variable_a(uint32_t a)
-// {
-// 	g_a_block = a;
-// 	return (0);
-// }
-
-// uint32_t	get_block_variables(int flag)
-// {
-// 	if (flag == 'a')
-// 		return (g_a_block);
-// 	else if (flag == 'b')
-// 		return (g_b_block);
-// 	else if (flag == 'c')
-// 		return (g_c_block);
-// 	return (g_d_block);
-// }

@@ -6,23 +6,25 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 11:20:43 by sschmele          #+#    #+#             */
-/*   Updated: 2021/08/08 23:02:05 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/14 00:52:13 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_MD5_H
 # define FT_MD5_H
 
-# define	SIZEOF_UINT32_BIT	32
-# define	NUMBER_OF_ROUNDS	64
-# define	MD5_first_play_min	1
-# define	MD5_first_play_max	16
-# define	MD5_second_play_min	17
-# define	MD5_second_play_max	32
-# define	MD5_third_play_min	33
-# define	MD5_third_play_max	48
-# define	MD5_fourth_play_min	49
-# define	MD5_fourth_play_max	64
+# define	SIZEOF_UINT32_BIT				32
+# define	NUMBER_OF_ROUNDS				64
+# define	NUMBER_OF_UINT32_VALUES			4
+# define	NUMBER_OF_UINT32_VALUES_PARTS	4
+# define	MD5_first_play_min				1
+# define	MD5_first_play_max				16
+# define	MD5_second_play_min				17
+# define	MD5_second_play_max				32
+# define	MD5_third_play_min				33
+# define	MD5_third_play_max				48
+# define	MD5_fourth_play_min				49
+# define	MD5_fourth_play_max				64
 
 /*
 ** File md5_start.c
@@ -55,19 +57,23 @@ uint32_t 	*md5_get_64bit_mlength_of_message(
 int			md5_calculate_hash_by_algo(uint32_t *message,
 				size_t message_size_uint32);
 int			calculate_with_fun_functions(void);
-int			play_the_round(uint32_t T_const_by_index,
-				uint32_t k_round_dependent,
+int			play_the_round(uint32_t sum_T_message_by_k,
 				uint32_t s_shift,
-				uint32_t (*F_fun_function)(uint32_t, uint32_t, uint32_t));
+				uint32_t (*F_fun_function)(uint32_t, uint32_t, uint32_t),
+				uint32_t s_shift_index);
 
 /*
 ** File md5_init_plays.c
 */
 
-int			init_first_play_with_16_rounds(uint32_t round_index);
-int			init_second_play_with_16_rounds(uint32_t round_index);
-int			init_third_play_with_16_rounds(uint32_t round_index);
-int			init_fourth_play_with_16_rounds(uint32_t round_index);
+int			init_first_play_with_16_rounds(uint32_t round_index,
+				uint32_t *message_512bit_block);
+int			init_second_play_with_16_rounds(uint32_t round_index,
+				uint32_t *message_512bit_block);
+int			init_third_play_with_16_rounds(uint32_t round_index,
+				uint32_t *message_512bit_block);
+int			init_fourth_play_with_16_rounds(uint32_t round_index,
+				uint32_t *message_512bit_block);
 
 /*
 ** File md5_fun_functions.c
@@ -128,5 +134,11 @@ uint32_t	*get_message_512bit_block(void);
 int			free_new_message_block_512bit(void);
 int			increase_block_number(void);
 size_t		get_block_number(void);
+
+/*
+** File md5_output_hash.c
+*/
+
+int			md5_output_hash(void);
 
 # endif
