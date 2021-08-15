@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/21 16:45:00 by sschmele          #+#    #+#             */
-/*   Updated: 2020/10/06 23:37:57 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/15 15:11:56 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,11 @@ static int	options_in_arg(char *arri, int num,
 ** 0000 0000 0000 0100 - "r" activated
 ** usage is not activated because after "--"
 ** everything is regarded as arguments
+**
+** If you want to define flags, you need to
+** do it in inverse order:
+** (char*[]){"elsrn", "--help", "--usage"}
+** needs FLAG_N 0x1, FLAG_R 0x2 and so on
 */
 
 int			ft_find_options(int num, char *flags_arr[num], char **arr)

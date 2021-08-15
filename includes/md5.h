@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 11:20:43 by sschmele          #+#    #+#             */
-/*   Updated: 2021/08/14 00:52:13 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/14 23:28:57 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 ** File md5_start.c
 */
 
-int			md5_algorithm_start(char *data, size_t data_size);
+int			md5_algorithm_start(void);
 
 /*
 ** File md5_prepare_message.c

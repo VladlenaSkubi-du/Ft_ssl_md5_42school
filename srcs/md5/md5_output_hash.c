@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 21:20:06 by sschmele          #+#    #+#             */
-/*   Updated: 2021/08/14 00:54:48 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/14 22:00:21 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ static int	md5_copy_variables_to_hash(uint8_t **hash)
 	while (i < NUMBER_OF_UINT32_VALUES)
 	{
 		value = get_buffer_variables(values_order[i]);
-			print_bits_as_32uint_little_endian(value);
 		ft_memcpy((*hash) + NUMBER_OF_UINT32_VALUES * i,
 			&value, NUMBER_OF_UINT32_VALUES_PARTS);
 		i++;

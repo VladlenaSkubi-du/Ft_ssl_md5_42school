@@ -37,6 +37,9 @@ SHA256 := \
 
 SOURCES := main.c \
 			ssl_parsing.c \
+			ssl_error_management.c \
+			ssl_usage.c \
+			ssl_smessage_methods.c \
 			$(MD5) \
 			$(SHA256) \
 			$(PRINT_FUNCTIONS)

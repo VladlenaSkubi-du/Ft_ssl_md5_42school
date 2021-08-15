@@ -1,28 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_options.c                                    :+:      :+:    :+:   */
+/*   ssl_smessage_methods.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/23 22:38:49 by sschmele          #+#    #+#             */
-/*   Updated: 2021/08/15 00:10:45 by sschmele         ###   ########.fr       */
+/*   Created: 2021/08/14 23:19:38 by sschmele          #+#    #+#             */
+/*   Updated: 2021/08/14 23:25:09 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
-#include "print_functions.h"
 
-void		print_options(int flags)
+static char		*g_data;
+static size_t	g_data_size;
+
+void	ssl_save_data(char *data, size_t data_size)
 {
-	if (flags < 0)
-		return ;
-	if (flags & FLAG_P)
-		ft_putendl_fd("Flag p is activated", STDOUT_FILENO);
-	if (flags & FLAG_Q)
-		ft_putendl_fd("Flag q is activated", STDOUT_FILENO);
-	if (flags & FLAG_S)
-		ft_putendl_fd("Flag s is activated", STDOUT_FILENO);
-	if (flags & FLAG_R)
-		ft_putendl_fd("Flag r is activated", STDOUT_FILENO);
+	g_data = data;
+	g_data_size = data_size;
+}
+
+char	*ssl_get_data(size_t *data_size)
+{
+	*data_size = g_data_size;
+	return (g_data);
+}
+
+void	ssl_free_data(void)
+{
+	free(g_data);
+	g_data = NULL;
+	g_data_size = 0;
 }

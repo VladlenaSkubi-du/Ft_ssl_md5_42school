@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 11:07:56 by sschmele          #+#    #+#             */
-/*   Updated: 2021/08/14 01:10:47 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/14 23:27:03 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,16 @@
 ** but 64 / 4 = 16 uint32_t blocks
 */
 
-int		md5_algorithm_start(char *data, size_t data_size)
+int		md5_algorithm_start(void)
 {
+	char		*data;
+	size_t		data_size;
 	uint32_t	*message;
 	size_t		message_size_uint32;
 	size_t		mlength_bits_padded;
 	
+	data_size = 0;
+	data = ssl_get_data(&data_size);
 	message_size_uint32 = 0;
 	mlength_bits_padded = 0;
 	message = md5_prepare_message_for_algo(data, data_size,
