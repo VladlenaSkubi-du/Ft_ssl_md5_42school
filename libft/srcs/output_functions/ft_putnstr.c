@@ -6,15 +6,15 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/25 15:58:03 by sschmele          #+#    #+#             */
-/*   Updated: 2020/07/25 15:58:08 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/16 18:22:11 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void		ft_putnstr(char const *s, int len)
+void	ft_putnstr(char const *s, int len)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (s)

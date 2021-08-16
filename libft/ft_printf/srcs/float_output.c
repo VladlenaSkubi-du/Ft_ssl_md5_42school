@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   float_output.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbecker <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 17:47:27 by sbecker           #+#    #+#             */
-/*   Updated: 2019/03/27 13:39:59 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/09 16:04:34 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ char	*get_string_int_fract(t_fcomp *fcomp, int precision)
 	register int	j;
 
 	len = fcomp->len_fraction;
-	if (fcomp->fraction[-(precision - len) - 1] ==
-			5 && fcomp->fraction[-(precision - len)] % 2 == 0)
+	if (fcomp->fraction[-(precision - len) - 1] == 5
+		&& fcomp->fraction[-(precision - len)] % 2 == 0)
 	{
 		if (check_5(fcomp, precision) == 1)
 			fcomp->fraction[-(precision - len)]++;
@@ -87,7 +87,8 @@ char	*get_string_with_precision(t_fcomp *fcomp, t_all *all)
 {
 	char			*s;
 
-	all->precision = all->precision < 0 ? 6 : all->precision;
+	if (all->precision < 0)
+		all->precision = 6;
 	if (fcomp->inf_check)
 		return (ft_strdup("inf"));
 	if (fcomp->nan_check == 1 && all->type == 'F')

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input.c                                            :+:      :+:    :+:   */
+/*   char_and_nonstandard_output.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbecker <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 12:50:06 by sbecker           #+#    #+#             */
-/*   Updated: 2019/03/27 11:46:24 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/09 16:01:58 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,30 @@
 
 void	do_n(t_all *all, va_list *ap)
 {
-	int *ptr;
+	int		*ptr;
 
-	ptr = va_arg(*ap, int*);
+	ptr = va_arg(*ap, int *);
 	*ptr = all->symbol_num;
 }
 
 char	*width_processing(char *str, int len, t_all *all)
 {
-	char *new;
+	char	*new;
 
 	new = malloc(all->width);
 	if (all->flag_minus == 1)
 	{
-		ft_memset((void*)new, ' ', all->width);
+		ft_memset((void *)new, ' ', all->width);
 		ft_strncpy(new, str, len);
 	}
 	else if (all->flag_zero == 1)
 	{
-		ft_memset((void*)new, '0', all->width);
+		ft_memset((void *)new, '0', all->width);
 		ft_strncpy(new + all->width - len, str, len);
 	}
 	else
 	{
-		ft_memset((void*)new, ' ', all->width);
+		ft_memset((void *)new, ' ', all->width);
 		ft_strncpy(new + all->width - len, str, len);
 	}
 	ft_strdel(&str);
@@ -81,7 +81,8 @@ void	do_string(t_all *all, va_list *ap, char *str)
 {
 	int		len;
 
-	if (!(str = ft_strdup(va_arg(*ap, char*))))
+	str = ft_strdup(va_arg(*ap, char *));
+	if (!str)
 		str = ft_strdup("(null)");
 	len = ft_strlen(str);
 	if (all->precision < len && all->precision != -1)

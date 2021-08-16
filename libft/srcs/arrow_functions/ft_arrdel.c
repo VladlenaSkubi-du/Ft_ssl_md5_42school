@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_arrdel.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aashara- <aashara-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 20:18:33 by sschmele          #+#    #+#             */
-/*   Updated: 2020/09/20 18:48:29 by aashara-         ###   ########.fr       */
+/*   Updated: 2021/08/09 21:24:20 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void			ft_arrdel(char **arr)
+void	ft_arrdel(char **arr)
 {
 	int			i;
 

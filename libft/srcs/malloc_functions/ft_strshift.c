@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/25 15:40:06 by sschmele          #+#    #+#             */
-/*   Updated: 2020/07/25 15:40:08 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/16 19:02:07 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@
 ** from the function that calls
 */
 
-void			ft_strshift(char *str, int shift)
+void	ft_strshift(char *str, int shift)
 {
 	char		*buff;
 	int			i;
 
-	if (str == (char*)NULL || str[0] == '\0')
+	if (str == (char *) NULL || str[0] == '\0')
 		return ;
-	buff = (char*)ft_xmalloc(ft_strlen(str) + 1);
+	buff = (char *)ft_xmalloc(ft_strlen(str) + 1);
 	ft_strcpy(buff, str);
 	ft_strcpy(str + shift, buff);
 	i = 0;

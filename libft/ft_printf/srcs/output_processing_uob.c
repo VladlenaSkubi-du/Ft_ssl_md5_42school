@@ -1,47 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   output_processing.c                                :+:      :+:    :+:   */
+/*   output_processing_uob.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschmele <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 16:05:26 by sschmele          #+#    #+#             */
-/*   Updated: 2019/03/27 11:45:30 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/09 17:39:39 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char		*intu82_p_processing(t_all *all, char *str, int *len)
+char	*intu82_p_processing(t_all *all, char *str, int *len)
 {
 	char	*new;
 
 	new = ft_strnew(all->precision);
-	ft_memset((void*)new, '0', (all->precision - *len));
+	ft_memset((void *)new, '0', (all->precision - *len));
 	ft_strcpy(&new[all->precision - *len], str);
 	*len = all->precision;
 	ft_strdel(&str);
 	return (new);
 }
 
-char		*intu82_w_mz_processing(t_all *all, char *str, int *len)
+char	*intu82_w_mz_processing(t_all *all, char *str, int *len)
 {
 	char	*new;
 
 	new = ft_strnew(all->width);
 	if (all->flag_minus == 1)
 	{
-		ft_memcpy((void*)new, (const void*)str, *len);
-		ft_memset((void*)&new[*len], ' ', (all->width - *len));
+		ft_memcpy((void *)new, (const void *)str, *len);
+		ft_memset((void *)&new[*len], ' ', (all->width - *len));
 	}
 	else if (all->flag_zero == 1 && all->precision < 0)
 	{
-		ft_memset((void*)new, '0', (all->width - *len));
+		ft_memset((void *)new, '0', (all->width - *len));
 		ft_strcpy(&new[all->width - *len], str);
 	}
 	else
 	{
-		ft_memset((void*)new, ' ', (all->width - *len));
+		ft_memset((void *)new, ' ', (all->width - *len));
 		ft_strcpy(&new[all->width - *len], str);
 	}
 	*len = ft_strlen(new);
@@ -55,7 +55,7 @@ char		*intu82_w_mz_processing(t_all *all, char *str, int *len)
 **only zero before the nb
 */
 
-char		*int8_h_processing(t_all *all, char *str, int *len)
+char	*int8_h_processing(t_all *all, char *str, int *len)
 {
 	char	*new;
 

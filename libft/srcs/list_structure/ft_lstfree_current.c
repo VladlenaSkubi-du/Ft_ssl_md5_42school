@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstfree_current.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbednar <rbednar@student.21school.ru>      +#+  +:+       +#+        */
+/*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/25 15:34:46 by sschmele          #+#    #+#             */
-/*   Updated: 2020/08/06 01:03:23 by rbednar          ###   ########.fr       */
+/*   Updated: 2021/08/16 10:30:49 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int			ft_lstfree_current(t_list **head)
+int	ft_lstfree_current(t_list **head)
 {
 	t_list	*delete;
 	t_list	*save_next;

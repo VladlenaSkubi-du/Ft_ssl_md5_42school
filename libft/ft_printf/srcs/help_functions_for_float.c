@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   integer_rounding.c                                 :+:      :+:    :+:   */
+/*   help_functions_for_float.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbecker <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 04:10:34 by sbecker           #+#    #+#             */
-/*   Updated: 2019/03/27 13:42:33 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/09 21:20:23 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		find_len_integer(int len_s)
+int	find_len_integer(int len_s)
 {
 	int				res;
 
@@ -60,7 +60,7 @@ void	processing_overflow_integerpart(t_fcomp *fcomp)
 		fcomp->len_integer++;
 }
 
-int		check_5(t_fcomp *fcomp, int count)
+int	check_5(t_fcomp *fcomp, int count)
 {
 	register int	i;
 
@@ -76,10 +76,15 @@ char	*get_string_integer(t_fcomp *fcomp)
 	char			*s;
 	register int	i;
 	register int	j;
+	int				res;
 
 	if (fcomp->fraction[fcomp->len_fraction - 1] == 5
-			&& fcomp->integer[0] % 2 == 0)
-		check_5(fcomp, 1) == 1 ? fcomp->integer[0]++ : fcomp->integer[0];
+		&& fcomp->integer[0] % 2 == 0)
+	{
+		res = check_5(fcomp, 1);
+		if (res == 1)
+			fcomp->integer[0]++;
+	}
 	else if (fcomp->fraction[fcomp->len_fraction - 1] >= 5)
 		fcomp->integer[0]++;
 	if (fcomp->integer[0] == 10)

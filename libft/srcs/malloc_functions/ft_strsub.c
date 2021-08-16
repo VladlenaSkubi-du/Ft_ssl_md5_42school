@@ -6,13 +6,13 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/25 15:41:12 by sschmele          #+#    #+#             */
-/*   Updated: 2020/07/25 15:41:14 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/16 10:58:00 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char		*ft_strsub(char const *s, unsigned int start, size_t len)
+char	*ft_strsub(char const *s, unsigned int start, size_t len)
 {
 	char	*str;
 	int		i;
@@ -23,7 +23,7 @@ char		*ft_strsub(char const *s, unsigned int start, size_t len)
 		return (NULL);
 	if (s)
 	{
-		str = (char*)ft_xmalloc((len + 1) * sizeof(*s));
+		str = (char *)ft_xmalloc((len + 1) * sizeof(*s));
 		while (len)
 		{
 			str[i] = s[start + i];

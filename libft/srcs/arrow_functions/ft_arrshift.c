@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/25 16:12:59 by sschmele          #+#    #+#             */
-/*   Updated: 2020/07/25 16:13:01 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/16 19:24:10 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,26 +40,26 @@
 ** from the function that calls
 */
 
-void			ft_arrshift(char **arr, int size, int shift)
+void	ft_arrshift(char **arr, int size, int shift)
 {
 	char		**buff;
 	int			i;
 
-	if (arr == (char**)NULL)
+	if (arr == (char **) NULL)
 		return ;
-	buff = (char**)ft_xmalloc(sizeof(char*) * (size + 1));
-	ft_memcpy(buff, arr, sizeof(char*) * size);
+	buff = (char **)ft_xmalloc(sizeof(char *) * (size + 1));
+	ft_memcpy(buff, arr, sizeof(char *) * size);
 	if (shift < 0)
 	{
 		i = shift - 1;
 		while (++i)
 			free(arr[i]);
 	}
-	ft_memcpy(arr + shift, buff, sizeof(char*) * (size - shift));
+	ft_memcpy(arr + shift, buff, sizeof(char *) * (size - shift));
 	i = 0;
 	while (i < shift)
 	{
-		arr[i] = (char*)NULL;
+		arr[i] = (char *) NULL;
 		i++;
 	}
 	free(buff);

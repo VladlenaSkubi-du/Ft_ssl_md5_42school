@@ -1,3 +1,14 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2018/12/04 16:34:17 by sschmele          #+#    #+#              #
+#    Updated: 2021/08/16 19:31:43 by sschmele         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
 NAME := libft.a
 
@@ -10,6 +21,14 @@ ARROW_FUNCTIONS := arrow_functions/ft_arrdel.c \
 	arrow_functions/ft_delelem_array.c \
 	arrow_functions/ft_arrshift.c \
 	arrow_functions/ft_memrealloc_array.c
+
+HASH_LIBRARY := hash_library/hash_ghashtable_methods.c \
+	hash_library/hash_ghashtable_values_methods.c \
+	hash_library/hash_shashdata_values_methods.c \
+	hash_library/hash_hashtable_methods.c \
+	hash_library/hash_hashcells_methods.c \
+	hash_library/hash_hashindex_find.c \
+	hash_library/hash_hashfunction.c
 
 LIST_STRUCTURE := list_structure/ft_lstadd.c \
 	list_structure/ft_lstclear.c \
@@ -27,12 +46,12 @@ LIST_STRUCTURE := list_structure/ft_lstadd.c \
 	list_structure/ft_lstfree_current.c \
 	list_structure/ft_lstfree.c
 
-TREE_FUNCTIONS := $(BINARY_TREE)
+TREE_FUNCTIONS := $(AVL_TREE)
 
-BINARY_TREE := tree_functions/binary_tree/ft_treeinit_leaf.c \
-	tree_functions/binary_tree/ft_treeadd_leaf.c \
-	tree_functions/binary_tree/ft_treefill_array.c \
-	tree_functions/binary_tree/ft_treefree.c
+AVL_TREE = tree_functions/avl_tree/ft_treeinit_leaf.c \
+	tree_functions/avl_tree/ft_treeadd_leaf.c \
+	tree_functions/avl_tree/ft_treefill_array.c \
+	tree_functions/avl_tree/ft_treefree.c
 
 MALLOC_FUNCTIONS := malloc_functions/ft_itoa.c \
 	malloc_functions/ft_ltoa_base.c \
@@ -68,7 +87,10 @@ MEMORY_FUNCTIONS := memory_functions/ft_bzero.c \
 
 OTHER_FUNCTIONS := other_functions/ft_atoi.c \
 	other_functions/ft_atoi_base.c \
+	other_functions/ft_find_factorial.c \
+	other_functions/ft_prime_numbers.c \
 	other_functions/ft_gnl.c \
+	other_functions/ft_gnl_methods.c \
 	other_functions/ft_isalnum.c \
 	other_functions/ft_isalpha.c \
 	other_functions/ft_isascii.c \
@@ -82,7 +104,7 @@ OTHER_FUNCTIONS := other_functions/ft_atoi.c \
 	other_functions/ft_toupper.c \
 	other_functions/swap_chars.c \
 	other_functions/swap_ints.c \
-	other_functions/ft_min.c\
+	other_functions/ft_min.c \
 	other_functions/ft_find_options.c
 
 OUTPUT_FUNCTIONS := output_functions/ft_putnstr.c \
@@ -96,7 +118,7 @@ OUTPUT_FUNCTIONS := output_functions/ft_putnstr.c \
 	output_functions/ft_putchrstr_fd.c \
 	output_functions/ft_putchrendl_fd.c \
 	output_functions/ft_putnstr_fd.c \
-	output_functions/ft_putnendl_fd.c \
+	output_functions/ft_putenendl_fd.c \
 	output_functions/ft_putstr_fd.c \
 	output_functions/ft_putstr.c
 
@@ -137,6 +159,7 @@ STRING_FUNCTIONS := string_functions/ft_straddsy.c \
 
 SOURCES := \
 	$(ARROW_FUNCTIONS) \
+	$(HASH_LIBRARY) \
 	$(LIST_STRUCTURE) \
 	$(TREE_FUNCTIONS) \
 	$(MALLOC_FUNCTIONS) \
@@ -154,7 +177,9 @@ OBJS := $(addprefix $(DIR_O)/,$(SOURCES:.c=.o))
 LIBFT := $(addsuffix .libft , $(LIBFT_DIR)/)
 
 INCLUDE := includes/libft.h \
-			includes/ft_printf.h
+			includes/ft_printf.h \
+			includes/libhash.h
+
 PRINTF_DIR := ./ft_printf
 PRINTF_HEADERS := includes/ft_printf.h
 PRINTF_LIB := ft_printf/libftprintf.a
@@ -181,6 +206,7 @@ $(OBJS):		$(DIR_O)/%.o: $(DIR_S)/%.c $(INCLUDE) | $(DIR_O)
 $(DIR_O):
 	mkdir -p $(DIR_O)
 	mkdir -p $(DIR_O)/arrow_functions
+	mkdir -p $(DIR_O)/hash_library
 	mkdir -p $(DIR_O)/list_structure
 #_____________________________________________________
 	mkdir -p $(DIR_O)/tree_functions

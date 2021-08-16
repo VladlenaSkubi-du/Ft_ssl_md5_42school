@@ -6,13 +6,13 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/25 15:30:01 by sschmele          #+#    #+#             */
-/*   Updated: 2020/09/20 18:45:21 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/09 16:07:39 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void		initialization(t_all *all)
+void	initialization(t_all *all)
 {
 	all->flag_sign_minus = 0;
 	all->flag_minus = 0;
@@ -26,7 +26,7 @@ void		initialization(t_all *all)
 	all->type = 0;
 }
 
-char		*processing_and_output(t_all *all, char *s, va_list *ap)
+char	*processing_and_output(t_all *all, char *s, va_list *ap)
 {
 	s = check_flags(all, ++s);
 	s = check_width_or_precision(all, s, ap, 0);
@@ -40,9 +40,9 @@ char		*processing_and_output(t_all *all, char *s, va_list *ap)
 	return (s);
 }
 
-char		*output_nonpercent_symbs(t_all *all, char *s)
+char	*output_nonpercent_symbs(t_all *all, char *s)
 {
-	register int i;
+	register int	i;
 
 	i = 0;
 	while (s[i] != '%' && s[i])
@@ -52,7 +52,7 @@ char		*output_nonpercent_symbs(t_all *all, char *s)
 	return (s + i);
 }
 
-char		*merge_strings(char *s1, int len_1, char *s2, size_t n)
+char	*merge_strings(char *s1, int len_1, char *s2, size_t n)
 {
 	char	*new;
 	int		i;
@@ -60,7 +60,8 @@ char		*merge_strings(char *s1, int len_1, char *s2, size_t n)
 
 	i = 0;
 	j = 0;
-	if (!(new = ft_strnew(len_1 + n)))
+	new = ft_strnew(len_1 + n);
+	if (!new)
 		return (NULL);
 	ft_memcpy(new, s1, len_1);
 	while (i < len_1)
@@ -71,7 +72,7 @@ char		*merge_strings(char *s1, int len_1, char *s2, size_t n)
 	return (new);
 }
 
-int			ft_printf(const char *str, ...)
+int	ft_printf(const char *str, ...)
 {
 	t_all	all;
 	va_list	ap;

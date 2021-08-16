@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/25 16:10:48 by sschmele          #+#    #+#             */
-/*   Updated: 2020/07/25 16:10:50 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/16 18:25:06 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 ** And count the maximal key name length among all selected
 */
 
-int				ft_treefill_array(t_avltree **root, char **list,
-					int *len, int *max)
+int	ft_treefill_array(t_avltree **root, char **list,
+		int *len, int *max)
 {
 	int					len_word;
 
@@ -32,7 +32,8 @@ int				ft_treefill_array(t_avltree **root, char **list,
 		{
 			list[*len] = ft_strdup((*root)->key);
 			len_word = ft_strlen((*root)->key);
-			*max = (len_word > *max) ? len_word : *max;
+			if (len_word > *max)
+				*max = len_word;
 			(*len)++;
 		}
 		ft_treefill_array(&((*root)->right), list, len, max);

@@ -1,27 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_treefree.c                                      :+:      :+:    :+:   */
+/*   ft_find_factorial.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/25 16:11:05 by sschmele          #+#    #+#             */
-/*   Updated: 2020/07/25 16:11:07 by sschmele         ###   ########.fr       */
+/*   Created: 2021/06/12 16:09:09 by sschmele          #+#    #+#             */
+/*   Updated: 2021/08/16 11:08:01 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void			ft_treefree(t_avltree **root)
+size_t	ft_find_factorial(size_t number)
 {
-	if (root != NULL && *root != NULL)
-	{
-		ft_treefree(&((*root)->right));
-		free((*root)->key);
-		(*root)->key = NULL;
-		free((*root)->value);
-		(*root)->value = NULL;
-		ft_treefree(&((*root)->left));
-		free(*root);
-	}
+	if (number >= 1)
+		return (number * ft_find_factorial(number - 1));
+	else
+		return (1);
 }

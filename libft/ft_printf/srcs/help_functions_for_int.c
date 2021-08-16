@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   help_functions_for_int.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbecker <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 00:00:19 by sbecker           #+#    #+#             */
-/*   Updated: 2019/03/27 11:46:14 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/09 21:20:52 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ char	*get_str(va_list *ap, char *str, t_all *all, int base)
 	}
 	else
 	{
-		base = base == 1 ? 10 : base;
+		if (base == 1)
+			base = 10;
 		if (all->modifier == 0)
 			str = ft_utoa_base(va_arg(*ap, unsigned int), base);
 		else if (all->modifier == 1)
@@ -49,7 +50,8 @@ void	zero_p(t_all *all, char *str, int *len, int flag)
 	if (all->precision == 0 && flag == 1 && all->flag_hash == 1)
 		all->precision++;
 	all->flag_hash = 0;
-	all->flag_hash = flag == 0 ? 0 : all->flag_hash;
+	if (flag == 0)
+		all->flag_hash = 0;
 	if (all->precision == 0 && all->width == 0)
 	{
 		*len = 0;

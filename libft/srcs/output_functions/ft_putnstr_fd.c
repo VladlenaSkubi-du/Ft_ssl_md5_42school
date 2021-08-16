@@ -6,13 +6,13 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/25 15:56:53 by sschmele          #+#    #+#             */
-/*   Updated: 2020/07/25 15:57:13 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/16 18:21:32 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void				ft_putnstr_fd(char *str, int n, int fd)
+void	ft_putnstr_fd(char *str, int n, int fd)
 {
 	int				i;
 

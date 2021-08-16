@@ -6,15 +6,15 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/25 15:59:57 by sschmele          #+#    #+#             */
-/*   Updated: 2020/07/25 16:00:01 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/16 18:56:55 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int				ft_strchrdiff(const char *s1, const char *s2, char sy)
+int	ft_strchrdiff(const char *s1, const char *s2, char sy)
 {
-	int i;
+	int	i;
 
 	if (s1 == 0 || s2 == 0)
 		return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aashara- <aashara-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/02 14:17:26 by sbecker           #+#    #+#             */
-/*   Updated: 2020/10/12 18:34:33 by aashara-         ###   ########.fr       */
+/*   Updated: 2021/08/09 17:44:45 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 typedef __int128	t_int128;
 
-typedef struct	s_all
+typedef struct s_all
 {
 	int			symbol_num;
 	char		flag_minus;
@@ -35,7 +35,7 @@ typedef struct	s_all
 	char		*fin_str;
 }				t_all;
 
-typedef struct	s_float_components
+typedef struct s_float_components
 {
 	int			sign;
 	int			*integer;
@@ -50,7 +50,7 @@ typedef struct	s_float_components
 int				ft_printf(const char *str, ...);
 char			*check_flags(t_all *all, char *s);
 char			*check_width_or_precision(t_all *all, char *s,
-		va_list *ap, char flag);
+					va_list *ap, char flag);
 char			*check_modifier(t_all *all, char *s);
 char			*check_type(t_all *all, char *s);
 char			*check_type_and_output(t_all *all, va_list *ap, char *s);
@@ -101,5 +101,18 @@ int				find_len_integer(int len_s);
 char			*flags_f_ps_or_signs(t_all *all, char *str, int *len);
 char			*float_w_mz_processing(t_all *all, char *str,
 					int *len, int flag);
+int				new_norm_ternary_get_components_l_fcomp_sign(t_int128 fcomp_one,
+					t_int128 bl);
+int				new_norm_ternary_get_components_fcomp_sign(long b);
+int				new_norm_ternary_bit_fraction_l_len(long exponent_l);
+char			new_norm_ternar_fractl_cycle(t_int128 one, int i, t_int128 bl);
+long			new_norm_ternary_bit_fraction_l_exponent_l(long exponent_l);
+int				new_norm_ternary_bit_fraction_len(long exponent);
+char			new_norm_ternary_fraction_cycle(int i, long b);
+long			new_norm_ternary_bit_fraction_exponent(long exponent);
+char			new_norm_ternary_integerl_cycle(t_int128 one,
+					int i, t_int128 bl);
+char			new_norm_ternary_integer_cycle(int i, long b);
+int				new_norm_ternary_processing_all_width(int all_width, int len);
 
 #endif

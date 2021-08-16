@@ -6,13 +6,13 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/25 16:15:09 by sschmele          #+#    #+#             */
-/*   Updated: 2020/07/25 16:15:11 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/09 21:26:06 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		ft_count_len(char **arr)
+static int	ft_count_len(char **arr)
 {
 	int			i;
 	int			len_arr;
@@ -24,7 +24,7 @@ static int		ft_count_len(char **arr)
 	return (len_arr);
 }
 
-void			ft_delelem_array(char ***array, int len, int start, int num)
+void	ft_delelem_array(char ***array, int len, int start, int num)
 {
 	int			i;
 	char		**arr;

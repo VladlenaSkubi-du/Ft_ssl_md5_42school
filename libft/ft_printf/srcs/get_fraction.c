@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_fraction.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbecker <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 21:14:38 by sbecker           #+#    #+#             */
-/*   Updated: 2019/03/27 13:54:06 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/09 17:35:08 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*bit_fraction_l(long *exponent_l, t_int128 bl, int *len)
 	char			*b_fraction;
 
 	one = 1;
-	*len = (*exponent_l == -16383) ? 64 + 16382 : 64 - *exponent_l;
+	*len = new_norm_ternary_bit_fraction_l_len(*exponent_l);
 	b_fraction = ft_strnewsetchar(*len, '0');
 	if (*exponent_l < 0)
 	{
@@ -28,16 +28,16 @@ char	*bit_fraction_l(long *exponent_l, t_int128 bl, int *len)
 			b_fraction[*len - 65] = '1';
 		i = 64;
 		while (--i >= 0)
-			b_fraction[*len - 1 - i] = ((one << i) & bl) ? '1' : '0';
+			b_fraction[*len - 1 - i] = new_norm_ternar_fractl_cycle(one, i, bl);
 	}
 	else
 	{
 		j = -1;
 		i = *len - 1;
 		while (--i >= 0)
-			b_fraction[++j] = ((one << i) & bl) ? '1' : '0';
+			b_fraction[++j] = new_norm_ternar_fractl_cycle(one, i, bl);
 	}
-	*exponent_l = (*exponent_l == -16383) ? -16382 : *exponent_l;
+	*exponent_l = new_norm_ternary_bit_fraction_l_exponent_l(*exponent_l);
 	return (b_fraction);
 }
 
@@ -47,25 +47,25 @@ char	*bit_fraction(long *exponent, long b, int *len)
 	register int	j;
 	char			*b_fraction;
 
-	*len = (*exponent == -1023) ? 53 + 1022 : 53 - *exponent;
+	*len = new_norm_ternary_bit_fraction_len(*exponent);
 	b_fraction = ft_memalloc(*len);
 	if (*exponent < 0)
 	{
-		ft_memset((void*)b_fraction, '0', *len - 1);
+		ft_memset((void *)b_fraction, '0', *len - 1);
 		if (!(b << 12 != 0 && *exponent == -1023))
 			b_fraction[*len - 54] = '1';
 		i = 52;
 		while (--i >= 0)
-			b_fraction[*len - 2 - i] = ((1l << i) & b) ? '1' : '0';
+			b_fraction[*len - 2 - i] = new_norm_ternary_fraction_cycle(i, b);
 	}
 	else
 	{
 		j = -1;
 		i = *len - 1;
 		while (--i >= 0)
-			b_fraction[++j] = ((1l << i) & b) ? '1' : '0';
+			b_fraction[++j] = new_norm_ternary_fraction_cycle(i, b);
 	}
-	*exponent = (*exponent == -1023) ? -1022 : *exponent;
+	*exponent = new_norm_ternary_bit_fraction_exponent(*exponent);
 	return (b_fraction);
 }
 
@@ -73,12 +73,14 @@ void	countup_fraction(t_fcomp *fcomp, int *num, char bit, int *count)
 {
 	*count = -1;
 	if (bit == '1')
+	{	
 		while (++*count < fcomp->len_fraction)
 		{
 			fcomp->fraction[*count] += num[*count];
 			fcomp->fraction[*count + 1] += fcomp->fraction[*count] / 10;
 			fcomp->fraction[*count] %= 10;
 		}
+	}
 	*count = -1;
 }
 
@@ -107,8 +109,8 @@ void	get_fraction(char *b_fraction, t_fcomp *fcomp)
 	int				count;
 	int				*num;
 
-	fcomp->fraction = (int*)ft_memalloc((fcomp->len_fraction + 1) * 4);
-	num = (int*)ft_memalloc((fcomp->len_fraction + 1) * 4);
+	fcomp->fraction = (int *)ft_memalloc((fcomp->len_fraction + 1) * 4);
+	num = (int *)ft_memalloc((fcomp->len_fraction + 1) * 4);
 	num[fcomp->len_fraction - 1] = 5;
 	i = -1;
 	while (b_fraction[++i])

@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/25 15:41:24 by sschmele          #+#    #+#             */
-/*   Updated: 2020/07/25 15:41:26 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/16 10:58:19 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	count_digits_u(unsigned long value, int base)
 	return (res);
 }
 
-char		*ft_utoa_base(unsigned long nb, int base)
+char	*ft_utoa_base(unsigned long nb, int base)
 {
 	int		i;
 	char	*str;
@@ -39,7 +39,7 @@ char		*ft_utoa_base(unsigned long nb, int base)
 	i = 0;
 	core = "0123456789ABCDEF";
 	len = count_digits_u(nb, base);
-	str = (char*)ft_xmalloc(len + 1);
+	str = (char *)ft_xmalloc(len + 1);
 	if (nb == 0)
 		str[0] = 0 + '0';
 	while (nb)

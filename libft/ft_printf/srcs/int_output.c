@@ -6,13 +6,13 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/25 15:30:44 by sschmele          #+#    #+#             */
-/*   Updated: 2020/07/25 15:30:47 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/09 17:12:17 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void		do_int(t_all *all, va_list *ap, char *str)
+void	do_int(t_all *all, va_list *ap, char *str)
 {
 	int			len;
 
@@ -39,7 +39,7 @@ void		do_int(t_all *all, va_list *ap, char *str)
 	free(str);
 }
 
-void		do_uint(t_all *all, va_list *ap, char *str)
+void	do_uint(t_all *all, va_list *ap, char *str)
 {
 	int				len;
 
@@ -56,7 +56,7 @@ void		do_uint(t_all *all, va_list *ap, char *str)
 	free(str);
 }
 
-void		do_int8(t_all *all, va_list *ap, char *str)
+void	do_int8(t_all *all, va_list *ap, char *str)
 {
 	int				len;
 
@@ -75,7 +75,7 @@ void		do_int8(t_all *all, va_list *ap, char *str)
 	free(str);
 }
 
-void		do_int16x(t_all *all, va_list *ap, char *str)
+void	do_int16x(t_all *all, va_list *ap, char *str)
 {
 	int				len;
 
@@ -88,7 +88,7 @@ void		do_int16x(t_all *all, va_list *ap, char *str)
 	if (all->precision >= len)
 		str = int16_p_processing(all, str, &len);
 	if (all->width > len && all->width > all->precision
-			&& all->precision < 0)
+		&& all->precision < 0)
 		str = int16_w_hmz_processing(all, str, &len);
 	else if (all->width >= len && all->width > all->precision)
 		str = int16_w_hm_processing(all, str, &len);
@@ -98,7 +98,7 @@ void		do_int16x(t_all *all, va_list *ap, char *str)
 	free(str);
 }
 
-void		do_int16xupper(t_all *all, va_list *ap, char *str)
+void	do_int16xupper(t_all *all, va_list *ap, char *str)
 {
 	int				len;
 
@@ -111,7 +111,7 @@ void		do_int16xupper(t_all *all, va_list *ap, char *str)
 	if (all->precision >= len)
 		str = int16_p_processing(all, str, &len);
 	if (all->width > len && all->width > all->precision
-			&& all->precision < 0)
+		&& all->precision < 0)
 		str = int16_w_hmz_processing(all, str, &len);
 	else if (all->width >= len && all->width > all->precision)
 		str = int16_w_hm_processing(all, str, &len);

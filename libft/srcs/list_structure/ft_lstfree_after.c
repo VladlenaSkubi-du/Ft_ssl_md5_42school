@@ -6,13 +6,13 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/25 15:35:20 by sschmele          #+#    #+#             */
-/*   Updated: 2020/07/25 15:35:25 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/16 10:30:52 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int			ft_lstfree_after(t_list **current)
+int	ft_lstfree_after(t_list **current)
 {
 	t_list	*delete;
 	t_list	*after;

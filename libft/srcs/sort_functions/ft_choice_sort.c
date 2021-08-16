@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_choice_sort.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschmele <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/08 16:11:11 by sschmele          #+#    #+#             */
-/*   Updated: 2018/12/08 17:13:13 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/16 18:22:34 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void		ft_swap(char *s, int dst, int src)
+static void	ft_swap(char *s, int dst, int src)
 {
 	char		tmp;
 
@@ -21,7 +21,7 @@ static void		ft_swap(char *s, int dst, int src)
 	s[src] = tmp;
 }
 
-void			ft_choice_sort(char *s)
+void	ft_choice_sort(char *s)
 {
 	int			i;
 	int			min;

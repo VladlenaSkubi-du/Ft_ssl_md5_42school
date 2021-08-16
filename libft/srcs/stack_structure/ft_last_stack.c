@@ -6,13 +6,13 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/25 15:58:56 by sschmele          #+#    #+#             */
-/*   Updated: 2020/07/25 15:58:58 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/16 18:23:06 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int				ft_last_stack(t_stack **head)
+int	ft_last_stack(t_stack **head)
 {
 	t_stack		*tmp;
 

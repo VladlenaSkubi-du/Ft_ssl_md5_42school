@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/25 15:34:03 by sschmele          #+#    #+#             */
-/*   Updated: 2020/07/25 15:34:05 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/16 10:29:59 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_lstclear(t_list **begin_list)
 {
-	t_list *tmp;
+	t_list	*tmp;
 
 	if (!(begin_list) || !(*begin_list))
 		return ;

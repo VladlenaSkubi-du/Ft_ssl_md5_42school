@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isoctdigit.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbednar <rbednar@student.21school.ru>      +#+  +:+       +#+        */
+/*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/12 15:17:28 by rbednar           #+#    #+#             */
-/*   Updated: 2020/06/12 15:17:43 by rbednar          ###   ########.fr       */
+/*   Updated: 2021/08/16 11:09:31 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_isoctdigit(char c)
+int	ft_isoctdigit(char c)
 {
 	if (c >= '0' && c <= '7')
 		return (1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_integer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbecker <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 01:07:03 by sbecker           #+#    #+#             */
-/*   Updated: 2019/03/27 13:55:17 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/09 17:35:30 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,15 @@ char	*bit_integer_l(long exponent_l, t_int128 bl, int *len)
 	}
 	*len = exponent_l + 1;
 	b_integer = ft_memalloc(*len + 2);
-	ft_memset((void*)b_integer, '0', *len + 1);
+	ft_memset((void *)b_integer, '0', *len + 1);
 	b_integer[0] = '1';
 	i = 0;
 	if (*len <= 63)
 		while (++i < *len)
-			b_integer[i] = ((one << (63 - i)) & bl) ? '1' : '0';
+			b_integer[i] = new_norm_ternary_integerl_cycle(one, i, bl);
 	else
 		while (++i < 63)
-			b_integer[i] = ((one << (63 - i)) & bl) ? '1' : '0';
+			b_integer[i] = new_norm_ternary_integerl_cycle(one, i, bl);
 	return (b_integer);
 }
 
@@ -50,15 +50,15 @@ char	*bit_integer(long exponent, long b, int *len)
 	}
 	*len = exponent + 1;
 	b_integer = ft_memalloc(*len + 2);
-	ft_memset((void*)b_integer, '0', *len + 1);
+	ft_memset((void *)b_integer, '0', *len + 1);
 	b_integer[0] = '1';
 	i = 0;
 	if (*len <= 52)
 		while (++i < *len)
-			b_integer[i] = ((1l << (52 - i)) & b) ? '1' : '0';
+			b_integer[i] = new_norm_ternary_integer_cycle(i, b);
 	else
 		while (++i <= 52)
-			b_integer[i] = ((1l << (52 - i)) & b) ? '1' : '0';
+			b_integer[i] = new_norm_ternary_integer_cycle(i, b);
 	return (b_integer);
 }
 
@@ -67,7 +67,7 @@ void	get_power(int power, int *num, t_fcomp *fcomp)
 	int				count;
 	int				p_count;
 
-	ft_memset((void*)num, 0, (fcomp->len_integer) * sizeof(int));
+	ft_memset((void *)num, 0, (fcomp->len_integer) * sizeof(int));
 	num[0] = 1;
 	p_count = 0;
 	while (++p_count <= power)
@@ -106,8 +106,8 @@ void	get_integer(char *b_integer, t_fcomp *fcomp)
 	power = fcomp->len_integer - 1;
 	if (fcomp->len_integer != 2)
 		fcomp->len_integer = find_len_integer(fcomp->len_integer);
-	fcomp->integer = (int*)ft_memalloc((fcomp->len_integer + 1) * sizeof(int));
-	num = (int*)malloc((fcomp->len_integer + 1) * sizeof(int));
+	fcomp->integer = (int *)ft_memalloc((fcomp->len_integer + 1) * sizeof(int));
+	num = (int *)malloc((fcomp->len_integer + 1) * sizeof(int));
 	i = -1;
 	while (b_integer[++i])
 	{

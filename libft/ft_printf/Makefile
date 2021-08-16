@@ -6,14 +6,13 @@
 #    By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/23 17:15:13 by sschmele          #+#    #+#              #
-#    Updated: 2020/09/21 21:57:54 by sschmele         ###   ########.fr        #
+#    Updated: 2021/08/09 16:41:10 by sschmele         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
 
-FLAGS = -Wall -Werror -Wextra
-FLAGS += -g
+FLAGS = -g -Wall -Werror -Wextra
 
 SOURCES = ft_printf.c \
 	   processing_functions.c \
@@ -29,7 +28,9 @@ SOURCES = ft_printf.c \
 	   other_and_bonus.c \
 	   get_integer.c \
 	   output_processing_f.c \
-	   help_functions_for_float.c
+	   help_functions_for_float.c \
+	   new_norm_functions_get_float_fraction.c \
+	   new_norm_functions_get_fraction.c
 
 DIR_O = objs
 
@@ -42,19 +43,20 @@ OBJS = $(addprefix $(DIR_O)/,$(SOURCES:.c=.o))
 all:	$(NAME)
 
 $(NAME):	$(OBJS)
-	ar rc $(NAME) $(OBJS)
+	@echo "\033[32;01mCompiling ft_printf...\033[0m"
+	@ar rc $(NAME) $(OBJS)
+	@echo "\033[32;01mLibftprintf.a is ready.\033[0m"
 
-$(OBJS):	$(DIR_O)/%.o: $(DIR_S)/%.c ../includes/ft_printf.h ../includes/libft.h | $(DIR_O)
-	gcc $(FLAGS) -c -I ../includes -o $@ $<
-
-$(DIR_O):
-	mkdir -p $(DIR_O)
-
+$(OBJS):	$(DIR_O)/%.o: $(DIR_S)/%.c ../includes/ft_printf.h ../includes/libft.h
+	@mkdir -p $(DIR_O)
+	@gcc $(FLAGS) -c -I ../includes -o $@ $<
 clean:
-	/bin/rm -rf $(DIR_O)
+	@echo "\033[34mDeleting ft_print o-files\033[0m"
+	@/bin/rm -rf $(DIR_O)
 
 fclean: clean
-	/bin/rm -f $(NAME)
+	@echo "\033[34mDeleting libftprint.a\033[0m"
+	@/bin/rm -f $(NAME)
 
 re:		fclean all
 

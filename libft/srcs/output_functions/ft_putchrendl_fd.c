@@ -6,13 +6,13 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/25 15:56:26 by sschmele          #+#    #+#             */
-/*   Updated: 2020/10/06 23:36:40 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/16 18:21:10 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void				ft_putchrendl_fd(char *str, char x, int fd)
+void	ft_putchrendl_fd(char *str, char x, int fd)
 {
 	int				i;
 

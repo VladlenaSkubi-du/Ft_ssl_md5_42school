@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/25 15:35:59 by sschmele          #+#    #+#             */
-/*   Updated: 2020/07/25 15:36:02 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/16 10:36:21 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static char	*ft_itoa_2(long res, char *str, int a, int n)
 	return (str);
 }
 
-char		*ft_itoa(int n)
+char	*ft_itoa(int n)
 {
 	char	*str;
 	long	res;
@@ -52,6 +52,6 @@ char		*ft_itoa(int n)
 		a *= 10;
 		len++;
 	}
-	str = (char*)ft_xmalloc(len + 2);
+	str = (char *)ft_xmalloc(len + 2);
 	return (ft_itoa_2(res, str, a, n));
 }

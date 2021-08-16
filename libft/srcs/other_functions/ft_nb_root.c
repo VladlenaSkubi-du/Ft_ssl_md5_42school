@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_nb_root.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschmele <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 14:01:58 by sschmele          #+#    #+#             */
-/*   Updated: 2018/12/22 19:42:19 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/16 11:11:20 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-long		ft_nb_root(long nb, size_t root)
+long	ft_nb_root(long nb, size_t root)
 {
-	long res;
+	long	res;
 
 	res = 1;
 	if (root == 0)

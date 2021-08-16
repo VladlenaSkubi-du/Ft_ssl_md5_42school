@@ -6,13 +6,13 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/25 15:37:05 by sschmele          #+#    #+#             */
-/*   Updated: 2020/07/25 15:37:07 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/16 10:54:27 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char		*ft_strmap(char const *s, char (*f)(char))
+char	*ft_strmap(char const *s, char (*f)(char))
 {
 	char	*str;
 	int		len;
@@ -20,7 +20,7 @@ char		*ft_strmap(char const *s, char (*f)(char))
 	if (s == NULL || f == NULL)
 		return (NULL);
 	len = ft_strlen(s);
-	str = (char*)ft_xmalloc((len + 1) * sizeof(*s));
+	str = (char *)ft_xmalloc((len + 1) * sizeof(*s));
 	while (*s)
 	{
 		*str = f(*s);

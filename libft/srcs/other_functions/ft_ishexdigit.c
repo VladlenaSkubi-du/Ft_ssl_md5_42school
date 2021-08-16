@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ishexdigit.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbednar <rbednar@student.21school.ru>      +#+  +:+       +#+        */
+/*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/12 15:15:48 by rbednar           #+#    #+#             */
-/*   Updated: 2020/06/12 15:17:06 by rbednar          ###   ########.fr       */
+/*   Updated: 2021/08/16 11:10:21 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_ishexdigit(char c)
+int	ft_ishexdigit(char c)
 {
-	if ((c >= '0' && c <= '9') ||
-			(c >= 'A' && c <= 'F'))
+	if ((c >= '0' && c <= '9')
+		|| (c >= 'A' && c <= 'F'))
 		return (1);
 	return (0);
 }

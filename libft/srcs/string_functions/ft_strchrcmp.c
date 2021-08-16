@@ -6,13 +6,13 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/25 16:01:00 by sschmele          #+#    #+#             */
-/*   Updated: 2020/07/25 16:01:02 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/16 18:56:45 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int			ft_strchrcmp(const char *s1, const char *s2, char x)
+int	ft_strchrcmp(const char *s1, const char *s2, char x)
 {
 	size_t			i;
 	unsigned char	end;

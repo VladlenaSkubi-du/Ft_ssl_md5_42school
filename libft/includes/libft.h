@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aashara- <aashara-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/25 15:31:24 by sschmele          #+#    #+#             */
-/*   Updated: 2020/10/07 17:21:36 by aashara-         ###   ########.fr       */
+/*   Updated: 2021/08/16 19:24:35 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,33 @@
 
 # include <string.h>
 # include <stdlib.h>
+# include <limits.h>
 
 # include "ft_printf.h"
+# include "libhash.h"
 
 # define GNL_CLEAN		-42
+/* Limit of `size_t' type.  */
+# if __WORDSIZE == 64
+#  define SIZET_MAX              ULLONG_MAX
+# else
+#  define SIZET_MAX              USHRT_MAX
+# endif
 
-typedef struct			s_list
+typedef struct s_list
 {
 	void				*content;
 	size_t				content_size;
 	struct s_list		*next;
 }						t_list;
 
-typedef struct			s_stack
+typedef struct s_stack
 {
 	int					data;
 	struct s_stack		*next;
 }						t_stack;
 
-typedef struct			s_avltree
+typedef struct s_avltree
 {
 	char				*key;
 	void				*value;
@@ -41,7 +49,7 @@ typedef struct			s_avltree
 	struct s_avltree	*left;
 }						t_avltree;
 
-typedef struct			s_list_fd
+typedef struct s_list_fd
 {
 	int					fd;
 	t_list				*buf;
@@ -51,18 +59,18 @@ typedef struct			s_list_fd
 }						t_fd_list;
 
 /*
-** Folder ARROW_FUNCTIONS
+** Folder ARROW_FUNCTIONS //переделать на size_t
 **_____________________________________________________________________________
 */
 
 void					ft_arrdel(char **arr);
 char					**ft_realloc_array(char ***subj, int len_subj,
-						int len_needed);
+							int len_needed);
 void					ft_delelem_array(char ***array, int len,
 							int start, int num);
 void					ft_arrshift(char **arr, int size, int shift);
-void					**ft_memrealloc_array(void ***subj, int len_subj,
-							int len_needed);
+void					**ft_memrealloc_array(void ***subj, size_t len_subj,
+							size_t len_needed);
 
 /*
 ** Folder LIST_STRUCTURE
@@ -162,8 +170,6 @@ void					ft_putnstr(char const *s, int len);
 void					ft_printmap(char **map, int side);
 void					ft_putnendl_fd(char *str, int n, int fd);
 void					ft_putnstr_fd(char *str, int n, int fd);
-void					ft_putchrendl_fd(char *str, char x, int fd);
-void					ft_putchrstr_fd(char *str, char x, int fd);
 
 /*
 ** Folder SORT_FUNCTIONS
@@ -243,8 +249,11 @@ void					swap_chars(char *cmd, int b, int a);
 void					swap_ints(int *a, int *b);
 int						ft_issign(char c);
 int						ft_gnl(const int fd, char **line);
-int						ft_min(int a, int b);
-int						ft_find_options(int num,
-							char *flags_arr[num], char **arr);
+int						ft_get_buf_line(char **line, t_fd_list **fd_buf);
+void					ft_gnl_clean(t_fd_list **p);
+int						ft_add_tail(int fd, t_fd_list **fd_buf);
+size_t					ft_find_factorial(size_t number);
+size_t					ft_find_next_prime_num(size_t number);
+int						ft_check_prime_number(size_t number);
 
 #endif

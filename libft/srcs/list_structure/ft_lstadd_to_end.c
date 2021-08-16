@@ -6,13 +6,13 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/25 15:32:51 by sschmele          #+#    #+#             */
-/*   Updated: 2020/07/25 15:33:08 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/16 10:29:35 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void		ft_lstadd_to_end(t_list **start, t_list *new)
+void	ft_lstadd_to_end(t_list **start, t_list *new)
 {
 	t_list	*tmp;
 

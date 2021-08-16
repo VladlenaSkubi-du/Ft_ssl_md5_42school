@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_float_components.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbecker <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 17:49:23 by sbecker           #+#    #+#             */
-/*   Updated: 2019/03/27 13:53:39 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/09 17:24:41 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		exception_handl_l(t_fcomp *fcomp, t_int128 bl, long exponent_l)
+int	exception_handl_l(t_fcomp *fcomp, t_int128 bl, long exponent_l)
 {
 	fcomp->inf_check = 0;
 	fcomp->nan_check = 0;
@@ -27,8 +27,8 @@ int		exception_handl_l(t_fcomp *fcomp, t_int128 bl, long exponent_l)
 	if (exponent_l == 0 && bl == 0)
 	{
 		fcomp->len_integer = 2;
-		fcomp->integer = (int*)ft_memalloc(sizeof(int));
-		fcomp->fraction = (int*)ft_memalloc(sizeof(int));
+		fcomp->integer = (int *)ft_memalloc(sizeof(int));
+		fcomp->fraction = (int *)ft_memalloc(sizeof(int));
 		return (1);
 	}
 	return (0);
@@ -43,8 +43,8 @@ void	get_components_l(va_list *ap, t_fcomp *fcomp)
 	char			*b_integer;
 
 	al = va_arg(*ap, long double);
-	bl = *((t_int128*)&al);
-	fcomp->sign = ((fcomp->one << 79) & bl) ? -1 : 1;
+	bl = *((t_int128 *)&al);
+	fcomp->sign = new_norm_ternary_get_components_l_fcomp_sign(fcomp->one, bl);
 	bl &= ~(fcomp->one << 79);
 	exponent_l = bl >> 64;
 	fcomp->len_fraction = 1;
@@ -63,7 +63,7 @@ void	get_components_l(va_list *ap, t_fcomp *fcomp)
 	free(b_integer);
 }
 
-int		exception_handling(t_fcomp *fcomp, long b, long exponent)
+int	exception_handling(t_fcomp *fcomp, long b, long exponent)
 {
 	fcomp->inf_check = 0;
 	fcomp->nan_check = 0;
@@ -78,8 +78,8 @@ int		exception_handling(t_fcomp *fcomp, long b, long exponent)
 	if (exponent == 0 && b == 0)
 	{
 		fcomp->len_integer = 2;
-		fcomp->integer = (int*)ft_memalloc(sizeof(int));
-		fcomp->fraction = (int*)ft_memalloc(sizeof(int));
+		fcomp->integer = (int *)ft_memalloc(sizeof(int));
+		fcomp->fraction = (int *)ft_memalloc(sizeof(int));
 		return (1);
 	}
 	return (0);
@@ -94,8 +94,8 @@ void	get_components(va_list *ap, t_fcomp *fcomp)
 	char			*b_integer;
 
 	a = va_arg(*ap, double);
-	b = *((long*)&a);
-	fcomp->sign = ((1lu << 63) & b) ? -1 : 1;
+	b = *((long *)&a);
+	fcomp->sign = new_norm_ternary_get_components_fcomp_sign(b);
 	b &= ~(1l << 63);
 	exponent = b >> 52;
 	fcomp->len_fraction = 1;

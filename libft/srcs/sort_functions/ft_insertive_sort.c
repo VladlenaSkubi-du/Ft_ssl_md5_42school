@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_insertive_sort.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschmele <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 13:47:07 by sschmele          #+#    #+#             */
-/*   Updated: 2018/12/22 19:40:21 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/16 18:22:40 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void			ft_swap(char *str, int dst, int src)
+static void	ft_swap(char *str, int dst, int src)
 {
 	int				temp;
 
@@ -21,7 +21,7 @@ static void			ft_swap(char *str, int dst, int src)
 	str[src] = temp;
 }
 
-void				ft_insertive_sort(char *s)
+void	ft_insertive_sort(char *s)
 {
 	int				i;
 	int				step;

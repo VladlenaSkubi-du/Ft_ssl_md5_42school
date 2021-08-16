@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   other_and_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschmele <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:19:15 by sschmele          #+#    #+#             */
-/*   Updated: 2019/03/27 12:15:25 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/09 17:35:49 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 **minus flag.
 */
 
-void		do_ptype(t_all *all, va_list *ap, char *str)
+void	do_ptype(t_all *all, va_list *ap, char *str)
 {
 	int		len;
 	char	*new;
@@ -33,7 +33,7 @@ void		do_ptype(t_all *all, va_list *ap, char *str)
 	{
 		new = ft_strnewsetchar(all->width, ' ');
 		if (all->flag_minus == 1)
-			ft_memcpy((void*)new, (const void*)str, len);
+			ft_memcpy((void *)new, (const void *)str, len);
 		else
 			ft_strcpy(&new[all->width - len], str);
 		len = all->width;
@@ -46,14 +46,21 @@ void		do_ptype(t_all *all, va_list *ap, char *str)
 	free(str);
 }
 
+static int	new_norm_ternary_do_letter_wzm_width(int all_width)
+{
+	if (all_width == 0)
+		return (1);
+	return (all_width);
+}
+
 /*
 **Width and flags zero and minus can work with other than type-letters letters.
 **For example: b, k, m, r, w, y.
 */
 
-void		do_letter_wzm(t_all *all, char *str, char s)
+void	do_letter_wzm(t_all *all, char *str, char s)
 {
-	all->width = all->width == 0 ? 1 : all->width;
+	all->width = new_norm_ternary_do_letter_wzm_width(all->width);
 	if ((s >= 0 && s <= 32) || s == 127)
 	{
 		str = ft_strnew(0);
@@ -68,7 +75,7 @@ void		do_letter_wzm(t_all *all, char *str, char s)
 			str[0] = s;
 		else if (all->flag_zero == 1)
 		{
-			ft_memset((void*)str, '0', (all->width - 1));
+			ft_memset((void *)str, '0', (all->width - 1));
 			str[all->width - 1] = s;
 		}
 		else
@@ -86,7 +93,7 @@ void		do_letter_wzm(t_all *all, char *str, char s)
 **function is almost copied but without that condition.
 */
 
-void		do_int2(t_all *all, va_list *ap, char *str)
+void	do_int2(t_all *all, va_list *ap, char *str)
 {
 	int		len;
 

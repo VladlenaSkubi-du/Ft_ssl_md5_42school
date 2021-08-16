@@ -6,13 +6,13 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/25 15:41:18 by sschmele          #+#    #+#             */
-/*   Updated: 2020/07/25 15:41:20 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/16 19:01:43 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char		*ft_strtrim(char const *s)
+char	*ft_strtrim(char const *s)
 {
 	int		i;
 	int		a;
@@ -30,11 +30,11 @@ char		*ft_strtrim(char const *s)
 	while (s[i])
 		i++;
 	while (i >= 0 && (s[i] == ' ' || s[i] == '\n'
-		|| s[i] == '\t' || s[i] == '\0'))
+			|| s[i] == '\t' || s[i] == '\0'))
 		i--;
 	while (a++ <= i)
 		len++;
-	str = (char*)ft_xmalloc(len + 1);
+	str = (char *)ft_xmalloc(len + 1);
 	ft_strncpy(str, s, len);
 	return (str);
 }

@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/25 16:07:06 by sschmele          #+#    #+#             */
-/*   Updated: 2020/07/25 16:09:06 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/16 18:24:07 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 ** loop and try to find those current->next that will be NULL
 */
 
-static int		insert_leaf_right(t_avltree **current,
-					t_avltree **parent, t_avltree **temp, int *len)
+static int	insert_leaf_right(t_avltree **current,
+				t_avltree **parent, t_avltree **temp, int *len)
 {
 	*current = (*current)->right;
 	if (*current == NULL)
@@ -39,8 +39,8 @@ static int		insert_leaf_right(t_avltree **current,
 ** loop and try to find those current->prev that will be NULL
 */
 
-static int		insert_leaf_left(t_avltree **current,
-					t_avltree **parent, t_avltree **temp, int *len)
+static int	insert_leaf_left(t_avltree **current,
+				t_avltree **parent, t_avltree **temp, int *len)
 {
 	*current = (*current)->left;
 	if (*current == NULL)
@@ -60,8 +60,8 @@ static int		insert_leaf_left(t_avltree **current,
 ** one we are on
 */
 
-static int		insert_new_leaf_to_tree(t_avltree **root,
-					t_avltree **new_leaf, int *len)
+static int	insert_new_leaf_to_tree(t_avltree **root,
+				t_avltree **new_leaf, int *len)
 {
 	t_avltree			*current;
 	t_avltree			*parent;
@@ -96,8 +96,8 @@ static int		insert_new_leaf_to_tree(t_avltree **root,
 ** leaf with the same parameters (alphabetically)
 */
 
-int				ft_treeadd_leaf(t_avltree **root,
-					t_avltree *new_leaf, int *len)
+int	ft_treeadd_leaf(t_avltree **root,
+		t_avltree *new_leaf, int *len)
 {
 	if (*root == NULL)
 	{

@@ -6,13 +6,13 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/25 15:39:27 by sschmele          #+#    #+#             */
-/*   Updated: 2020/07/25 15:39:29 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/16 10:54:50 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char		*ft_strndup(const char *s1, size_t n)
+char	*ft_strndup(const char *s1, size_t n)
 {
 	char	*temp;
 	int		i;
@@ -22,7 +22,7 @@ char		*ft_strndup(const char *s1, size_t n)
 		return (NULL);
 	if ((n + 1) < n)
 		return (NULL);
-	temp = (char*)ft_xmalloc((n + 1) * sizeof(*s1));
+	temp = (char *)ft_xmalloc((n + 1) * sizeof(*s1));
 	while (n)
 	{
 		temp[i] = s1[i];

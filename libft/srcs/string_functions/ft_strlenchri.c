@@ -6,13 +6,13 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/25 16:00:32 by sschmele          #+#    #+#             */
-/*   Updated: 2020/07/25 16:00:38 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/16 18:58:17 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t			ft_strlenchri(const char *s, char c)
+size_t	ft_strlenchri(const char *s, char c)
 {
 	size_t		i;
 

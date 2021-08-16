@@ -6,13 +6,13 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/25 15:36:11 by sschmele          #+#    #+#             */
-/*   Updated: 2020/07/25 15:36:13 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/16 10:43:49 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char		*ft_makerevstr(char *s)
+char	*ft_makerevstr(char *s)
 {
 	char	*str;
 	int		i;
@@ -23,7 +23,7 @@ char		*ft_makerevstr(char *s)
 	{
 		i = 0;
 		len = ft_strlen(s);
-		str = (char*)ft_xmalloc(len * sizeof(char));
+		str = (char *)ft_xmalloc(len * sizeof(char));
 		while (len--)
 		{
 			str[i] = s[len];

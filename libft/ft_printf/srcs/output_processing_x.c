@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   output_processing.c                                :+:      :+:    :+:   */
+/*   output_processing_x.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschmele <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 16:05:26 by sschmele          #+#    #+#             */
-/*   Updated: 2019/03/27 10:53:21 by sbecker          ###   ########.fr       */
+/*   Updated: 2021/08/09 17:44:06 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@
 **it should be processed before width and after precision.
 */
 
-char		*int16_p_processing(t_all *all, char *str, int *len)
+char	*int16_p_processing(t_all *all, char *str, int *len)
 {
 	char	*new;
 
 	new = ft_strnew(all->precision);
-	ft_memset((void*)new, '0', (all->precision - *len));
+	ft_memset((void *)new, '0', (all->precision - *len));
 	ft_strcpy(&new[all->precision - *len], str);
 	*len = all->precision;
 	ft_strdel(&str);
@@ -46,22 +46,22 @@ char		*int16_p_processing(t_all *all, char *str, int *len)
 **with hash and zero (without precision) = S0х000032А.
 */
 
-char		*int16_w_hmz_processing(t_all *all, char *str, int *len)
+char	*int16_w_hmz_processing(t_all *all, char *str, int *len)
 {
 	char	*new;
 
 	new = ft_strnewsetchar(all->width, ' ');
 	if ((all->flag_hash == 1 && all->flag_zero == 0) || (all->flag_hash == 1
-				&& all->flag_zero == 1 && all->width == *len + 1))
+			&& all->flag_zero == 1 && all->width == *len + 1))
 	{
 		str = int16x_h_processing(all, str, len);
-		all->width = all->width < *len ? *len : all->width;
+		all->width = new_norm_ternary_processing_all_width(all->width, *len);
 	}
 	if (all->flag_minus == 1)
-		ft_memcpy((void*)new, (const void*)str, *len);
+		ft_memcpy((void *)new, (const void *)str, *len);
 	else if (all->flag_zero == 1)
 	{
-		ft_memset((void*)new, '0', (all->width - *len));
+		ft_memset((void *)new, '0', (all->width - *len));
 		ft_strcpy(&new[all->width - *len], str);
 		if (all->flag_hash == 1)
 			new[1] = 'X';
@@ -79,7 +79,7 @@ char		*int16_w_hmz_processing(t_all *all, char *str, int *len)
 **more than 0 but less than length.
 */
 
-char		*int16_w_hm_processing(t_all *all, char *str, int *len)
+char	*int16_w_hm_processing(t_all *all, char *str, int *len)
 {
 	char	*new;
 
@@ -87,16 +87,16 @@ char		*int16_w_hm_processing(t_all *all, char *str, int *len)
 	if (all->flag_hash == 1)
 	{
 		str = int16x_h_processing(all, str, len);
-		all->width = all->width < *len ? *len : all->width;
+		all->width = new_norm_ternary_processing_all_width(all->width, *len);
 	}
 	if (all->flag_minus == 1)
 	{
-		ft_memset((void*)&new[*len], ' ', (all->width - *len));
-		ft_memcpy((void*)new, (const void*)str, *len);
+		ft_memset((void *)&new[*len], ' ', (all->width - *len));
+		ft_memcpy((void *)new, (const void *)str, *len);
 	}
 	else
 	{
-		ft_memset((void*)new, ' ', (all->width - *len));
+		ft_memset((void *)new, ' ', (all->width - *len));
 		ft_strcpy(&new[all->width - *len], str);
 	}
 	*len = all->width;
@@ -108,7 +108,7 @@ char		*int16_w_hm_processing(t_all *all, char *str, int *len)
 **Processing of the hash flag
 */
 
-char		*int16x_h_processing(t_all *all, char *str, int *len)
+char	*int16x_h_processing(t_all *all, char *str, int *len)
 {
 	char	*new;
 
@@ -128,7 +128,7 @@ char		*int16x_h_processing(t_all *all, char *str, int *len)
 **all the capital letters are changed
 */
 
-void		do_lower(char *str)
+void	do_lower(char *str)
 {
 	int		i;
 

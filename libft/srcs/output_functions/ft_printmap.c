@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printmap.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschmele <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/13 17:33:26 by sschmele          #+#    #+#             */
-/*   Updated: 2019/01/16 15:01:08 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/16 18:21:00 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void			ft_printmap(char **map, int side)
+void	ft_printmap(char **map, int side)
 {
 	int			i;
 	int			j;
