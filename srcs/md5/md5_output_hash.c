@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   md5_output_hash.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: a18979859 <a18979859@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 21:20:06 by sschmele          #+#    #+#             */
-/*   Updated: 2021/08/14 22:00:21 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/23 23:49:56 by a18979859        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	md5_output_hash(void)
 		* (blocks_in_hash + 1));
 	md5_copy_variables_to_hash(&hash);
 	hash_string = md5_make_string_from_hash(hash);
-	ft_putendl_fd(hash_string, STDOUT_FILENO);
+	ssl_save_output(hash_string);
 	free(hash);
 	return (0);
 }

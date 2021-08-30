@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   md5.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: a18979859 <a18979859@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 11:20:43 by sschmele          #+#    #+#             */
-/*   Updated: 2021/08/14 23:28:57 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/23 12:24:14 by a18979859        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 ** File md5_start.c
 */
 
-int			md5_algorithm_start(void);
+int			md5_algorithm_start(size_t data_size);
 
 /*
 ** File md5_prepare_message.c

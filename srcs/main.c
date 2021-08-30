@@ -3,36 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: a18979859 <a18979859@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 22:14:29 by sschmele          #+#    #+#             */
-/*   Updated: 2021/08/15 15:33:24 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/24 00:52:43 by a18979859        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
-
-static int	ssl_read_from_stdin(void)
-{
-	char	buf[STDIN_BUFFER];
-	char	*data;
-	size_t	data_size;
-	size_t	answer;
-
-	ft_bzero(buf, STDIN_BUFFER);
-	data = (char*)ft_xmalloc(1);
-	data_size = 0;
-	while ((answer = read(STDIN_FILENO, buf, STDIN_BUFFER - 1)) > 0)
-	{
-		data = ft_strrejoin(data, buf);
-		data_size += answer;
-		ft_bzero(buf, STDIN_BUFFER);
-	}
-	if (data_size + 1 < data_size)
-		return (ERR_MESSAGE_LONG);
-	ssl_save_data(data, data_size);
-	return (0);
-}
+#include "ssl_cmd_list.h"
 
 static int	check_program_options(int argc, char **argv)
 {
@@ -45,7 +24,7 @@ static int	check_program_options(int argc, char **argv)
 		return (-1);
 	}
 	flags = ft_find_options(2, (char*[]){PROGRAM_OPTIONS, "--help"}, argv);
-		print_options(flags);
+		print_options(flags); // TODO delete
 	if (flags == HELP_OPTION)
 	{
 		ssl_usage();
@@ -58,26 +37,50 @@ static int	check_program_options(int argc, char **argv)
 	return (flags);
 }
 
+static int	ssl_save_available_commands(void)
+{
+	int			i;
+	size_t		answer;
+	
+	i = 0;
+	hashtable_init();
+	save_clean_hashdata_function(&clean_hashdata);
+	while (i < SSL_CMDS_NUM - 1)
+	{
+		answer = ssl_save_commands_hashadd(g_sslcmd_list[i]);
+		if (answer == SIZET_MAX)
+			return (0);
+		i++;
+	}
+	ssl_save_commands_hashlist();
+	return (0);
+}
+
+static int	ssl_clean_saved_commands(void)
+{
+	hashtable_remove();
+	return (0);
+}
+
 int		main(int argc, char **argv)
 {
-	int		answer;
+	size_t	answer_cmd;
 	int		flags;
 
-	flags = check_program_options(argc, argv);
+	flags = check_program_options(argc, argv + 1);
 	if (flags == HELP_OPTION)
 		return (0);
 	else if (flags < 0)
 		return (1);
-	answer = ssl_parse_arguments(argc, argv + 1);
-	// if (answer != 0)
-	// 	return (1);
-	// if (!(flags & FLAG_S))
-	// {
-	// 	answer = ssl_read_from_stdin();
-	// 	if (answer == ERR_MESSAGE_LONG)
-	// 		return (ssl_errors_management(ERR_MESSAGE_LONG, NULL, 0, 0));
-	// }
-		
+	ssl_save_available_commands();
+	ssl_init_data_buffer();
+	answer_cmd = ssl_parse_arguments(argc, argv + 1, &flags);
+	if (answer_cmd == SIZET_MAX)
+		return (1);
+	ssl_init_output_buffer();
+	if (g_sslcmd_list_func[answer_cmd] == 1)
+		return (ssl_errors_management(ERR_ALGO, NULL, 0, 0));
+	ssl_output_results(flags);
 	
 	// unsigned int i = 1;
 	// char *c = (char*)&i;
@@ -88,8 +91,8 @@ int		main(int argc, char **argv)
 	// getchar();
 	// return 0;
 	
-	// if (md5_algorithm_start() == 1)
-	// 	return (ssl_errors_management(ERR_ALGO, NULL, 0, 0));
-	// ssl_free_data();
+	ssl_free_output_buffer();
+	ssl_free_data();
+	ssl_clean_saved_commands();
 	return (0);
 }

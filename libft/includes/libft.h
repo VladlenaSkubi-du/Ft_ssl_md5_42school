@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: a18979859 <a18979859@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/25 15:31:24 by sschmele          #+#    #+#             */
-/*   Updated: 2021/08/16 19:24:35 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/08/23 10:12:50 by a18979859        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,7 @@ void					ft_putnstr(char const *s, int len);
 void					ft_printmap(char **map, int side);
 void					ft_putnendl_fd(char *str, int n, int fd);
 void					ft_putnstr_fd(char *str, int n, int fd);
+void					ft_putchrendl_fd(char *str, char x, int fd);
 
 /*
 ** Folder SORT_FUNCTIONS
@@ -255,5 +256,7 @@ int						ft_add_tail(int fd, t_fd_list **fd_buf);
 size_t					ft_find_factorial(size_t number);
 size_t					ft_find_next_prime_num(size_t number);
 int						ft_check_prime_number(size_t number);
+int						ft_find_options(int num, char *flags_arr[num],
+							char **arr);
 
 #endif

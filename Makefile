@@ -40,6 +40,9 @@ SOURCES := main.c \
 			ssl_error_management.c \
 			ssl_usage.c \
 			ssl_smessage_methods.c \
+			ssl_cmd_hashmethods.c \
+			ssl_read_message.c \
+			ssl_output_results.c \
 			$(MD5) \
 			$(SHA256) \
 			$(PRINT_FUNCTIONS)
