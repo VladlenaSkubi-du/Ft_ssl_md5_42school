@@ -35,6 +35,10 @@ SHA256_DIR := sha256
 SHA256 := \
 			$(SHA256_DIR)/sha256_start.c
 
+DGST_DIR := dgst
+DGST := \
+			$(DGST_DIR)/dgst_start.c
+
 SOURCES := main.c \
 			ssl_parsing.c \
 			ssl_error_management.c \
@@ -45,6 +49,7 @@ SOURCES := main.c \
 			ssl_output_results.c \
 			$(MD5) \
 			$(SHA256) \
+			$(DGST) \
 			$(PRINT_FUNCTIONS)
 
 # ------------  DIRECTORIES  ------------------------------------------------- #
@@ -99,6 +104,7 @@ $(DIR_O):
 	mkdir -p $(DIR_O)
 	mkdir -p $(DIR_O)/$(MD5_DIR)
 	mkdir -p $(DIR_O)/$(SHA256_DIR)
+	mkdir -p $(DIR_O)/$(DGST_DIR)
 	mkdir -p $(DIR_O)/$(PRINT_FUNCTIONS_DIR)
 
 clean:

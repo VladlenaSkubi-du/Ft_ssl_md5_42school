@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: a18979859 <a18979859@student.42.fr>        +#+  +:+       +#+        */
+/*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 22:14:29 by sschmele          #+#    #+#             */
-/*   Updated: 2021/08/24 00:52:43 by a18979859        ###   ########.fr       */
+/*   Updated: 2021/09/30 22:55:49 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,25 +74,15 @@ int		main(int argc, char **argv)
 		return (1);
 	ssl_save_available_commands();
 	ssl_init_data_buffer();
-	answer_cmd = ssl_parse_arguments(argc, argv + 1, &flags);
-	if (answer_cmd == SIZET_MAX)
-		return (1);
-	ssl_init_output_buffer();
-	if (g_sslcmd_list_func[answer_cmd] == 1)
-		return (ssl_errors_management(ERR_ALGO, NULL, 0, 0));
-	ssl_output_results(flags);
-	
-	// unsigned int i = 1;
-	// char *c = (char*)&i;
-	// if (*c)    
-	//     printf("Little endian");
-	// else
-	//     printf("Big endian");
-	// getchar();
-	// return 0;
-	
-	ssl_free_output_buffer();
-	ssl_free_data();
-	ssl_clean_saved_commands();
+	// answer_cmd = ssl_parse_arguments(argc, argv + 1, &flags);
+	// if (answer_cmd == SIZET_MAX)
+	// 	return (1);
+	// ssl_init_output_buffer();
+	// if (g_sslcmd_list_func[answer_cmd] == 1)
+	// 	return (ssl_errors_management(ERR_ALGO, NULL, 0, 0));
+	// ssl_output_results(flags);
+	// ssl_free_output_buffer();
+	// ssl_free_data();
+	// ssl_clean_saved_commands();
 	return (0);
 }
