@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ssl_read_message.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: a18979859 <a18979859@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 11:09:12 by a18979859         #+#    #+#             */
-/*   Updated: 2021/10/10 21:52:17 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/10/11 12:24:38 by a18979859        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ssl_read_from_stdin(void)
 	if (data_size + 1 < data_size)
 		return (ERR_MESSAGE_LONG);
 	if (data_size > 0)
-		ssl_save_data(data, data_size, STDIN);
+		ssl_save_data(data, data_size, STDIN_DATA);
     else
 		free(data);
 	return (0);
@@ -68,13 +68,10 @@ int	ssl_read_from_file(int fd, char *data, size_t data_size)
 	{
 		data = ft_strrejoin(data, buf);
 		data_size += answer;
-		ft_bzero(buf, STDIN_BUFFER);
+		ft_bzero(buf, FILE_BUFFER);
 	}
 	if (data_size + 1 < data_size)
 		return (ERR_MESSAGE_LONG);
-	if (data_size > 0)
-		ssl_save_data(data, data_size, FILE);
-    else
-		free(data);
+	ssl_save_data(data, data_size, FILE_DATA);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: a18979859 <a18979859@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 12:29:31 by a18979859         #+#    #+#             */
-/*   Updated: 2021/08/24 00:58:51 by a18979859        ###   ########.fr       */
+/*   Updated: 2021/10/11 11:54:21 by a18979859        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int		ssl_output_results(int flags)
 	data_message = ssl_get_data(&needed, 0);
 	while (1)
 	{
-		if (data_message[0] == FILE)
+		if (data_message[0] == FILE_DATA)
 			filename = ssl_data_find_filename(data_message);
 	}
 	free(filename);

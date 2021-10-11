@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ssl.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: a18979859 <a18979859@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 22:14:49 by sschmele          #+#    #+#             */
-/*   Updated: 2021/10/10 22:20:51 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/10/11 11:53:22 by a18979859        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 #include <limits.h>
 #include <string.h>
 #include <fcntl.h>
+
+#include <stdio.h>
 
 #include "md5.h"
 #include "sha256.h"
@@ -64,9 +66,9 @@ typedef enum
 
 typedef enum
 {
-	STDIN = 1,
-	STRING,
-	FILE,
+	STDIN_DATA = 1,
+	STRING_DATA,
+	FILE_DATA,
 }		t_ssl_messagetype;
 
 typedef struct s_celldata

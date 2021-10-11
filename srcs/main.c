@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: a18979859 <a18979859@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 22:14:29 by sschmele          #+#    #+#             */
-/*   Updated: 2021/10/11 09:08:49 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/10/11 18:52:30 by a18979859        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,27 +62,47 @@ static int	ssl_clean_saved_commands(void)
 	return (0);
 }
 
-static size_t		ssl_parse_arguments_new(int argc, char **argv)
-{	
-	char	*filename;
+static size_t		ssl_filename_argument(char *filename)
+{
 	int		fd;
-	char	*file_contents;
-	size_t	file_contents_size;
-	int		answer_other;
-	
-	if (ft_strcmp(argv[1], "-s") != 0)
-		printf("Vlada, make -s string then filename then stdin");
-	ssl_save_data(argv[2], ft_strlen(argv[2]), STRING);
-	filename = argv[3];
+	char	*filename_in_string;
+	size_t	filename_in_string_size;
+	size_t	answer;
+
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
-		return (ssl_errors_management(ERR_FILEOPEN, filename, 0, 0));
-	file_contents = ft_strjoin(filename, STOP_FILENAME_SEQ);
-	file_contents_size = ft_strlen(filename) + ft_strlen(STOP_FILENAME_SEQ);
-	answer_other = ssl_read_from_file(fd, filename, file_contents_size);
-	if (answer_other == ERR_MESSAGE_LONG)
+		return (ERR_FILEOPEN);
+	filename_in_string = ft_strjoin(filename, STOP_FILENAME_SEQ);
+	filename_in_string_size = ft_strlen(filename) + ft_strlen(STOP_FILENAME_SEQ);
+	answer = ssl_read_from_file(fd, filename_in_string, filename_in_string_size);
+	if (answer == ERR_MESSAGE_LONG)
 	{
-		free(file_contents);
+		free(filename_in_string);
+		ssl_errors_management(ERR_MESSAGE_LONG, NULL, 0, 0);
+		return (SIZET_MAX);
+	}
+	return (0);
+}
+
+static size_t		ssl_parse_arguments_new(int argc, char **argv)
+{
+	size_t	answer;
+	
+	if (ft_strcmp(argv[1], "-s") != 0)
+	{
+		printf("Vlada, make -s string then filename then stdin\n");
+		return (0);
+	}
+	ssl_save_data(argv[2], ft_strlen(argv[2]), STRING_DATA);
+	answer = ssl_filename_argument(argv[3]);
+	if (answer == ERR_FILEOPEN)
+	{
+		ssl_errors_management(ERR_FILEOPEN, argv[3], 0, 0);
+		return (SIZET_MAX);
+	}
+	answer = ssl_read_from_stdin();
+	if (answer == ERR_MESSAGE_LONG)
+	{
 		ssl_errors_management(ERR_MESSAGE_LONG, NULL, 0, 0);
 		return (SIZET_MAX);
 	}
@@ -92,12 +112,12 @@ static size_t		ssl_parse_arguments_new(int argc, char **argv)
 static char			*interpret_file_data(char *data, size_t *data_type_size, char **filename)
 {
 	char			*file_contents;
-	size_t			i;
+	size_t			end_of_filename;
 
-	i = 0;
-	i = ft_strstr(data, STOP_FILENAME_SEQ) - data;
-	printf("filename is %zu long\n", i);
-	
+	end_of_filename = ft_strstr(data, STOP_FILENAME_SEQ) - data; //сделать защиту на NULL
+	*filename = ft_strndup(data, end_of_filename);
+	*data_type_size = *data_type_size - end_of_filename - ft_strlen(STOP_FILENAME_SEQ);
+	return (data + end_of_filename + ft_strlen(STOP_FILENAME_SEQ));
 }
 
 static int			print_full_data_saved(void)
@@ -110,30 +130,30 @@ static int			print_full_data_saved(void)
 	char			*filename;
 	
 	ssl_get_dataarray_index(&data_size);
-	i = 1;
-	data = ssl_get_data(&data_type_size, 0);
-	while (i < data_size)
+	data = ssl_get_data(&data_type_size, 1);
+	i = 0;
+	while (i < data_size && data)
 	{
-		if (data != NULL && data[0] == FILE)
+		if (data[0] == FILE_DATA)
 		{
 			final_data = interpret_file_data(data + 1, &data_type_size, &filename);
-			printf("filename is %s and its contents are %s with size %zu\n", filename, final_data, data_type_size);
+			printf("filename is %s and its contents are \"%s\" with size %zu\n", filename, final_data, data_type_size);
 		}
-		// else if (data != NULL && data[0] == STRING)
-		// {
-		// 	printf("string is %s with size %zu\n", data, data_type_size);
-		// }
-		// else if (data != NULL && data[0] == STDIN)
-		// {
-		// 	printf("stdin is %s with size %zu\n", data, data_type_size);
-		// }
+		if (data[0] == STRING_DATA)
+		{
+			printf("string is %s with size %zu\n", data + 1, data_type_size);
+		}
+		else if (data[0] == STDIN_DATA)
+		{
+			printf("stdin is %s with size %zu\n", data + 1, data_type_size);
+		}
 		else if (data == NULL)
 		{
 			printf("something went wrong, there is no data");
 			return(0);
 		}
-		data = ssl_get_data(&data_type_size, &data_size);
 		i++;
+		data = ssl_get_data(&data_type_size, 0);
 	}
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ssl_smessage_methods.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: a18979859 <a18979859@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/14 23:19:38 by sschmele          #+#    #+#             */
-/*   Updated: 2021/10/10 22:03:35 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/10/11 12:04:25 by a18979859        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,24 @@
 static char		**g_data;
 static size_t	g_data_buffer_size;
 static size_t	*g_data_size;
-static size_t	bufindex;
+static size_t	g_bufindex;
 
 void	ssl_init_data_buffer(void)
 {
 	g_data = (char **)ft_xmalloc(sizeof(char *) * (DATA_BUFFER + 1));
 	g_data_size = (size_t *)ft_xmalloc(sizeof(size_t) * (DATA_BUFFER + 1));
 	g_data_buffer_size = DATA_BUFFER;
-	bufindex = 0;
+	g_bufindex = 0;
 }
 
 void	ssl_save_data(char *data, size_t data_size, t_ssl_messagetype type)
 {
-	g_data[bufindex] = (char *)ft_xmalloc(sizeof(char *) * (data_size + 2)); //первый байт под тип данных
-	g_data[bufindex][0] = (char)type;
-	ft_memcpy(g_data[bufindex] + 1, data, data_size);
-	g_data_size[bufindex] = data_size;
-	bufindex++;
-	// if (bufindex == g_data_buffer_size)
+	g_data[g_bufindex] = (char *)ft_xmalloc(sizeof(char *) * (data_size + 2)); //первый байт под тип данных
+	g_data[g_bufindex][0] = (char)type;
+	ft_memcpy(g_data[g_bufindex] + 1, data, data_size);
+	g_data_size[g_bufindex] = data_size;
+	g_bufindex++;
+	// if (g_bufindex == g_data_buffer_size)
 	// {
 	// 	g_data = ft_memrealloc_array(&g_data, g_data_buffer_size,
 	// 			g_data_buffer_size * 2);
@@ -45,20 +45,24 @@ void	ssl_save_data(char *data, size_t data_size, t_ssl_messagetype type)
 size_t	ssl_get_dataarray_index(size_t *data_buffer_size)
 {
 	*data_buffer_size = g_data_buffer_size;
-	return (bufindex);
+	return (g_bufindex);
 }
 
 char	*ssl_get_data(size_t *data_size, int flag_from_beginning)
 {
+	char		*current_data;
+	
 	if (flag_from_beginning)
-		bufindex = 0;
-	if (bufindex == g_data_buffer_size)
+		g_bufindex = 0;
+	if (g_bufindex == g_data_buffer_size)
 	{
 		*data_size = 0;
 		return (NULL);
 	}
-	*data_size = g_data_size[bufindex];
-	return (g_data[bufindex]);
+	*data_size = g_data_size[g_bufindex];
+	current_data = g_data[g_bufindex];
+	g_bufindex++;
+	return (current_data);
 }
 
 void	ssl_free_data(void)
