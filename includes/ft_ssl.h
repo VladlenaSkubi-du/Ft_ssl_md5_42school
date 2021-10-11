@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ssl.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: a18979859 <a18979859@student.42.fr>        +#+  +:+       +#+        */
+/*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 22:14:49 by sschmele          #+#    #+#             */
-/*   Updated: 2021/08/24 00:31:07 by a18979859        ###   ########.fr       */
+/*   Updated: 2021/10/10 22:20:51 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <unistd.h>
 #include <limits.h>
 #include <string.h>
+#include <fcntl.h>
 
 #include "md5.h"
 #include "sha256.h"
@@ -28,6 +29,7 @@
 # define SSL_ERROR -42
 
 # define STDIN_BUFFER 20
+# define FILE_BUFFER 10
 # define DATA_BUFFER 3
 # define STOP_FILENAME_SEQ "\t\v\n\v\t"
 
@@ -57,6 +59,7 @@ typedef enum
 	ERR_MESSAGE_LONG,
 	ERR_INVALID_CMD,
 	ERR_ALGO,
+	ERR_FILEOPEN,
 }		t_ssl_errors;
 
 typedef enum
@@ -124,6 +127,7 @@ void	ssl_free_data(void);
 */
 
 int		ssl_read_from_stdin(void);
+int		ssl_read_from_file(int fd, char *data, size_t data_size);
 
 /*
 ** File ssl_output_results.c
