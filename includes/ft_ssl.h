@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ssl.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: a18979859 <a18979859@student.42.fr>        +#+  +:+       +#+        */
+/*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 22:14:49 by sschmele          #+#    #+#             */
-/*   Updated: 2021/10/11 11:53:22 by a18979859        ###   ########.fr       */
+/*   Updated: 2021/10/28 19:10:54 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 
 # define STDIN_BUFFER 20
 # define FILE_BUFFER 10
-# define DATA_BUFFER 3
+# define DATA_BUFFER 2
 # define STOP_FILENAME_SEQ "\t\v\n\v\t"
 
 /*
@@ -84,6 +84,22 @@ typedef struct s_celldata
 size_t	ssl_parse_arguments(int argc, char **argv, int *flags);
 
 /*
+** File ssl_prepare_arguments_as_data.c
+*/
+
+size_t	ssl_filename_argument(char *filename);
+char	*interpret_file_data(char *data, size_t *data_type_size,
+			char **filename);
+
+
+/*
+** File ssl_prepare_ssl_cmds.c
+*/
+
+int	ssl_save_available_commands(void);
+int	ssl_clean_saved_commands(void);
+
+/*
 ** File ssl_cmd_hashethods.c
 */
 
@@ -129,7 +145,7 @@ void	ssl_free_data(void);
 */
 
 int		ssl_read_from_stdin(void);
-int		ssl_read_from_file(int fd, char *data, size_t data_size);
+int		ssl_read_from_file(int fd, char **data, size_t data_size);
 
 /*
 ** File ssl_output_results.c

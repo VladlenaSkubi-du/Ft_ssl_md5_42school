@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ssl_smessage_methods.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: a18979859 <a18979859@student.42.fr>        +#+  +:+       +#+        */
+/*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/14 23:19:38 by sschmele          #+#    #+#             */
-/*   Updated: 2021/10/11 12:04:25 by a18979859        ###   ########.fr       */
+/*   Updated: 2021/10/28 18:30:14 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,14 @@ void	ssl_save_data(char *data, size_t data_size, t_ssl_messagetype type)
 	ft_memcpy(g_data[g_bufindex] + 1, data, data_size);
 	g_data_size[g_bufindex] = data_size;
 	g_bufindex++;
-	// if (g_bufindex == g_data_buffer_size)
-	// {
-	// 	g_data = ft_memrealloc_array(&g_data, g_data_buffer_size,
-	// 			g_data_buffer_size * 2);
-	// 	// g_data_size = ft_realloc(&g_data_size, g_data_buffer_size,
-	// 	// 		g_data_buffer_size * 2); //переделать на другую функцию.
-	// 	g_data_buffer_size *= 2;
-	// }
+	if (g_bufindex == g_data_buffer_size)
+	{
+		g_data = ft_memrealloc_array(&g_data, g_data_buffer_size,
+				g_data_buffer_size * 2);
+		g_data_size = ft_memrealloc_array(&g_data_size, g_data_buffer_size,
+				g_data_buffer_size * 2);
+		g_data_buffer_size *= 2;
+	}
 }
 
 size_t	ssl_get_dataarray_index(size_t *data_buffer_size)

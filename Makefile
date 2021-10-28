@@ -41,6 +41,8 @@ DGST := \
 
 SOURCES := main.c \
 			ssl_parsing.c \
+			ssl_prepare_ssl_cmds.c \
+			ssl_prepare_arguments_as_data.c \
 			ssl_error_management.c \
 			ssl_usage.c \
 			ssl_smessage_methods.c \
