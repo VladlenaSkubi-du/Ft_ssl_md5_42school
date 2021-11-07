@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ssl_output_results.c                               :+:      :+:    :+:   */
+/*   ssl_prepare_output_results.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: a18979859 <a18979859@student.42.fr>        +#+  +:+       +#+        */
+/*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 12:29:31 by a18979859         #+#    #+#             */
-/*   Updated: 2021/10/11 11:54:21 by a18979859        ###   ########.fr       */
+/*   Updated: 2021/11/06 17:39:35 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,46 +47,4 @@ void	ssl_free_output_buffer(void)
 {
 	ft_arrdel(g_output_results);
 	g_output_results = NULL;
-}
-
-static char	*ssl_data_find_filename(char *data_message)
-{
-	char	*filename;
-	char	filename_size;
-	int		answer;
-	size_t	i;
-
-	filename_size = data_message[1];
-	i = 1;
-	while (data_message[i])
-	{
-		if (data_message[i] == filename_size)
-		{
-			answer = ft_strncmp(data_message + i + 1,
-					STOP_FILENAME_SEQ, 5);
-			if (answer == 0)
-				break ;
-		}
-		i++;
-	}
-	filename = ft_strndup(data_message + 2, filename_size);
-	return (filename);
-}
-
-int		ssl_output_results(int flags)
-{
-	char	*data_message;
-	char	*filename;
-	size_t	needed;
-	size_t	i;
-
-	needed = 0;
-	data_message = ssl_get_data(&needed, 0);
-	while (1)
-	{
-		if (data_message[0] == FILE_DATA)
-			filename = ssl_data_find_filename(data_message);
-	}
-	free(filename);
-	return (0);
 }

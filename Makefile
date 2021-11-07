@@ -33,7 +33,8 @@ MD5 := \
 
 SHA256_DIR := sha256
 SHA256 := \
-			$(SHA256_DIR)/sha256_start.c
+			$(SHA256_DIR)/sha256_start.c \
+			$(SHA256_DIR)/sha256_output_hash.c
 
 DGST_DIR := dgst
 DGST := \
@@ -41,14 +42,16 @@ DGST := \
 
 SOURCES := main.c \
 			ssl_parsing.c \
+			ssl_options.c \
 			ssl_prepare_ssl_cmds.c \
-			ssl_prepare_arguments_as_data.c \
 			ssl_error_management.c \
 			ssl_usage.c \
 			ssl_smessage_methods.c \
 			ssl_cmd_hashmethods.c \
 			ssl_read_message.c \
-			ssl_output_results.c \
+			ssl_output.c \
+			ssl_prepare_output_results.c \
+			ssl_prepare_output_args_as_data.c \
 			$(MD5) \
 			$(SHA256) \
 			$(DGST) \

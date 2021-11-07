@@ -6,36 +6,51 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/28 14:44:10 by sschmele          #+#    #+#             */
-/*   Updated: 2021/10/28 19:05:18 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/06 17:04:21 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
+#include "ssl_cmd_list.h"
 
-// static int	ssl_start_command(char *cmd_name, int flags)
-// {
-// 	int		i;
-// 	int		answer;
+size_t		ssl_check_command(char *cmd)
+{
+	size_t	answer_cmd;
 
-// 	i = 0;
-// 	while (g_sslcmd_list[i])
-// 	{
-// 		answer = ft_strcmp(cmd_name, g_sslcmd_list[i]);
-// 		if (!answer)
-// 		{
-// 			if (flags)
-// 			{
-// 				answer = g_sslcmd_list_func[i]();
-// 				return (answer);
-// 			}
-// 			return (i);
-// 		}
-// 		i++;
-// 	}
-// 	return (-1);
-// }
+	answer_cmd = ssl_save_commands_hashfind(cmd);
+	if (answer_cmd == SIZET_MAX)
+	{
+		ssl_errors_management(ERR_INVALID_CMD, cmd, 0, 0);
+		return (SIZET_MAX);
+	}
+	return (answer_cmd);
+}
+
+static int	check_program_options(int argc, char **argv)
+{
+	int		answer;
+	int		flags;
+
+	flags = ft_find_options(2, (char*[]){PROGRAM_OPTIONS, "--help"}, argv);
+		print_options(flags); // TODO delete
+	if (flags < 0)
+	{
+		ssl_errors_management(ERR_OPTION, NULL, 0, 0);
+		return (-1);
+	}
+	if (argc == 2 && (flags & FLAG_S))
+	{
+		ssl_errors_management(ERR_NO_ARG, NULL, 0, 0);
+		return (-1);
+	}
+	return (flags);
+}
 
 /*
+** First we check the name of the command we are working with
+** Because each command will have its own flags so we check
+** it in the beginning
+**
 ** Here we need to check the arguments (empty or not),
 ** parse the line to see what algoriphm
 ** and options we have.
@@ -45,21 +60,26 @@
 size_t	ssl_parse_arguments(int argc, char **argv, int *flags)
 {
 	int			i;
-	size_t		answer_cmd;
-	int			answer_other;
+	size_t		answer;
 
-	answer_cmd = ssl_save_commands_hashfind(argv[0]);
-	if (answer_cmd == SIZET_MAX)
-	{
-		ssl_errors_management(ERR_INVALID_CMD, argv[0], 0, 0);
+	*flags = check_program_options(argc, argv + 1);
+	if (*flags < 0)
 		return (SIZET_MAX);
-	}
-	answer_other = ssl_read_from_stdin();
-	if (answer_other == ERR_MESSAGE_LONG)
+	if (*flags == 0)
 	{
-		ssl_errors_management(ERR_MESSAGE_LONG, NULL, 0, 0);
-		return (SIZET_MAX);
+		answer = ssl_read_from_stdin();
+		if (answer == ERR_MESSAGE_LONG)
+		{
+			ssl_errors_management(ERR_MESSAGE_LONG, NULL, 0, 0);
+			return (SIZET_MAX);
+		}
 	}
+	// answer_other = ssl_read_from_stdin();
+	// if (answer_other == ERR_MESSAGE_LONG)
+	// {
+	// 	ssl_errors_management(ERR_MESSAGE_LONG, NULL, 0, 0);
+	// 	return (SIZET_MAX);
+	// }
 	
 	// i = 1;
 	// while (argv[++i])
@@ -78,5 +98,5 @@ size_t	ssl_parse_arguments(int argc, char **argv, int *flags)
 	// 	else
 	// 		return (btin_history_noargs());
 	// }
-	return (answer_cmd);
+	return (0);
 }

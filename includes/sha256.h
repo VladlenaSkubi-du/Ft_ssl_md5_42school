@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sha256.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: a18979859 <a18979859@student.42.fr>        +#+  +:+       +#+        */
+/*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 11:38:59 by a18979859         #+#    #+#             */
-/*   Updated: 2021/08/23 11:39:54 by a18979859        ###   ########.fr       */
+/*   Updated: 2021/11/06 17:34:43 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,12 @@
 ** File sha256_start.c
 */
 
-int			sha256_algorithm_start(void);
+int		sha256_algorithm_start(size_t data_size);
+
+/*
+** File sha256_output_hash.c
+*/
+
+int		sha256_output_hash(void);
 
 # endif

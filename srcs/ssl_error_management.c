@@ -6,13 +6,13 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/14 21:01:57 by sschmele          #+#    #+#             */
-/*   Updated: 2021/10/10 21:46:49 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/06 17:11:58 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
 
-#define ERRORS_NUM 6
+#define ERRORS_NUM 7
 
 int	ssl_check_posix_option(char *arg, char *options,
 		int (error_function)(int error_index, char *arg,
@@ -51,7 +51,8 @@ static char	*ssl_errors_types(int sequence_num)
 	seq_action[2] = "argument is too long";
 	seq_action[3] = "command is invalid: ";
 	seq_action[4] = "algorithm error";
-	seq_action[5] = "there is no such file found: ";
+	seq_action[5] = "this algoriphm is not processed: ";
+	seq_action[6] = "there is no such file found: ";
 	return (seq_action[sequence_num]);
 }
 

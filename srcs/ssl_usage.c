@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/14 22:59:57 by sschmele          #+#    #+#             */
-/*   Updated: 2021/08/15 15:29:59 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/10/28 19:25:28 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 # define MD_COMMANDS_DGST "dgst"
 # define MD_COMMANDS_MD5 "md5"
-# define MD_COMMANDS_ENC "enc"
+# define MD_COMMANDS_SHA256 "sha256"
 
 void	ssl_usage_standard_commands(void)
 {
@@ -25,13 +25,17 @@ void	ssl_usage_md_commands(void)
 {
 	ft_putendl_fd(MD_COMMANDS_DGST, STDOUT_FILENO);
 	ft_putendl_fd(MD_COMMANDS_MD5, STDOUT_FILENO);
-	ft_putendl_fd(MD_COMMANDS_ENC, STDOUT_FILENO);
+	ft_putendl_fd(MD_COMMANDS_SHA256, STDOUT_FILENO);
 }
 
 void	ssl_usage_cipher_commands(void)
 {
 	ft_putchar_fd('\n', STDOUT_FILENO);
 }
+
+/*
+** 	ft_printf("(see the `enc' command for more details):\n");
+*/
 
 void	ssl_usage(void)
 {
@@ -45,8 +49,7 @@ void	ssl_usage(void)
 	ft_printf("\nMessage Digest commands ");
 	ft_printf("(see the `dgst' command for more details):\n");
 	ssl_usage_md_commands();
-	ft_printf("\nCipher commands ");
-	ft_printf("(see the `enc' command for more details):\n");
+	ft_printf("\nCipher commands:\n");
 	ssl_usage_cipher_commands();
-	ft_printf("%5s%s [--help]\n", "", PROGRAM_NAME);
+	ft_printf("%5s%s [command] [--help]\n", "", PROGRAM_NAME);
 }

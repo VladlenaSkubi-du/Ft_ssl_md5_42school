@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 22:14:49 by sschmele          #+#    #+#             */
-/*   Updated: 2021/10/28 19:10:54 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/07 14:35:01 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef enum
 	ERR_MESSAGE_LONG,
 	ERR_INVALID_CMD,
 	ERR_ALGO,
+	ERR_ALGO_NOTFOUND,
 	ERR_FILEOPEN,
 }		t_ssl_errors;
 
@@ -81,6 +82,7 @@ typedef struct s_celldata
 ** File ssl_parsing.c
 */
 
+size_t	ssl_check_command(char *cmd);
 size_t	ssl_parse_arguments(int argc, char **argv, int *flags);
 
 /*
@@ -98,6 +100,7 @@ char	*interpret_file_data(char *data, size_t *data_type_size,
 
 int	ssl_save_available_commands(void);
 int	ssl_clean_saved_commands(void);
+int	ssl_start_command(char *cmd_name);
 
 /*
 ** File ssl_cmd_hashethods.c
@@ -137,7 +140,7 @@ void	ssl_save_data(char *data, size_t data_size,
 			t_ssl_messagetype type);
 size_t	ssl_get_dataarray_index(size_t *data_buffer_size);
 char	*ssl_get_data(size_t *data_size, int flag_from_beginning);
-void	ssl_free_data(void);
+void	ssl_free_data_buffer(void);
 
 
 /*
@@ -148,6 +151,13 @@ int		ssl_read_from_stdin(void);
 int		ssl_read_from_file(int fd, char **data, size_t data_size);
 
 /*
+** File ssl_output.c
+*/
+
+int		ssl_output_algo(char *algo_name);
+size_t	ssl_output(int flags);
+
+/*
 ** File ssl_output_results.c
 */
 
@@ -155,7 +165,7 @@ void	ssl_init_output_buffer(void);
 void	ssl_save_output(char *output_hash);
 char	*ssl_get_output(int flag_from_beginning);
 void	ssl_free_output_buffer(void);
-int		ssl_output_results(int flags);
+int		ssl_output_results(void);
 
 int		dgst_start(void);
 

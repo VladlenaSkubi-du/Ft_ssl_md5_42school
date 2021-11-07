@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   md5_start.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: a18979859 <a18979859@student.42.fr>        +#+  +:+       +#+        */
+/*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 11:07:56 by sschmele          #+#    #+#             */
-/*   Updated: 2021/08/23 12:24:02 by a18979859        ###   ########.fr       */
+/*   Updated: 2021/11/06 17:33:59 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include "md5.h"
 
 /*
+** Argument data_size that funtion gets is a feature
+
 ** @index_of_512bit_block makes a step of 16 because we need to
 ** send each 512-bit block where 512 / 8 = 64 bytes or 64 uint8_t blocks
 ** but 64 / 4 = 16 uint32_t blocks
