@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 15:48:11 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/06 17:32:06 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/07 15:06:48 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,12 @@ static char			*g_sslcmd_list[SSL_CMDS_NUM] = {\
 	"sha256", \
 	NULL};
 
-static int			(*g_sslcmd_list_func[SSL_CMDS_NUM])(size_t) = {\
+static char			*g_sslcmd_list_options[SSL_CMDS_NUM] = {\
+	DEFAULT_ALGO_OPTIONS, \
+	DEFAULT_ALGO_OPTIONS, \
+	NULL};
+
+static int			(*g_sslcmd_list_start_func[SSL_CMDS_NUM])(size_t) = {\
 	md5_algorithm_start, \
 	sha256_algorithm_start, \
 	NULL};

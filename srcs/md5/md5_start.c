@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 11:07:56 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/06 17:33:59 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/07 16:33:47 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int		md5_algorithm_start(size_t data_size)
 			break ;
 		message_size_uint32 = 0;
 		mlength_bits_padded = 0;
-		message = md5_prepare_message_for_algo(data, data_size,
+		message = md5_prepare_message_for_algo(data + 1, data_size,
 			&message_size_uint32, &mlength_bits_padded);
 		if (message == NULL)
 			return (1);

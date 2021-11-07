@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 15:01:35 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/07 14:30:32 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/07 16:33:05 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,14 @@ size_t		ssl_output_stdin(int flags, char *data, size_t data_type_size)
 {
 	ft_putstr_fd("(", STDOUT_FILENO);
 	if (flags & FLAG_P)
-		ft_putstr_fd(data, STDOUT_FILENO);
+	{
+		ft_putstr_fd("\"", STDOUT_FILENO);
+		if (data[data_type_size - 1] == '\n')
+			ft_putchrstr_fd(data, '\n', STDOUT_FILENO);
+		else
+			ft_putstr_fd(data, STDOUT_FILENO);
+		ft_putstr_fd("\"", STDOUT_FILENO);
+	}
 	else if (flags == 0)
 		ft_putstr_fd("stdin", STDOUT_FILENO);
 	ft_putstr_fd(") = ", STDOUT_FILENO);

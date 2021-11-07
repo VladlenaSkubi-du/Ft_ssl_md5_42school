@@ -48,6 +48,7 @@ SOURCES := main.c \
 			ssl_usage.c \
 			ssl_smessage_methods.c \
 			ssl_cmd_hashmethods.c \
+			ssl_hashdata_methods.c \
 			ssl_read_message.c \
 			ssl_output.c \
 			ssl_prepare_output_results.c \

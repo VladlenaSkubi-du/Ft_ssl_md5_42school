@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 22:14:49 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/07 14:35:01 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/07 16:35:15 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 
 # define PROGRAM_NAME "./ft_ssl"
 # define OPTIONS_NUM 4
-# define PROGRAM_OPTIONS "srqp"
+# define DEFAULT_ALGO_OPTIONS "srqp"
 # define SSL_ERROR -42
 
 # define STDIN_BUFFER 20
@@ -63,6 +63,7 @@ typedef enum
 	ERR_ALGO,
 	ERR_ALGO_NOTFOUND,
 	ERR_FILEOPEN,
+	ERR_PROGRAMM,
 }		t_ssl_errors;
 
 typedef enum
@@ -74,7 +75,8 @@ typedef enum
 
 typedef struct s_celldata
 {
-	int		number;
+	char		*flags;
+	int			(*start_algo_function)(size_t);
 }		t_celldata;
 
 
@@ -83,7 +85,8 @@ typedef struct s_celldata
 */
 
 size_t	ssl_check_command(char *cmd);
-size_t	ssl_parse_arguments(int argc, char **argv, int *flags);
+size_t	ssl_parse_arguments(int argc, char **argv,
+				int *flags, char *cmd_options);
 
 /*
 ** File ssl_prepare_arguments_as_data.c
@@ -98,19 +101,28 @@ char	*interpret_file_data(char *data, size_t *data_type_size,
 ** File ssl_prepare_ssl_cmds.c
 */
 
-int	ssl_save_available_commands(void);
-int	ssl_clean_saved_commands(void);
-int	ssl_start_command(char *cmd_name);
+int			ssl_save_available_commands(void);
+int			ssl_clean_saved_commands(void);
 
 /*
 ** File ssl_cmd_hashethods.c
 */
 
-size_t	ssl_save_commands_hashlist(void);
-size_t	ssl_save_commands_hashadd(char *key);
-size_t	ssl_save_commands_hashfind(char *key);
-void	clean_hashdata(void *cell_data);
-void	print_hashdata(void *cell_data);
+size_t		ssl_save_commands_hashlist(void);
+size_t		ssl_save_commands_hashadd(char *key, void *data);
+size_t		ssl_save_commands_hashfind(char *key);
+t_celldata	*ssl_get_data_from_hashtable(size_t answer_cmd);
+
+/*
+** File ssl_hashdata_methods.c
+*/
+
+void		*init_hashdata(void);
+void		fill_hashdata(void **cell_data, char *options,
+				int (*start_algo_function)(size_t));
+void		copy_hashdata(void **cell_data, void *data);
+void		clean_hashdata(void *cell_data);
+void		print_hashdata(void *cell_data);
 
 /*
 ** File ssl_error_management.c

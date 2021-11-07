@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/28 14:44:10 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/06 17:04:21 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/07 16:24:49 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ size_t		ssl_check_command(char *cmd)
 	return (answer_cmd);
 }
 
-static int	check_program_options(int argc, char **argv)
+static int	check_algo_options(int argc, char **argv, char *cmd_options)
 {
 	int		answer;
 	int		flags;
 
-	flags = ft_find_options(2, (char*[]){PROGRAM_OPTIONS, "--help"}, argv);
+	flags = ft_find_options(2, (char*[]){cmd_options, "--help"}, argv);
 		print_options(flags); // TODO delete
 	if (flags < 0)
 	{
@@ -57,15 +57,16 @@ static int	check_program_options(int argc, char **argv)
 ** If we have -s option - we take the string, not the stdin
 */
 
-size_t	ssl_parse_arguments(int argc, char **argv, int *flags)
+size_t	ssl_parse_arguments(int argc, char **argv,
+			int *flags, char *cmd_options)
 {
 	int			i;
 	size_t		answer;
 
-	*flags = check_program_options(argc, argv + 1);
+	*flags = check_algo_options(argc, argv, cmd_options);
 	if (*flags < 0)
 		return (SIZET_MAX);
-	if (*flags == 0)
+	if (*flags == 0 || (*flags & FLAG_P))
 	{
 		answer = ssl_read_from_stdin();
 		if (answer == ERR_MESSAGE_LONG)

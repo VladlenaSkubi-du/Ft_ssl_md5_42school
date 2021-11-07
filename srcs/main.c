@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 22:14:29 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/07 14:45:56 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/07 16:21:29 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,11 +119,11 @@ int		ssl_output_results(void)
 	return (0);
 }
 
-static int		ssl_main_start(char *algo_name, size_t answer_cmd)
+static int		ssl_main_start(char *algo_name, t_celldata *cmd_data)
 {
 	int			answer;
-	
-	answer = ssl_start_command(algo_name);
+
+	answer = cmd_data->start_algo_function(0);
 	if (answer)
 	{
 		if (answer == -1)
@@ -152,15 +152,15 @@ static int		ssl_clean_main_environment(void)
 }
 
 /*
-** g_sslcmd_list_func[answer_cmd] is the main function call
+** g_sslcmd_list_start_func[answer_cmd] is the main function call
 */
 
 int		main(int argc, char **argv)
 {
-	size_t	answer_cmd;
-	size_t	answer_other;
-	char	*algo_name;
-	int		flags;
+	size_t		answer;
+	char		*algo_name;
+	int			flags;
+	t_celldata	*cmd_data;
 
 	if (argc == 1)
 	{
@@ -169,14 +169,17 @@ int		main(int argc, char **argv)
 	}
 	algo_name = argv[1];
 	ssl_prepare_main_environment();
-	answer_cmd = ssl_check_command(algo_name);
-	if (answer_cmd == SIZET_MAX)
+	answer = ssl_check_command(algo_name);
+	if (answer == SIZET_MAX)
 		return (1);
-	answer_other = ssl_parse_arguments(argc, argv + 1, &flags);
-	if (answer_other == SIZET_MAX)
+	cmd_data = ssl_get_data_from_hashtable(answer);
+	if (cmd_data == NULL)
 		return (1);
-	answer_other = ssl_main_start(algo_name, answer_cmd);
-	if (answer_other)
+	answer = ssl_parse_arguments(argc, argv + 1, &flags, cmd_data->flags);
+	if (answer == SIZET_MAX)
+		return (1);
+	answer = ssl_main_start(algo_name, cmd_data);
+	if (answer)
 		return (1);
 	ssl_output_algo(algo_name);
 	ssl_output(flags);
