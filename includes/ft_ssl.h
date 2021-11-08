@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 22:14:49 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/08 12:43:19 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/08 20:53:54 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@
 # define FLAG_Q 0x2
 # define FLAG_R 0x4
 # define FLAG_S 0x8
+# define FLAG_FILENAME 0x10
 # define HELP_OPTION 0x10000
 
 typedef enum
@@ -163,6 +164,7 @@ void	ssl_free_data_buffer(void);
 
 int		ssl_read_from_stdin(void);
 int		ssl_read_from_file(int fd, char *data, size_t data_size);
+int		ssl_read_string(char *string);
 
 /*
 ** File ssl_output.c
@@ -170,6 +172,9 @@ int		ssl_read_from_file(int fd, char *data, size_t data_size);
 
 int		ssl_output_algo(char *algo_name);
 size_t	ssl_output(char *algo_name, int flags);
+int		ssl_output_string(int flags, char *data);
+int		ssl_output_file(int flags, char *data, size_t data_type_size);
+int		ssl_output_stdin(int flags, char *data, size_t data_type_size);
 
 /*
 ** File ssl_output_results.c

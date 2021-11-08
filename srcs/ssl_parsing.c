@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/28 14:44:10 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/08 12:58:03 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/08 20:49:44 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ static int	check_algo_options(int argc, char **argv, char *cmd_options)
 	int		flags;
 
 	flags = ft_find_options(2, (char*[]){cmd_options, "--help"}, argv);
-		print_options(flags); // TODO delete
 	if (flags < 0)
 	{
 		ssl_errors_management(ERR_OPTION, NULL, 0, 0);
@@ -44,6 +43,71 @@ static int	check_algo_options(int argc, char **argv, char *cmd_options)
 		return (-1);
 	}
 	return (flags);
+}
+
+static size_t	error_lets_save_space(t_ssl_errors error, char *option)
+{
+	ssl_errors_management(error, option, 0, 0);
+	return (SIZET_MAX);
+}
+
+static size_t	define_default_options(int argc, char **argv, int *flags)
+{
+	int			i;
+	size_t		answer;
+	
+	i = 0;
+	*flags = 0;
+	while (argv[++i])
+	{
+		printf("arg = %s\n", argv[i]);
+		if ((!(*flags) || (*flags && !(*flags & FLAG_S) && !(*flags & FLAG_FILENAME)))
+				&& argv[i][0] == '-')
+		{
+			if (!argv[i][1])
+				return (error_lets_save_space(ERR_OPTION, "-"));
+			else if (argv[i][1] == '-' && !argv[i][2])
+				return (error_lets_save_space(ERR_OPTION, "--"));
+			else if (argv[i][1] == 'p')
+			{
+				*flags |= FLAG_P;
+				answer = ssl_read_from_stdin();
+				if (answer == ERR_MESSAGE_LONG)
+					return (error_lets_save_space(ERR_MESSAGE_LONG, NULL));
+			}
+			else if (argv[i][1] == 'r')
+				*flags |= FLAG_R;
+			else if (argv[i][1] == 'q')
+				*flags |= FLAG_Q;
+			else if (argv[i][1] == 's')
+			{
+				if (!argv[i + 1])
+					return (error_lets_save_space(ERR_NO_ARG, NULL));
+				*flags |= FLAG_S;		
+				answer = ssl_read_string(argv[i + 1]);
+				if (answer == ERR_MESSAGE_LONG)
+					return (error_lets_save_space(ERR_MESSAGE_LONG, NULL));
+				i++;
+			}
+		}
+		else
+		{
+			*flags |= FLAG_FILENAME;
+			answer = ssl_filename_argument(argv[i]);
+			if (answer == ERR_FILEOPEN)
+				ssl_errors_management(ERR_FILEOPEN, argv[i], 0, 0);
+			else if (answer == ERR_MESSAGE_LONG)
+				return (error_lets_save_space(ERR_MESSAGE_LONG, NULL));
+		}
+	}
+	if (*flags == 0 || *flags == FLAG_R || *flags == FLAG_Q
+			|| (*flags && !(*flags & FLAG_S) && !(*flags & FLAG_FILENAME)))
+	{
+		answer = ssl_read_from_stdin();
+		if (answer == ERR_MESSAGE_LONG)
+			return (error_lets_save_space(ERR_MESSAGE_LONG, NULL));
+	}
+	return (0);
 }
 
 /*
@@ -66,52 +130,28 @@ size_t	ssl_parse_arguments(int argc, char **argv,
 	*flags = check_algo_options(argc, argv, cmd_options);
 	if (*flags < 0)
 		return (SIZET_MAX);
-	if (*flags == 0 || (*flags & FLAG_P))
-	{
-		answer = ssl_read_from_stdin();
-		if (answer == ERR_MESSAGE_LONG)
-		{
-			ssl_errors_management(ERR_MESSAGE_LONG, NULL, 0, 0);
-			return (SIZET_MAX);
-		}
-	}
-	if (*flags & FLAG_R)
-	{
-		i = 1;
-		while (i < argc && argv[i])
-		{
-			// printf("argv = %s\n", argv[i]);
-			answer = ssl_filename_argument(argv[i]);
-			if (answer == ERR_FILEOPEN)
-				ssl_errors_management(ERR_FILEOPEN, argv[i], 0, 0);
-			else if (answer == ERR_MESSAGE_LONG)
-				ssl_errors_management(ERR_MESSAGE_LONG, NULL, 0, 0);
-			i++;
-		}
-	}
+	answer = define_default_options(argc, argv, flags);
+	if (answer == SIZET_MAX)
+		return (SIZET_MAX);
+	// if (*flags & FLAG_R)
+	// {
+	// 	i = 1;
+	// 	while (i < argc && argv[i])
+	// 	{
+	// 		// printf("argv = %s\n", argv[i]);
+	// 		answer = ssl_filename_argument(argv[i]);
+	// 		if (answer == ERR_FILEOPEN)
+	// 			ssl_errors_management(ERR_FILEOPEN, argv[i], 0, 0);
+	// 		else if (answer == ERR_MESSAGE_LONG)
+	// 			ssl_errors_management(ERR_MESSAGE_LONG, NULL, 0, 0);
+	// 		i++;
+	// 	}
+	// }
 	// answer_other = ssl_read_from_stdin();
 	// if (answer_other == ERR_MESSAGE_LONG)
 	// {
 	// 	ssl_errors_management(ERR_MESSAGE_LONG, NULL, 0, 0);
 	// 	return (SIZET_MAX);
-	// }
-	
-	// i = 1;
-	// while (argv[++i])
-	// {
-	// 	if (argv[i][0] == '-')
-	// 	{
-	// 		if (!argv[i][1])
-	// 			return (ERR_OPTION);
-	// 		else if (argv[i][1] == 'c')
-	// 			return ((check_posix_option(argv[i], "c",
-	// 				btin_history_error_message) != 0) ?
-	// 				BTIN_ERROR : btin_history_clear());
-	// 		else if (argv[i][1] == '-' && !argv[i][2])
-	// 			return (btin_history_noargs());
-	// 	}
-	// 	else
-	// 		return (btin_history_noargs());
 	// }
 	return (0);
 }

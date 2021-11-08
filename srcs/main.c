@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 22:14:29 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/08 12:43:24 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/08 19:58:19 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,12 +150,13 @@ int		main(int argc, char **argv)
 	cmd_data = ssl_get_data_from_hashtable(answer);
 	if (cmd_data == NULL)
 		return (1);
-	answer = ssl_parse_arguments(argc, argv + 1, &flags, cmd_data->flags);
+	answer = ssl_parse_arguments(argc - 1, argv + 1, &flags, cmd_data->flags);
 	if (answer == SIZET_MAX)
 		return (1);
 	answer = ssl_main_start(algo_name, cmd_data);
 	if (answer)
 		return (1);
+			print_options(flags); // TODO delete
 	ssl_output(algo_name, flags);
 	ssl_clean_main_environment();
 	return (0);
