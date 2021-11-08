@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 15:01:35 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/07 16:33:05 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/08 12:54:56 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,19 @@ int			ssl_output_algo(char *algo_name)
 		i++;
 	}
 	ft_putchar_fd(' ', STDOUT_FILENO);
+	return (0);
+}
+
+size_t		ssl_output_file(int flags, char *data, size_t data_type_size)
+{
+	char	*final_data;
+	char	*filename;
+
+	final_data = interpret_file_data(data, &data_type_size, &filename);
+	ft_putstr_fd("(", STDOUT_FILENO);
+	ft_putstr_fd(filename, STDOUT_FILENO);
+	ft_putstr_fd(") = ", STDOUT_FILENO);
+	free(filename);
 	return (0);
 }
 
@@ -49,7 +62,7 @@ size_t		ssl_output_stdin(int flags, char *data, size_t data_type_size)
 ** counting starts from 0.
 */
 
-size_t		ssl_output(int flags)
+size_t		ssl_output(char *algo_name, int flags)
 {
 	size_t	buf_arguments_size;
 	size_t	data_type_size;
@@ -58,13 +71,18 @@ size_t		ssl_output(int flags)
 	size_t	i;
 
 	ssl_get_dataarray_index(&buf_arguments_size);
+	printf("buf_arguments_size = %zu\n", buf_arguments_size);
 	data = ssl_get_data(&data_type_size, 1);
 	hash = ssl_get_output(1);
 	i = 0;
 	while (i < buf_arguments_size && data && hash)
 	{
-		if (data[0] == STDIN_DATA)
+		if (!(flags & FLAG_Q))
+			ssl_output_algo(algo_name);
+		if (data[0] == STDIN_DATA && !(flags & FLAG_Q))
 			ssl_output_stdin(flags, data + 1, data_type_size);
+		else if (data[0] == FILE_DATA && !(flags & FLAG_Q))
+			ssl_output_file(flags, data + 1, data_type_size);
 		ft_putendl_fd(hash, STDOUT_FILENO);
 		data = ssl_get_data(&data_type_size, 0);
 		hash = ssl_get_output(0);

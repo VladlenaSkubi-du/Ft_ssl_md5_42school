@@ -6,37 +6,12 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 22:14:29 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/07 16:21:29 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/08 12:43:24 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
 #include "ssl_cmd_list.h"
-
-static size_t		ssl_parse_arguments_new(int argc, char **argv)
-{
-	size_t	answer;
-	int		i;
-	
-	if (ft_strcmp(argv[1], "-s") != 0)
-	{
-		printf("Vlada, make -s string then filename then stdin\n");
-		return (0);
-	}
-	ssl_save_data(argv[2], ft_strlen(argv[2]), STRING_DATA);
-	i = 3;
-	while (i < argc)
-	{
-		answer = ssl_filename_argument(argv[i]);
-		if (answer == ERR_FILEOPEN)
-		{
-			ssl_errors_management(ERR_FILEOPEN, argv[3], 0, 0);
-			return (SIZET_MAX);
-		}
-		i++;
-	}
-	return (0);
-}
 
 static int			print_full_data_saved(void)
 {
@@ -181,8 +156,7 @@ int		main(int argc, char **argv)
 	answer = ssl_main_start(algo_name, cmd_data);
 	if (answer)
 		return (1);
-	ssl_output_algo(algo_name);
-	ssl_output(flags);
+	ssl_output(algo_name, flags);
 	ssl_clean_main_environment();
 	return (0);
 }

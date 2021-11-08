@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 12:29:31 by a18979859         #+#    #+#             */
-/*   Updated: 2021/11/06 17:39:35 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/08 12:55:44 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,16 @@ void	ssl_save_output(char *output_hash)
 char	*ssl_get_output(int flag_from_beginning)
 {
 	size_t	output_results_buffer;
+	char	*hash_line;
 	
 	ssl_get_dataarray_index(&output_results_buffer);
 	if (flag_from_beginning)
 		bufindex = 0;
-	if (bufindex == output_results_buffer)
+	if (bufindex == output_results_buffer || !g_output_results[bufindex])
 		return (NULL);
-	return (g_output_results[bufindex]);
+	hash_line = g_output_results[bufindex];
+	bufindex++;
+	return (hash_line);
 }
 
 void	ssl_free_output_buffer(void)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: a18979859 <a18979859@student.42.fr>        +#+  +:+       +#+        */
+/*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/25 15:31:24 by sschmele          #+#    #+#             */
-/*   Updated: 2021/08/23 10:12:50 by a18979859        ###   ########.fr       */
+/*   Updated: 2021/11/07 17:21:14 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,7 @@ void					ft_printmap(char **map, int side);
 void					ft_putnendl_fd(char *str, int n, int fd);
 void					ft_putnstr_fd(char *str, int n, int fd);
 void					ft_putchrendl_fd(char *str, char x, int fd);
+void					ft_putchrstr_fd(char *str, char x, int fd);
 
 /*
 ** Folder SORT_FUNCTIONS

@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 22:14:49 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/07 16:35:15 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/08 12:43:19 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ size_t	ssl_parse_arguments(int argc, char **argv,
 size_t	ssl_filename_argument(char *filename);
 char	*interpret_file_data(char *data, size_t *data_type_size,
 			char **filename);
+char		*interpret_file_data_algo(char *data, size_t *data_type_size);
 
 
 /*
@@ -152,6 +153,7 @@ void	ssl_save_data(char *data, size_t data_size,
 			t_ssl_messagetype type);
 size_t	ssl_get_dataarray_index(size_t *data_buffer_size);
 char	*ssl_get_data(size_t *data_size, int flag_from_beginning);
+char	*ssl_get_data_algo(size_t *data_size, int flag_from_beginning);
 void	ssl_free_data_buffer(void);
 
 
@@ -160,14 +162,14 @@ void	ssl_free_data_buffer(void);
 */
 
 int		ssl_read_from_stdin(void);
-int		ssl_read_from_file(int fd, char **data, size_t data_size);
+int		ssl_read_from_file(int fd, char *data, size_t data_size);
 
 /*
 ** File ssl_output.c
 */
 
 int		ssl_output_algo(char *algo_name);
-size_t	ssl_output(int flags);
+size_t	ssl_output(char *algo_name, int flags);
 
 /*
 ** File ssl_output_results.c

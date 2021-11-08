@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 11:09:12 by a18979859         #+#    #+#             */
-/*   Updated: 2021/10/28 18:24:34 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/08 12:42:20 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ int	ssl_read_from_stdin(void)
 		ft_bzero(buf, STDIN_BUFFER);
 	}
 	if (data_size + 1 < data_size)
+	{
+		free(data);
 		return (ERR_MESSAGE_LONG);
+	}
 	if (data_size > 0)
 		ssl_save_data(data, data_size, STDIN_DATA);
 	free(data);
@@ -57,20 +60,26 @@ int	ssl_read_from_stdin(void)
 ** file untill the function read returns 0
 */
 
-int	ssl_read_from_file(int fd, char **data, size_t data_size)
+int	ssl_read_from_file(int fd, char *filename_in_string, size_t data_size)
 {
 	char	buf[FILE_BUFFER];
+	char	*data;
 	size_t	answer;
 
 	ft_bzero(buf, FILE_BUFFER);
+	data = ft_strdup(filename_in_string);
 	while ((answer = read(fd, buf, FILE_BUFFER - 1)) > 0)
 	{
-		*data = ft_strrejoin(*data, buf);
+		data = ft_strrejoin(data, buf);
 		data_size += answer;
 		ft_bzero(buf, FILE_BUFFER);
 	}
 	if (data_size + 1 < data_size)
+	{
+		free(data);
 		return (ERR_MESSAGE_LONG);
-	ssl_save_data(*data, data_size, FILE_DATA);
+	}
+	ssl_save_data(data, data_size, FILE_DATA);
+	free(data);
 	return (0);
 }
