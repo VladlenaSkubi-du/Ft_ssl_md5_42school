@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/14 23:19:38 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/08 12:46:55 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/08 15:07:21 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,14 @@ char	*ssl_get_data_algo(size_t *data_size, int flag_from_beginning)
 	}
 	*data_size = g_data_size[g_bufindex];
 	if (g_data[g_bufindex][0] == FILE_DATA)
+	{
 		current_data = interpret_file_data_algo(g_data[g_bufindex],
 				data_size);
+		//printf("current_data =%s with %zu\n", current_data, *data_size);
+	}
 	else
 		current_data = g_data[g_bufindex];
+	//printf("data_size in after interpret =%zu\n", *data_size);
 	g_bufindex++;
 	return (current_data);
 }

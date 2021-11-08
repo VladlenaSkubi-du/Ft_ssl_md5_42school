@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/28 14:44:10 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/08 12:08:05 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/08 12:58:03 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ size_t	ssl_parse_arguments(int argc, char **argv,
 		i = 1;
 		while (i < argc && argv[i])
 		{
-			printf("argv = %s\n", argv[i]);
+			// printf("argv = %s\n", argv[i]);
 			answer = ssl_filename_argument(argv[i]);
 			if (answer == ERR_FILEOPEN)
 				ssl_errors_management(ERR_FILEOPEN, argv[i], 0, 0);

@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 11:09:12 by a18979859         #+#    #+#             */
-/*   Updated: 2021/11/08 12:42:20 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/08 15:07:50 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int	ssl_read_from_file(int fd, char *filename_in_string, size_t data_size)
 {
 	char	buf[FILE_BUFFER];
 	char	*data;
+	char	*new_data;
 	size_t	answer;
 
 	ft_bzero(buf, FILE_BUFFER);

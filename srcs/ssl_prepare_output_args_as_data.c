@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 19:05:02 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/08 12:19:52 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/08 15:06:42 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ char		*interpret_file_data_algo(char *data, size_t *data_type_size)
 		return (data);
 	else
 	{
-		end_of_filename = stop_seq_beginning - data;
+		end_of_filename = stop_seq_beginning - data - 1;
 		*data_type_size = *data_type_size - end_of_filename - stop_seq_length;
 	}
-	return (data + end_of_filename + stop_seq_length - 1);
+	return (data + end_of_filename + stop_seq_length);
 }

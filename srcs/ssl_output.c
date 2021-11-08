@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 15:01:35 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/08 12:54:56 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/08 12:57:57 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ size_t		ssl_output(char *algo_name, int flags)
 	size_t	i;
 
 	ssl_get_dataarray_index(&buf_arguments_size);
-	printf("buf_arguments_size = %zu\n", buf_arguments_size);
+	// printf("buf_arguments_size = %zu\n", buf_arguments_size);
 	data = ssl_get_data(&data_type_size, 1);
 	hash = ssl_get_output(1);
 	i = 0;

@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 11:07:56 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/08 12:48:32 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/08 13:01:24 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int		md5_algorithm_start(size_t data_size)
 			data = ssl_get_data_algo(&data_size, 0);
 		if (data == NULL)
 			break ;
-		// printf("data = %s with %zu\n", data, data_size);
+		printf("data =%s with %zu\n", data + 1, data_size);
 		message_size_uint32 = 0;
 		mlength_bits_padded = 0;
 		message = md5_prepare_message_for_algo(data + 1, data_size,
