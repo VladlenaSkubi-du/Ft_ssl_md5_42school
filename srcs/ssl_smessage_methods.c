@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/14 23:19:38 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/08 15:07:21 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/11 15:54:03 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static size_t	g_data_buffer_size;
 static size_t	*g_data_size;
 static size_t	g_bufindex;
 
-void	ssl_init_data_buffer(void)
+void			ssl_init_data_buffer(void)
 {
 	g_data = (char **)ft_xmalloc(sizeof(char *) * (DATA_BUFFER + 1));
 	g_data_size = (size_t *)ft_xmalloc(sizeof(size_t) * (DATA_BUFFER + 1));
@@ -29,7 +29,7 @@ void	ssl_init_data_buffer(void)
 ** In ft_realloc g_data_size is freed
 */
 
-void	ssl_save_data(char *data, size_t data_size, t_ssl_messagetype type)
+void			ssl_save_data(char *data, size_t data_size, t_ssl_messagetype type)
 {
 	void		*new_g_data_size;
 	
@@ -42,21 +42,21 @@ void	ssl_save_data(char *data, size_t data_size, t_ssl_messagetype type)
 	{
 		g_data = (char **)ft_memrealloc_array((void ***)&g_data, g_data_buffer_size,
 				g_data_buffer_size * 2);
-		new_g_data_size = ft_realloc((void *)g_data_size, g_data_buffer_size * sizeof(size_t),
-				g_data_buffer_size * sizeof(size_t),
-				g_data_buffer_size * sizeof(size_t) * 2);
+		new_g_data_size = ft_xmalloc(g_data_buffer_size * sizeof(size_t) * 2);
+		ft_memcpy(new_g_data_size, g_data_size, g_data_buffer_size * sizeof(size_t));
+		free(g_data_size);
 		g_data_size = (size_t *)new_g_data_size;
 		g_data_buffer_size *= 2;
 	}
 }
 
-size_t	ssl_get_dataarray_index(size_t *data_buffer_size)
+size_t			ssl_get_dataarray_index(size_t *data_buffer_size)
 {
 	*data_buffer_size = g_data_buffer_size;
 	return (g_bufindex);
 }
 
-char	*ssl_get_data_algo(size_t *data_size, int flag_from_beginning)
+char			*ssl_get_data_algo(size_t *data_size, int flag_from_beginning)
 {
 	char		*current_data;
 	
@@ -71,18 +71,16 @@ char	*ssl_get_data_algo(size_t *data_size, int flag_from_beginning)
 	*data_size = g_data_size[g_bufindex];
 	if (g_data[g_bufindex][0] == FILE_DATA)
 	{
-		current_data = interpret_file_data_algo(g_data[g_bufindex],
+		current_data = ssl_interpret_file_data_algo(g_data[g_bufindex],
 				data_size);
-		//printf("current_data =%s with %zu\n", current_data, *data_size);
 	}
 	else
 		current_data = g_data[g_bufindex];
-	//printf("data_size in after interpret =%zu\n", *data_size);
 	g_bufindex++;
 	return (current_data);
 }
 
-char	*ssl_get_data(size_t *data_size, int flag_from_beginning)
+char			*ssl_get_data(size_t *data_size, int flag_from_beginning)
 {
 	char		*current_data;
 	
@@ -100,7 +98,7 @@ char	*ssl_get_data(size_t *data_size, int flag_from_beginning)
 	return (current_data);
 }
 
-void	ssl_free_data_buffer(void)
+void			ssl_free_data_buffer(void)
 {
 	ft_arrdel(g_data);
 	free(g_data_size);

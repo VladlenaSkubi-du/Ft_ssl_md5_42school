@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 19:05:02 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/08 19:04:32 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/11 15:34:34 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ size_t		ssl_filename_argument(char *filename)
 ** stop sequence length
 */
 
-char		*interpret_file_data(char *data, size_t *data_type_size, char **filename)
+char		*ssl_interpret_file_data(char *data, size_t *data_type_size, char **filename)
 {
 	char	*stop_seq_beginning;
 	size_t	end_of_filename;
@@ -63,7 +63,7 @@ char		*interpret_file_data(char *data, size_t *data_type_size, char **filename)
 	return (data + end_of_filename + stop_seq_length);
 }
 
-char		*interpret_file_data_algo(char *data, size_t *data_type_size)
+char		*ssl_interpret_file_data_algo(char *data, size_t *data_type_size)
 {
 	char	*stop_seq_beginning;
 	size_t	end_of_filename;

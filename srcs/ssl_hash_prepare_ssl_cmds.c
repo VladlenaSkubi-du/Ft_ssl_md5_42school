@@ -6,18 +6,31 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 18:45:42 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/07 16:35:06 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/11 13:36:20 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
 #include "ssl_cmd_list.h"
 
-int	ssl_save_available_commands(void)
+size_t		ssl_check_command(char *cmd)
 {
-	int			i;
-	size_t		answer;
-	void		*cell_data;
+	size_t	answer_cmd;
+
+	answer_cmd = ssl_save_commands_hashfind(cmd);
+	if (answer_cmd == SIZET_MAX)
+	{
+		ssl_errors_management(ERR_INVALID_CMD, cmd, 0, 0);
+		return (SIZET_MAX);
+	}
+	return (answer_cmd);
+}
+
+int			ssl_save_available_commands(void)
+{
+	int		i;
+	size_t	answer;
+	void	*cell_data;
 	
 	i = 0;
 	hashtable_init();
@@ -38,9 +51,8 @@ int	ssl_save_available_commands(void)
 	return (0);
 }
 
-int	ssl_clean_saved_commands(void)
+int			ssl_clean_saved_commands(void)
 {
 	hashtable_remove();
 	return (0);
 }
-

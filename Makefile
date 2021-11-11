@@ -41,18 +41,19 @@ DGST := \
 			$(DGST_DIR)/dgst_start.c
 
 SOURCES := main.c \
+			ssl_hash_prepare_ssl_cmds.c \
+			ssl_hash_cmd_hashmethods.c \
+			ssl_hash_hashdata_methods.c \
+			ssl_smessage_methods.c \
 			ssl_parsing.c \
 			ssl_options.c \
-			ssl_prepare_ssl_cmds.c \
+			ssl_read_message.c \
+			ssl_read_filename.c \
+			ssl_output.c \
+			ssl_output_options.c \
+			ssl_soutput_buffer_methods.c \
 			ssl_error_management.c \
 			ssl_usage.c \
-			ssl_smessage_methods.c \
-			ssl_cmd_hashmethods.c \
-			ssl_hashdata_methods.c \
-			ssl_read_message.c \
-			ssl_output.c \
-			ssl_prepare_output_results.c \
-			ssl_prepare_output_args_as_data.c \
 			$(MD5) \
 			$(SHA256) \
 			$(DGST) \

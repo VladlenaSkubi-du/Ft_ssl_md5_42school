@@ -6,54 +6,73 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/28 14:44:10 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/08 20:49:44 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/11 15:12:13 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
-#include "ssl_cmd_list.h"
 
-size_t		ssl_check_command(char *cmd)
+/*
+** If there are no flags: ./ft_ssl md5
+** or if there are flags but not s and we have not started to see
+** all the arguments as filenames: ./ft_ssl md5 -p -r
+*/
+
+static int		conditions_for_options(char **argv, int i, int *flags)
 {
-	size_t	answer_cmd;
-
-	answer_cmd = ssl_save_commands_hashfind(cmd);
-	if (answer_cmd == SIZET_MAX)
-	{
-		ssl_errors_management(ERR_INVALID_CMD, cmd, 0, 0);
-		return (SIZET_MAX);
-	}
-	return (answer_cmd);
+	if ((!(*flags) || (*flags && !(*flags & FLAG_S)
+			&& !(*flags & FLAG_FILENAME)))
+			&& argv[i][0] == '-')
+		return (1);
+	return (0);
 }
 
-static int	check_algo_options(int argc, char **argv, char *cmd_options)
+static size_t	cycle_to_check_arguments(char **argv, int *i, int *flags)
 {
-	int		answer;
-	int		flags;
-
-	flags = ft_find_options(2, (char*[]){cmd_options, "--help"}, argv);
-	if (flags < 0)
+	size_t		answer;
+	int			conditions;
+	
+	conditions = conditions_for_options(argv, *i, flags);
+	if (conditions)
 	{
-		ssl_errors_management(ERR_OPTION, NULL, 0, 0);
-		return (-1);
+		if (!argv[*i][1] || (argv[*i][1] && argv[*i][1] == '-' && !argv[*i][2]))
+			return (error_lets_save_space(ERR_OPTION, "- or --"));
+		else
+		{
+			answer = ssl_default_options_actions(argv, i, flags);
+			if (answer == SIZET_MAX)
+				return (SIZET_MAX);
+		}
 	}
-	if (argc == 2 && (flags & FLAG_S))
+	else
 	{
-		ssl_errors_management(ERR_NO_ARG, NULL, 0, 0);
-		return (-1);
+		answer = ssl_default_fileargs_actions(argv, *i, flags);
+		if (answer == SIZET_MAX)
+			return (SIZET_MAX);
 	}
-	return (flags);
+	return (0);
 }
 
-static size_t	error_lets_save_space(t_ssl_errors error, char *option)
+/*
+** If there are no flags: ./ft_ssl md5
+** or there is only r flag: ./ft_ssl md5 -r
+** or there is only q flag: ./ft_ssl md5 -q
+** or there are flags that are not s and we have not started to
+** see all arguments as filenames: ./ft_ssl md5 -q -r -p
+*/
+
+static int		conditions_for_stdin(int *flags)
 {
-	ssl_errors_management(error, option, 0, 0);
-	return (SIZET_MAX);
+	if (*flags == 0 || *flags == FLAG_R || *flags == FLAG_Q
+			|| (*flags && !(*flags & FLAG_S) && !(*flags & FLAG_FILENAME)))
+		return (1);
+	return (0);
 }
 
-static size_t	define_default_options(int argc, char **argv, int *flags)
+static size_t	define_default_options(char **argv, int *flags)
 {
 	int			i;
+	int			conditions;
 	size_t		answer;
 	
 	i = 0;
@@ -61,47 +80,12 @@ static size_t	define_default_options(int argc, char **argv, int *flags)
 	while (argv[++i])
 	{
 		printf("arg = %s\n", argv[i]);
-		if ((!(*flags) || (*flags && !(*flags & FLAG_S) && !(*flags & FLAG_FILENAME)))
-				&& argv[i][0] == '-')
-		{
-			if (!argv[i][1])
-				return (error_lets_save_space(ERR_OPTION, "-"));
-			else if (argv[i][1] == '-' && !argv[i][2])
-				return (error_lets_save_space(ERR_OPTION, "--"));
-			else if (argv[i][1] == 'p')
-			{
-				*flags |= FLAG_P;
-				answer = ssl_read_from_stdin();
-				if (answer == ERR_MESSAGE_LONG)
-					return (error_lets_save_space(ERR_MESSAGE_LONG, NULL));
-			}
-			else if (argv[i][1] == 'r')
-				*flags |= FLAG_R;
-			else if (argv[i][1] == 'q')
-				*flags |= FLAG_Q;
-			else if (argv[i][1] == 's')
-			{
-				if (!argv[i + 1])
-					return (error_lets_save_space(ERR_NO_ARG, NULL));
-				*flags |= FLAG_S;		
-				answer = ssl_read_string(argv[i + 1]);
-				if (answer == ERR_MESSAGE_LONG)
-					return (error_lets_save_space(ERR_MESSAGE_LONG, NULL));
-				i++;
-			}
-		}
-		else
-		{
-			*flags |= FLAG_FILENAME;
-			answer = ssl_filename_argument(argv[i]);
-			if (answer == ERR_FILEOPEN)
-				ssl_errors_management(ERR_FILEOPEN, argv[i], 0, 0);
-			else if (answer == ERR_MESSAGE_LONG)
-				return (error_lets_save_space(ERR_MESSAGE_LONG, NULL));
-		}
+		answer = cycle_to_check_arguments(argv, &i, flags);
+		if (answer == SIZET_MAX)
+			return (SIZET_MAX);
 	}
-	if (*flags == 0 || *flags == FLAG_R || *flags == FLAG_Q
-			|| (*flags && !(*flags & FLAG_S) && !(*flags & FLAG_FILENAME)))
+	conditions = conditions_for_stdin(flags);
+	if (conditions)
 	{
 		answer = ssl_read_from_stdin();
 		if (answer == ERR_MESSAGE_LONG)
@@ -119,39 +103,20 @@ static size_t	define_default_options(int argc, char **argv, int *flags)
 ** parse the line to see what algoriphm
 ** and options we have.
 ** If we have -s option - we take the string, not the stdin
+** if we do not have string or -p (that is stdin),
+** we have filename arguments
 */
 
 size_t	ssl_parse_arguments(int argc, char **argv,
 			int *flags, char *cmd_options)
 {
-	int			i;
 	size_t		answer;
 
-	*flags = check_algo_options(argc, argv, cmd_options);
+	*flags = ssl_check_algo_options(argc, argv, cmd_options);
 	if (*flags < 0)
 		return (SIZET_MAX);
-	answer = define_default_options(argc, argv, flags);
+	answer = define_default_options(argv, flags);
 	if (answer == SIZET_MAX)
 		return (SIZET_MAX);
-	// if (*flags & FLAG_R)
-	// {
-	// 	i = 1;
-	// 	while (i < argc && argv[i])
-	// 	{
-	// 		// printf("argv = %s\n", argv[i]);
-	// 		answer = ssl_filename_argument(argv[i]);
-	// 		if (answer == ERR_FILEOPEN)
-	// 			ssl_errors_management(ERR_FILEOPEN, argv[i], 0, 0);
-	// 		else if (answer == ERR_MESSAGE_LONG)
-	// 			ssl_errors_management(ERR_MESSAGE_LONG, NULL, 0, 0);
-	// 		i++;
-	// 	}
-	// }
-	// answer_other = ssl_read_from_stdin();
-	// if (answer_other == ERR_MESSAGE_LONG)
-	// {
-	// 	ssl_errors_management(ERR_MESSAGE_LONG, NULL, 0, 0);
-	// 	return (SIZET_MAX);
-	// }
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 15:11:56 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/07 15:16:22 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/11 14:52:11 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 ** Here data consists of a string and an integer.
 */
 
-void	*init_hashdata(void)
+void			*init_hashdata(void)
 {
 	t_celldata	*cmd_attributes;
 
@@ -28,8 +28,8 @@ void	*init_hashdata(void)
 	return ((void *)cmd_attributes);
 }
 
-void	fill_hashdata(void **cell_data, char *options,
-			int (*start_algo_function)(size_t))
+void			fill_hashdata(void **cell_data, char *options,
+					int (*start_algo_function)(size_t))
 {
 	t_celldata	*cmd_attributes;
 
@@ -38,7 +38,7 @@ void	fill_hashdata(void **cell_data, char *options,
 	cmd_attributes->start_algo_function = start_algo_function;
 }
 
-void	copy_hashdata(void **cell_data, void *data)
+void			copy_hashdata(void **cell_data, void *data)
 {
 	t_celldata	*cmd_attributes_old;
 	t_celldata	*cmd_attributes_new;
@@ -51,7 +51,7 @@ void	copy_hashdata(void **cell_data, void *data)
 	*cell_data = cmd_attributes_new;
 }
 
-void	clean_hashdata(void *cell_data)
+void			clean_hashdata(void *cell_data)
 {
 	t_celldata	*cmd_attributes;
 
@@ -61,7 +61,7 @@ void	clean_hashdata(void *cell_data)
 	cmd_attributes->start_algo_function = NULL;
 }
 
-void	print_hashdata(void *cell_data)
+void			print_hashdata(void *cell_data)
 {
 	t_celldata	*cmd_attributes;
 

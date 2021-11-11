@@ -6,13 +6,13 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 11:09:12 by a18979859         #+#    #+#             */
-/*   Updated: 2021/11/08 19:50:24 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/11 15:37:07 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
 
-int	ssl_read_from_stdin(void)
+int			ssl_read_from_stdin(void)
 {
 	char	buf[STDIN_BUFFER];
 	char	*data;
@@ -60,7 +60,7 @@ int	ssl_read_from_stdin(void)
 ** file untill the function read returns 0
 */
 
-int	ssl_read_from_file(int fd, char *filename_in_string, size_t data_size)
+int			ssl_read_from_file(int fd, char *filename_in_string, size_t data_size)
 {
 	char	buf[FILE_BUFFER];
 	char	*data;
@@ -84,7 +84,7 @@ int	ssl_read_from_file(int fd, char *filename_in_string, size_t data_size)
 	return (0);
 }
 
-int	ssl_read_string(char *string)
+int			ssl_read_string(char *string)
 {
 	size_t	data_size;
 

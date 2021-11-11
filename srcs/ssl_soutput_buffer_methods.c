@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 12:29:31 by a18979859         #+#    #+#             */
-/*   Updated: 2021/11/08 12:55:44 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/11 15:31:08 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 static char     **g_output_results;
 static size_t	bufindex;
 
-void	ssl_init_output_buffer(void)
+void			ssl_init_output_buffer(void)
 {
-	size_t	output_results_buffer;
+	size_t		output_results_buffer;
 	
 	ssl_get_dataarray_index(&output_results_buffer);
 	g_output_results = (char **)ft_xmalloc(sizeof(char *)
@@ -25,16 +25,16 @@ void	ssl_init_output_buffer(void)
 	bufindex = 0;
 }
 
-void	ssl_save_output(char *output_hash)
+void			ssl_save_output(char *output_hash)
 {
 	g_output_results[bufindex] = output_hash;
 	bufindex++;
 }
 
-char	*ssl_get_output(int flag_from_beginning)
+char			*ssl_get_output(int flag_from_beginning)
 {
-	size_t	output_results_buffer;
-	char	*hash_line;
+	size_t		output_results_buffer;
+	char		*hash_line;
 	
 	ssl_get_dataarray_index(&output_results_buffer);
 	if (flag_from_beginning)
@@ -46,7 +46,7 @@ char	*ssl_get_output(int flag_from_beginning)
 	return (hash_line);
 }
 
-void	ssl_free_output_buffer(void)
+void			ssl_free_output_buffer(void)
 {
 	ft_arrdel(g_output_results);
 	g_output_results = NULL;

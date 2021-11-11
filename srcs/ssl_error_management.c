@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/14 21:01:57 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/07 15:08:25 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/11 14:47:34 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,10 @@ int	ssl_errors_management(int error_index, char *arg,
 	if (usage_needed == 1)
 		ssl_usage();
 	return (-1);
+}
+
+size_t	error_lets_save_space(t_ssl_errors error, char *option)
+{
+	ssl_errors_management(error, option, 0, 0);
+	return (SIZET_MAX);
 }
