@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/24 09:41:38 by sschmele          #+#    #+#             */
-/*   Updated: 2021/08/10 21:27:34 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/12 22:20:28 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,7 @@ uint32_t 	*md5_make_padded_message(char *data, size_t data_size,
 				// ft_putchar('\n');
 	message[index_of_uint32_block] |= 1UL << index_of_bit;
 				// ft_putendl("after we add 1 bit:");
-				// print_bits_as_32uint_little_endian(message[index_of_byte]);
+				// print_bits_as_32uint_little_endian(message[index_of_uint32_block]);
 	*message_size_uint32 = uint32_blocks_in_message;
 	return (message);
 }

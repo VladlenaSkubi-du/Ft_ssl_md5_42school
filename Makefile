@@ -34,6 +34,7 @@ MD5 := \
 SHA256_DIR := sha256
 SHA256 := \
 			$(SHA256_DIR)/sha256_start.c \
+			$(SHA256_DIR)/sha256_prepare_message.c \
 			$(SHA256_DIR)/sha256_output_hash.c
 
 DGST_DIR := dgst

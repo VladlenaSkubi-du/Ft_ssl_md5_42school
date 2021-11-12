@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 21:49:01 by sschmele          #+#    #+#             */
-/*   Updated: 2021/08/08 11:52:27 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/12 21:47:44 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static uint32_t	g_b_buffer;
 static uint32_t	g_c_buffer;
 static uint32_t	g_d_buffer;
 
-int			init_buffer0_variables(void) // add another const for big-endian
+int			init_buffer0_variables(void)
 {
 	g_a0 = 0x67452301;
 	g_b0 = 0xEFCDAB89;
