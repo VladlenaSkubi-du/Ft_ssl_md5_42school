@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 22:14:49 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/11 15:55:51 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/13 20:56:32 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 #include "md5.h"
 #include "sha256.h"
 #include "print_functions.h"
+#include "algorithms.h"
 #include "libft.h"
 
 # define PROGRAM_NAME "./ft_ssl"

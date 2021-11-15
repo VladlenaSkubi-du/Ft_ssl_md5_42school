@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/28 14:04:41 by sschmele          #+#    #+#             */
-/*   Updated: 2021/08/08 22:06:03 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/13 23:48:23 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void			print_bits_as_32uint_little_endian(uint32_t number)
 		if (bit % 8 == 0)
 			ft_putchar(' ');
 	}
-	ft_putchar('\n');
 }
 
 void		print_bits_as_32uint_string_little_endian(uint32_t *message,
@@ -73,6 +72,23 @@ void		print_bits_as_32uint_string_little_endian(uint32_t *message,
 	while (i < uint32_blocks)
 	{
 		print_bits_as_32uint_little_endian(message[i]);
+		ft_putchar('\n');
 		i++;
+	}
+}
+
+void		print_bits_as_2_32uint_string_little_endian(uint32_t *message,
+				int uint32_blocks)
+{
+	int		i;
+
+	i = 0;
+	while (i < uint32_blocks)
+	{
+		print_bits_as_32uint_little_endian(message[i]);
+		ft_putchar('\t');
+		print_bits_as_32uint_little_endian(message[i + 1]);
+		ft_putchar('\n');
+		i += 2;
 	}
 }

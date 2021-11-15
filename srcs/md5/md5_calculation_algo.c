@@ -6,12 +6,13 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/08 22:45:25 by sschmele          #+#    #+#             */
-/*   Updated: 2021/08/14 01:09:38 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/13 21:23:35 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
 #include "md5.h"
+#include "algorithms.h"
 
 /*
 ** Here we init all the variables needed for calculations,
@@ -73,15 +74,6 @@ int	calculate_with_fun_functions(void)
 	return (0);
 }
 
-static uint32_t	rotate_left_in_play(uint32_t value, uint32_t s_shift)
-{
-	uint32_t	rotation_done;
-
-	rotation_done = (value << s_shift) |
-		(value >> (SIZEOF_UINT32_BIT - s_shift));
-	return (rotation_done);
-}
-
 /*
 ** Main formula here consist of 3 lines started with aa
 ** But the point is that each of 4 rounds we change the order
@@ -126,7 +118,7 @@ int	play_the_round(uint32_t sum_T_message_by_k,
 	cc = get_buffer_variables(values_orders_vars[s_shift_index + 2]);
 	dd = get_buffer_variables(values_orders_vars[s_shift_index + 3]);
 	aa += F_fun_function(bb, cc, dd) + sum_T_message_by_k;
-	aa = rotate_left_in_play(aa, s_shift);
+	aa = uint32_rotate_left_in_algo(aa, s_shift);
 	aa += bb;
 	save_buffer_variables(aa, values_orders_vars[s_shift_index]);
 	return (0);

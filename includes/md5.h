@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   md5.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: a18979859 <a18979859@student.42.fr>        +#+  +:+       +#+        */
+/*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 11:20:43 by sschmele          #+#    #+#             */
-/*   Updated: 2021/08/23 12:24:14 by a18979859        ###   ########.fr       */
+/*   Updated: 2021/11/13 21:02:01 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_MD5_H
 # define FT_MD5_H
 
-# define	SIZEOF_UINT32_BIT				32
 # define	NUMBER_OF_ROUNDS				64
 # define	NUMBER_OF_UINT32_VALUES			4
 # define	NUMBER_OF_UINT32_VALUES_PARTS	4
@@ -85,14 +84,6 @@ uint32_t	md5_fun_third_play(uint32_t x, uint32_t y, uint32_t z);
 uint32_t	md5_fun_fourth_play(uint32_t x, uint32_t y, uint32_t z);
 
 /*
-** File md5_logic_bit_operations.c
-*/
-
-uint32_t	md5_bit_and(uint32_t x, uint32_t y);
-uint32_t	md5_bit_or(uint32_t x, uint32_t y);
-uint32_t	md5_bit_xor(uint32_t x, uint32_t y);
-
-/*
 ** File md5_svariables_buffer_methods.c
 */
 
@@ -108,11 +99,6 @@ uint32_t	get_buffer_variables(int flag);
 
 int			save_buffer_before_block(void);
 int			save_buffer_after_block(void);
-
-// uint32_t	get_buffer_before_block(int flag);
-// int			init_block_variables(void);
-// int			save_block_variable_a(uint32_t a);
-// uint32_t	get_block_variables(int flag);
 
 /*
 ** File md5_sconst_and_shift_methods.c

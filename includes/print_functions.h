@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 22:40:12 by sschmele          #+#    #+#             */
-/*   Updated: 2021/08/08 22:14:49 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/13 23:48:35 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void        print_bits(char *str);
 void		print_bits_as_32uint_little_endian(uint32_t number);
 void		print_bits_as_32uint_string_little_endian(uint32_t *message,
 				int uint32_blocks);
+void		print_bits_as_2_32uint_string_little_endian(uint32_t *message,
+				int uint32_blocks);
 
 /*
 ** File print_bits_big_endian.c
@@ -30,6 +32,8 @@ void		print_bits_as_32uint_string_little_endian(uint32_t *message,
 
 void		print_bits_as_32uint_big_endian(uint32_t number);
 void		print_bits_as_32uint_string_big_endian(uint32_t *message,
+				int uint32_blocks);
+void		print_bits_as_2_32uint_string_big_endian(uint32_t *message,
 				int uint32_blocks);
 
 /*

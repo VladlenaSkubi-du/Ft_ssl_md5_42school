@@ -9,6 +9,11 @@ FLAGS += -g
 
 # ------------  SOURCE FILES  ------------------------------------------------ #
 
+OVERALL_DIR := overall
+OVERALL := \
+			$(OVERALL_DIR)/logic_bit_operations.c \
+			$(OVERALL_DIR)/rotations.c
+
 PRINT_FUNCTIONS_DIR := print_functions
 PRINT_FUNCTIONS := \
 			$(PRINT_FUNCTIONS_DIR)/print_options.c \
@@ -24,7 +29,6 @@ MD5 := \
 			$(MD5_DIR)/md5_calculation_algo.c \
 			$(MD5_DIR)/md5_init_plays.c \
 			$(MD5_DIR)/md5_init_fun_functions.c \
-			$(MD5_DIR)/md5_logic_bit_operations.c \
 			$(MD5_DIR)/md5_output_hash.c \
 			$(MD5_DIR)/md5_smessage_block_methods.c \
 			$(MD5_DIR)/md5_sconst_and_shift_methods.c \
@@ -34,12 +38,18 @@ MD5 := \
 SHA256_DIR := sha256
 SHA256 := \
 			$(SHA256_DIR)/sha256_start.c \
+			$(SHA256_DIR)/sha256_notmine.c \
 			$(SHA256_DIR)/sha256_prepare_message.c \
+			$(SHA256_DIR)/sha256_svariables_block_methods.c \
+			$(SHA256_DIR)/sha256_svariables_buffer_methods.c \
+			$(SHA256_DIR)/sha256_smessage_block_methods.c \
+			$(SHA256_DIR)/sha256_sconst_methods.c \
 			$(SHA256_DIR)/sha256_output_hash.c
 
 DGST_DIR := dgst
 DGST := \
 			$(DGST_DIR)/dgst_start.c
+
 
 SOURCES := main.c \
 			ssl_hash_prepare_ssl_cmds.c \
@@ -58,6 +68,7 @@ SOURCES := main.c \
 			$(MD5) \
 			$(SHA256) \
 			$(DGST) \
+			$(OVERALL) \
 			$(PRINT_FUNCTIONS)
 
 # ------------  DIRECTORIES  ------------------------------------------------- #
@@ -113,6 +124,7 @@ $(DIR_O):
 	mkdir -p $(DIR_O)/$(MD5_DIR)
 	mkdir -p $(DIR_O)/$(SHA256_DIR)
 	mkdir -p $(DIR_O)/$(DGST_DIR)
+	mkdir -p $(DIR_O)/$(OVERALL_DIR)
 	mkdir -p $(DIR_O)/$(PRINT_FUNCTIONS_DIR)
 
 clean:

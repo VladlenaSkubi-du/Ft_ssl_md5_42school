@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/24 09:41:38 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/12 22:20:28 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/15 20:40:25 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ uint32_t 	*md5_add_64bit_mlength_to_message(uint32_t *message,
 }
 
 /*
-** WHen we count @uint32_blocks_in_message we take the full calculated
+** When we count @uint32_blocks_in_message we take the full calculated
 ** length of the message in bits, divide by 8 to get how many uint8_t
 ** blocks in the message we should have
 ** And then divide the final result by 4 because there are 4 uint8_t blocks
