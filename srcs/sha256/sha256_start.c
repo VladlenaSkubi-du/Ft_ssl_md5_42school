@@ -6,147 +6,140 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 11:36:41 by a18979859         #+#    #+#             */
-/*   Updated: 2021/11/15 20:40:04 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/16 00:03:07 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sha256_notmine.h"
 
-#define ROTLEFT(a,b) (((a) << (b)) | ((a) >> (32-(b))))
-#define ROTRIGHT(a,b) (((a) >> (b)) | ((a) << (32-(b))))
-#define SIG0(x) (ROTRIGHT(x,7) ^ ROTRIGHT(x,18) ^ ((x) >> 3))
-#define SIG1(x) (ROTRIGHT(x,17) ^ ROTRIGHT(x,19) ^ ((x) >> 10))
-
 #include "ft_ssl.h"
 #include "sha256.h"
 #include "algorithms.h"
 
-static uint32_t	*g_sha256_64words_block;
-
-static int		sha256_change_uint32_word_in_64_uint32_words_block(size_t index,
-					uint32_t word_to_change)
+static uint32_t	sha256_find_ch_temp1_algo(void)
 {
-	g_sha256_64words_block[index] = word_to_change;
-		print_bits_as_32uint_little_endian(g_sha256_64words_block[index]);
-		ft_putstr("\n");
-	return (0);
+	uint32_t	e;
+	uint32_t	f;
+	uint32_t	g;
+	uint32_t	ch_result;
+	
+	e = sha256_get_buffer_variables('e');
+	f = sha256_get_buffer_variables('f');
+	g = sha256_get_buffer_variables('g');
+	ch_result = uint32_bit_xor(uint32_bit_and(e, f), uint32_bit_and(~e, g));
+	return (ch_result);
 }
 
-static uint32_t	*sha256_get_64_uint32_words_block(void)
+static uint32_t	sha256_find_s1_temp1_algo(void)
 {
-	return (g_sha256_64words_block);
-}
-
-static int		sha256_free_64_uint32_words_block(void)
-{
-	free(g_sha256_64words_block);
-	g_sha256_64words_block = NULL;
-	return (0);
-}
-
-static uint32_t	sha256_find_s0_const(uint32_t *message_64words_block, int i)
-{
-	uint32_t	result;
 	uint32_t	first;
 	uint32_t	second;
+	uint32_t	s1_result;
+	uint32_t	e;
 
-	if (i < 1 || i > SHA256_FULL_NUMBER_OF_WORDS)
-		return (0);	
-	first = uint32_rotate_right_in_algo(message_64words_block[i - SHA256_s0_index],
-			SHA256_s0_first_rotright);
-	second = uint32_rotate_right_in_algo(message_64words_block[i - SHA256_s0_index],
-			SHA256_s0_second_rotright);
-	result = uint32_bit_xor(first, second);		
-	first = result;
-	second = message_64words_block[i - SHA256_s0_index] >> SHA256_s0_third_shift;
-	result = uint32_bit_xor(first, second);
-	return (result);
+	e = sha256_get_buffer_variables('e');
+	first = uint32_rotate_right_in_algo(e, SHA256_temp1_s1_efirst_rotright);
+	second = uint32_rotate_right_in_algo(e, SHA256_temp1_s1_esecond_rotright);
+	s1_result = uint32_bit_xor(first, second);
+	first = s1_result;
+	second = uint32_rotate_right_in_algo(e, SHA256_temp1_s1_ethird_rotright);
+	s1_result = uint32_bit_xor(first, second);
+	return (s1_result);
 }
 
-static uint32_t	sha256_find_s1_const(uint32_t *message_64words_block, int i)
+static uint32_t	sha256_find_temp1_algo(uint32_t *message_64words_block,
+					size_t i)
 {
-	uint32_t	result;
+	uint32_t	s1;
+	uint32_t	h;
+	uint32_t	ch;
+	uint32_t	k_const;
+
+	s1 = sha256_find_s1_temp1_algo();
+	ch = sha256_find_ch_temp1_algo();
+	h = sha256_get_buffer_variables('h');
+	k_const = sha256_get_const_table_sin_value(i);
+	return (h + s1 + ch + k_const + message_64words_block[i]);
+}
+
+static uint32_t	sha256_find_maj_temp2_algo(uint32_t a)
+{
 	uint32_t	first;
 	uint32_t	second;
+	uint32_t	maj_result;
+	uint32_t	b;
+	uint32_t	c;
 
-	if (i < 1 || i > SHA256_FULL_NUMBER_OF_WORDS)
-		return (0);
-	first = uint32_rotate_right_in_algo(message_64words_block[i - SHA256_s1_index],
-			SHA256_s1_first_rotright);
-	second = uint32_rotate_right_in_algo(message_64words_block[i - SHA256_s1_index],
-			SHA256_s1_second_rotright);
-	result = uint32_bit_xor(first, second);
-	first = result;
-	second = message_64words_block[i - SHA256_s1_index] >> SHA256_s1_third_shift;
-	result = uint32_bit_xor(first, second);
-	return (result);
+	b = sha256_get_buffer_variables('b');
+	c = sha256_get_buffer_variables('c');
+	first = uint32_bit_and(a, b);
+	second = uint32_bit_and(a, c);
+	maj_result = uint32_bit_xor(first, second);
+	first = maj_result;
+	second = uint32_bit_and(b, c);
+	maj_result = uint32_bit_xor(first, second);
+	return (maj_result);
 }
 
-static int		sha256_change_64_uint32_words_block(void)
+static uint32_t	sha256_find_s0_temp2_algo(uint32_t a)
+{
+	uint32_t	first;
+	uint32_t	second;
+	uint32_t	s0_result;
+
+	first = uint32_rotate_right_in_algo(a,
+		SHA256_temp2_s0_afirst_rotright);
+	second = uint32_rotate_right_in_algo(a,
+		SHA256_temp2_s0_asecond_rotright);
+	s0_result = uint32_bit_xor(first, second);
+	first = s0_result;
+	second = uint32_rotate_right_in_algo(a,
+		SHA256_temp2_s0_athird_rotright);
+	s0_result = uint32_bit_xor(first, second);
+	return (s0_result);
+}
+
+static uint32_t	sha256_find_temp2_algo(void)
+{
+	uint32_t	s0;
+	uint32_t	maj;
+	uint32_t	a;
+
+	a = sha256_get_buffer_variables('a');
+	s0 = sha256_find_s0_temp2_algo(a);
+	maj = sha256_find_maj_temp2_algo(a);
+	return (s0 + maj);
+}
+
+static int		sha256_compress_64_words_block(void)
 {
 	uint32_t	*message_64words_block;
-	uint32_t	s0;
-	uint32_t	s1;
-	uint32_t	uint32_for_change;
 	size_t		i;
-
-	i = 16;
-	message_64words_block = sha256_get_64_uint32_words_block();
-	while (i < SHA256_FULL_NUMBER_OF_WORDS) //SHA256_FULL_NUMBER_OF_WORDS
+	uint32_t	temp1;
+	uint32_t	temp2;
+	
+	message_64words_block = sha256_get_64words_message_block();
+	i = 0;
+	while (i < SHA256_FULL_NUMBER_OF_WORDS)
 	{
-	// 		printf("before\n");
-	// 		print_bits_as_32uint_little_endian(message_64words_block[i]);
-	// 		ft_putstr("\n");
-		s0 = sha256_find_s0_const(message_64words_block, (int)i);
-			// printf("w1 number = %d\n", message_64words_block[i - 15]);
-			// printf("s0\n");
-			// print_bits_as_32uint_little_endian(s0);
-			// ft_putstr("\n");		
-			// printf("s0 number = %d\n", s0);
-		s1 = sha256_find_s1_const(message_64words_block, (int)i);
-			// printf("s1\n");
-			// print_bits_as_32uint_little_endian(s1);
-			// ft_putstr("\n");		
-			// printf("s1 number= %d\n", s1);
-		uint32_for_change = message_64words_block[i - SHA256_word_first_index] +
-			s0 +
-			message_64words_block[i - SHA256_word_second_index] +
-			s1;
-		sha256_change_uint32_word_in_64_uint32_words_block(i, uint32_for_change);
+		temp1 = sha256_find_temp1_algo(message_64words_block, i);
+		temp2 = sha256_find_temp2_algo();
+		sha256_save_buffer_variables(sha256_get_buffer_variables('g'), 'h');
+		sha256_save_buffer_variables(sha256_get_buffer_variables('f'), 'g');
+		sha256_save_buffer_variables(sha256_get_buffer_variables('e'), 'f');
+		sha256_save_buffer_variables(sha256_get_buffer_variables('d') + temp1, 'e');
+		sha256_save_buffer_variables(sha256_get_buffer_variables('c'), 'd');
+		sha256_save_buffer_variables(sha256_get_buffer_variables('b'), 'c');
+		sha256_save_buffer_variables(sha256_get_buffer_variables('a'), 'b');
+		sha256_save_buffer_variables(temp1 + temp2, 'a');
 		i++;
 	}
-		//print_bits_as_2_32uint_string_little_endian(message_64words_block, 64); //TODO delete
+	// printf("buffer a is %u\n", sha256_get_buffer_variables('a'));
 	return (0);
 }
 
-/*
-** We copy each uint32_t word into the new buffer with little-endian to
-** big-endian order
-**
-** For debug:
-** For little-endian before:
-** ft_memcpy(g_sha256_64words_block, message_512bit_block,
-** 	block_size * (sizeof(uint32_t)));
-*/
-
-static int		sha256_add_48_uint32_words_to_message_block_512bit(size_t block_size)
-{
-	uint32_t	*message_512bit_block;
-	size_t		full_words_number_in_block;
-	size_t		uint32_word;
-	size_t		uint8_part;
-
-	message_512bit_block = sha256_get_message_512bit_block();
-	full_words_number_in_block = SHA256_FULL_NUMBER_OF_WORDS;
-	g_sha256_64words_block = (uint32_t*)ft_xmalloc(sizeof(uint32_t) *
-		(full_words_number_in_block + 1));
-	ft_memcpy(g_sha256_64words_block, message_512bit_block,
-		block_size * (sizeof(uint32_t)));
-	return (0);
-}
-
-static int	sha256_calculate_hash_by_algo(uint32_t *message,
-		size_t message_size_uint32)
+int				sha256_calculate_hash_by_algo(uint32_t *message,
+					size_t message_size_uint32)
 {
 	size_t		index_of_512bit_block;
 
@@ -154,15 +147,15 @@ static int	sha256_calculate_hash_by_algo(uint32_t *message,
 	sha256_init_buffer0_variables();
 	sha256_init_buffer_variables();
 	printf("message_size_uint32 = %zu\n", message_size_uint32); //TODO delete
-	while (index_of_512bit_block < message_size_uint32)//message_size_uint32
+	while (index_of_512bit_block < message_size_uint32) //message_size_uint32
 	{
 		sha256_save_buffer_before_block();
 		sha256_init_new_message_block_512bit(message + index_of_512bit_block, 16);
-		sha256_add_48_uint32_words_to_message_block_512bit(16); //я работаю дальше с этим блоком
-		sha256_change_64_uint32_words_block();
-		//sha256_calculate_with_fun_functions();
+		sha256_init_64words_message_block(16); //я работаю дальше с этим блоком
 		sha256_free_new_message_block_512bit(); //512bit сhunk мне не нужен
-		sha256_free_64_uint32_words_block();
+		sha256_make_message_schedule_64words();
+		sha256_compress_64_words_block();
+		sha256_free_64words_message_block();
 		sha256_save_buffer_after_block();
 		index_of_512bit_block += 16;
 		sha256_increase_block_number();
@@ -199,15 +192,22 @@ int		sha256_algorithm_start(size_t data_size)
 			printf("my algo:\n");
 		sha256_calculate_hash_by_algo(message, message_size_uint32);
 			printf("__________\n");
-		// sha256_output_hash();
+		sha256_output_hash();
 		free(message);
 	}
 	//////////////////////////////////////////
-	// 	printf("other algo:\n");
-	// BYTE text1[] = {"hello world aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"};          
-	// SHA256_CTX ctx;
-	// sha256_init(&ctx);
-	// sha256_update(&ctx, text1, strlen(text1));
+		printf("other algo:\n");
+	BYTE text1[] = {"abc"};  
+	BYTE hash1[SHA256_BLOCK_SIZE] = {0xba,0x78,0x16,0xbf,0x8f,0x01,0xcf,0xea,0x41,0x41,0x40,0xde,0x5d,0xae,0x22,0x23,
+	        0xb0,0x03,0x61,0xa3,0x96,0x17,0x7a,0x9c,0xb4,0x10,0xff,0x61,0xf2,0x00,0x15,0xad};        
+	SHA256_CTX ctx;
+	BYTE buf[SHA256_BLOCK_SIZE];
+	int pass = 1;
+	sha256_init(&ctx);
+	sha256_update(&ctx, text1, strlen(text1));
+	sha256_final(&ctx, buf);
+	pass = pass && !memcmp(hash1, buf, SHA256_BLOCK_SIZE);
+	printf("SHA-256 tests: %s\n", pass ? "SUCCEEDED" : "FAILED");
 	//////////////////////////////////////
 	return (0);
 }

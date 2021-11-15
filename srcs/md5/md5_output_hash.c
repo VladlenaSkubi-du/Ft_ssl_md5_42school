@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 21:20:06 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/12 22:53:58 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/15 23:54:58 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	md5_copy_variables_to_hash(uint8_t **hash)
 	while (i < NUMBER_OF_UINT32_VALUES)
 	{
 		value = get_buffer_variables(values_order[i]);
-		ft_memcpy((*hash) + NUMBER_OF_UINT32_VALUES * i,
+		ft_memcpy((*hash) + NUMBER_OF_UINT32_VALUES_PARTS * i,
 			&value, NUMBER_OF_UINT32_VALUES_PARTS);
 		i++;
 	}
@@ -56,7 +56,7 @@ static char	*md5_make_string_from_hash(uint8_t *hash)
 		* (blocks_in_hash * 2 + 1));
 	index_in_uint8 = 0;
 	index_in_char = 0;
-	while (index_in_uint8 < 16)
+	while (index_in_uint8 < blocks_in_hash)
 	{
 		hash_string[index_in_char] = hex_char[(hash[index_in_uint8] >> 4) & 0x0F];
 		hash_string[index_in_char + 1] = hex_char[hash[index_in_uint8] & 0x0F];

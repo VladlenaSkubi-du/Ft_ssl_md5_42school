@@ -51,21 +51,27 @@ void sha256_transform(SHA256_CTX *ctx, const BYTE data[])
 
 	for (i = 0, j = 0; i < 16; ++i, j += 4)
 		m[i] = (data[j] << 24) | (data[j + 1] << 16) | (data[j + 2] << 8) | (data[j + 3]);
-	for ( ; i < 17; ++i)
+	for ( ; i < 64; ++i)
 	{
-		printf("m[1] before = %d\n", m[i - 15]);
+		// printf("m[1] before = %d\n", m[i - 15]);
 		print1 = SIG0(m[i - 15]);
-			printf("s0\n");
-			print_bits_as_32uint_little_endian(print1);
-			ft_putstr("\n");		
-			printf("s0 number = %d\n", print1);
+			// printf("s0\n");
+			// print_bits_as_32uint_little_endian(print1);
+			// ft_putstr("\n");		
+			// printf("s0 number = %d\n", print1);
 		print1 = SIG1(m[i - 2]);
-			printf("s1\n");
-			print_bits_as_32uint_little_endian(print1);
-			ft_putstr("\n");		
-			printf("s1 number= %d\n", print1);
+			// printf("s1\n");
+			// print_bits_as_32uint_little_endian(print1);
+			// ft_putstr("\n");		
+			// printf("s1 number= %d\n", print1);
 		m[i] = SIG1(m[i - 2]) + m[i - 7] + SIG0(m[i - 15]) + m[i - 16];
 	}
+	// printf("full 64 words:\n");
+	// for(i = 0; i < 64; i++)
+	// {
+	// 	printf("[%d] - ", m[i]);
+	// }
+	// printf("\n");
 
 	a = ctx->state[0];
 	b = ctx->state[1];
