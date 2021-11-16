@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 11:36:41 by a18979859         #+#    #+#             */
-/*   Updated: 2021/11/16 00:03:07 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/16 22:48:37 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ static uint32_t	sha256_find_temp1_algo(uint32_t *message_64words_block,
 	s1 = sha256_find_s1_temp1_algo();
 	ch = sha256_find_ch_temp1_algo();
 	h = sha256_get_buffer_variables('h');
-	k_const = sha256_get_const_table_sin_value(i);
+	k_const = sha256_get_const_table_sin_value(i + 1);
+		// printf("inside t1: h=%u, s1=%u, ch=%u, k[i]=%u, m[i]=%u\n", h, s1, ch, k_const, message_64words_block[i]);
 	return (h + s1 + ch + k_const + message_64words_block[i]);
 }
 
@@ -111,6 +112,21 @@ static uint32_t	sha256_find_temp2_algo(void)
 	return (s0 + maj);
 }
 
+/*
+** For debug:
+**	printf("round %zu\n", i);
+** 		printf("t1 = [%u], ", temp1);
+**		printf("t2 = [%u], ", temp2);
+**		printf("h = [%u], ", sha256_get_buffer_variables('h'));
+**		printf("g = [%u], ", sha256_get_buffer_variables('g'));
+**		printf("f = [%u], ", sha256_get_buffer_variables('f'));
+**		printf("e = [%u], ", sha256_get_buffer_variables('e'));
+**		printf("d = [%u], ", sha256_get_buffer_variables('d'));
+**		printf("c = [%u], ", sha256_get_buffer_variables('c'));
+**		printf("b = [%u], ", sha256_get_buffer_variables('b'));
+**		printf("a = [%u]\n\n", sha256_get_buffer_variables('a'));
+*/
+
 static int		sha256_compress_64_words_block(void)
 {
 	uint32_t	*message_64words_block;
@@ -120,7 +136,7 @@ static int		sha256_compress_64_words_block(void)
 	
 	message_64words_block = sha256_get_64words_message_block();
 	i = 0;
-	while (i < SHA256_FULL_NUMBER_OF_WORDS)
+	while (i < SHA256_FULL_NUMBER_OF_WORDS) //SHA256_FULL_NUMBER_OF_WORDS
 	{
 		temp1 = sha256_find_temp1_algo(message_64words_block, i);
 		temp2 = sha256_find_temp2_algo();
@@ -146,7 +162,7 @@ int				sha256_calculate_hash_by_algo(uint32_t *message,
 	index_of_512bit_block = 0;
 	sha256_init_buffer0_variables();
 	sha256_init_buffer_variables();
-	printf("message_size_uint32 = %zu\n", message_size_uint32); //TODO delete
+	// printf("message_size_uint32 = %zu\n", message_size_uint32); //TODO delete
 	while (index_of_512bit_block < message_size_uint32) //message_size_uint32
 	{
 		sha256_save_buffer_before_block();
@@ -182,32 +198,41 @@ int		sha256_algorithm_start(size_t data_size)
 			data = ssl_get_data_algo(&data_size, 0);
 		if (data == NULL)
 			break ;
-		printf("data =%s with %zu\n", data + 1, data_size); //TODO delete
+		// printf("data =%s with %zu\n", data + 1, data_size); //TODO delete
 		message_size_uint32 = 0;
 		mlength_bits_padded = 0;
 		message = sha256_prepare_message_for_algo(data + 1, data_size,
 			&message_size_uint32, &mlength_bits_padded);
 		if (message == NULL)
 			return (1);
-			printf("my algo:\n");
+			// printf("my algo:\n");
 		sha256_calculate_hash_by_algo(message, message_size_uint32);
-			printf("__________\n");
+			// printf("__________\n");
 		sha256_output_hash();
 		free(message);
 	}
 	//////////////////////////////////////////
-		printf("other algo:\n");
-	BYTE text1[] = {"abc"};  
-	BYTE hash1[SHA256_BLOCK_SIZE] = {0xba,0x78,0x16,0xbf,0x8f,0x01,0xcf,0xea,0x41,0x41,0x40,0xde,0x5d,0xae,0x22,0x23,
-	        0xb0,0x03,0x61,0xa3,0x96,0x17,0x7a,0x9c,0xb4,0x10,0xff,0x61,0xf2,0x00,0x15,0xad};        
-	SHA256_CTX ctx;
-	BYTE buf[SHA256_BLOCK_SIZE];
-	int pass = 1;
-	sha256_init(&ctx);
-	sha256_update(&ctx, text1, strlen(text1));
-	sha256_final(&ctx, buf);
-	pass = pass && !memcmp(hash1, buf, SHA256_BLOCK_SIZE);
-	printf("SHA-256 tests: %s\n", pass ? "SUCCEEDED" : "FAILED");
+		// printf("other algo:\n");
+	// BYTE text1[] = {"abc"};  
+	// BYTE hash1[SHA256_BLOCK_SIZE] = {0xba,0x78,0x16,0xbf,0x8f,0x01,0xcf,0xea,0x41,0x41,0x40,0xde,0x5d,0xae,0x22,0x23,
+	// //         0xb0,0x03,0x61,0xa3,0x96,0x17,0x7a,0x9c,0xb4,0x10,0xff,0x61,0xf2,0x00,0x15,0xad};        
+	// BYTE text1[] = {"abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq"};
+	// BYTE hash1[SHA256_BLOCK_SIZE] = {0x24,0x8d,0x6a,0x61,0xd2,0x06,0x38,0xb8,0xe5,0xc0,0x26,0x93,0x0c,0x3e,0x60,0x39,
+	//                                  0xa3,0x3c,0xe4,0x59,0x64,0xff,0x21,0x67,0xf6,0xec,0xed,0xd4,0x19,0xdb,0x06,0xc1};
+	// BYTE text1[] = {"hello world"}; 
+	// BYTE hash1[SHA256_BLOCK_SIZE] = {0xb9,0x4d,0x27,0xb9,0x93,0x4d,0x3e,0x08,0xa5,0x2e,0x52,0xd7,0xda,0x7d,0xab,0xfa,
+	//                                  0xc4,0x84,0xef,0xe3,0x7a,0x53,0x80,0xee,0x90,0x88,0xf7,0xac,0xe2,0xef,0xcd,0xe9};
+	// BYTE text1[] = {"abcde"}; 
+	// BYTE hash1[SHA256_BLOCK_SIZE] = {0x36, 0xbb, 0xe5, 0x0e, 0xd9, 0x68, 0x41, 0xd1, 0x04, 0x43, 0xbc, 0xb6, 0x70, 0xd6, 0x55, 0x4f, 
+	// 								0x0a, 0x34, 0xb7, 0x61, 0xbe, 0x67, 0xec, 0x9c, 0x4a, 0x8a, 0xd2, 0xc0, 0xc4, 0x4c, 0xa4, 0x2c};
+	// SHA256_CTX ctx;
+	// BYTE buf[SHA256_BLOCK_SIZE];
+	// int pass = 1;
+	// sha256_init(&ctx);
+	// sha256_update(&ctx, text1, strlen(text1));
+	// sha256_final(&ctx, buf);
+	// pass = pass && !memcmp(hash1, buf, SHA256_BLOCK_SIZE);
+	// printf("SHA-256 tests: %s\n", pass ? "SUCCEEDED" : "FAILED");
 	//////////////////////////////////////
 	return (0);
 }

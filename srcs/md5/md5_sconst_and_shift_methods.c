@@ -6,26 +6,26 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 22:21:35 by sschmele          #+#    #+#             */
-/*   Updated: 2021/08/14 01:10:12 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/16 20:38:34 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
 #include "md5.h"
 
-static uint32_t	g_shifts_first_play[5] = { 0,
+static uint32_t	g_md5_shifts_first_play[5] = { 0,
 	7, 12, 17, 22};
 
-static uint32_t	g_shifts_second_play[5] = { 0,
+static uint32_t	g_md5_shifts_second_play[5] = { 0,
 	5, 9, 14, 20};
 
-static uint32_t	g_shifts_third_play[5] = { 0,
+static uint32_t	g_md5_shifts_third_play[5] = { 0,
 	4, 11, 16, 23};
 
-static uint32_t	g_shifts_fourth_play[5] = { 0,
+static uint32_t	g_md5_shifts_fourth_play[5] = { 0,
 	6, 10, 15, 21};
 
-static uint32_t	g_const_table_sin[65] = { 0,
+static uint32_t	g_md5_const_table_sin[65] = { 0,
 	0xd76aa478, 0xe8c7b756, 0x242070db, 0xc1bdceee,
 	0xf57c0faf, 0x4787c62a, 0xa8304613, 0xfd469501,
 	0x698098d8, 0x8b44f7af, 0xffff5bb1, 0x895cd7be,
@@ -43,37 +43,37 @@ static uint32_t	g_const_table_sin[65] = { 0,
 	0x6fa87e4f, 0xfe2ce6e0, 0xa3014314, 0x4e0811a1,
 	0xf7537e82, 0xbd3af235, 0x2ad7d2bb, 0xeb86d391};
 
-uint32_t		get_shift_first_play_value(size_t index)
+uint32_t		md5_get_shift_first_play_value(size_t index)
 {
 	if (index + 1 < index)
 		return (0);
-	return (g_shifts_first_play[index]);
+	return (g_md5_shifts_first_play[index]);
 }
 
-uint32_t		get_shift_second_play_value(size_t index)
+uint32_t		md5_get_shift_second_play_value(size_t index)
 {
 	if (index + 1 < index)
 		return (0);
-	return (g_shifts_second_play[index]);
+	return (g_md5_shifts_second_play[index]);
 }
 
-uint32_t		get_shift_third_play_value(size_t index)
+uint32_t		md5_get_shift_third_play_value(size_t index)
 {
 	if (index + 1 < index)
 		return (0);
-	return (g_shifts_third_play[index]);
+	return (g_md5_shifts_third_play[index]);
 }
 
-uint32_t		get_shift_fourth_play_value(size_t index)
+uint32_t		md5_get_shift_fourth_play_value(size_t index)
 {
 	if (index + 1 < index)
 		return (0);
-	return (g_shifts_fourth_play[index]);
+	return (g_md5_shifts_fourth_play[index]);
 }
 
 uint32_t		get_const_table_sin_value(size_t index)
 {
 	if (index > 64 || (index + 1 < index))
 		return (0);
-	return (g_const_table_sin[index]);
+	return (g_md5_const_table_sin[index]);
 }

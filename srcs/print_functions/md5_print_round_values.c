@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/08 21:28:30 by sschmele          #+#    #+#             */
-/*   Updated: 2021/08/08 22:44:07 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/16 20:31:13 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,10 @@ void		md5_print_abcd(void)
 	uint32_t	cc;
 	uint32_t	dd;
 
-	aa = get_buffer_variables('a');
-	bb = get_buffer_variables('b');
-	cc = get_buffer_variables('c');
-	dd = get_buffer_variables('d');
+	aa = md5_get_buffer_variables('a');
+	bb = md5_get_buffer_variables('b');
+	cc = md5_get_buffer_variables('c');
+	dd = md5_get_buffer_variables('d');
 	ft_printf("We deal with %d 512 bit block from the message\n",
 		(int)get_block_number());
 	ft_printf("		a value is %d\n", (int)aa);

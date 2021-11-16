@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 21:04:03 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/15 21:33:21 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/16 19:24:32 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,8 +125,14 @@ int				sha256_make_message_schedule_64words(void)
 		sha256_change_64words_message_block(i, uint32_for_change);
 		i++;
 	}
-		// message_64words_block = sha256_get_64words_message_block();
+		message_64words_block = sha256_get_64words_message_block();
 		// printf("full 64 words block after change:\n");
 		// print_bits_as_2_32uint_string_little_endian(message_64words_block, 64); //TODO delete
+		// printf("full 64 words:\n");
+		// for(i = 0; i < 64; i++)
+		// {
+		// 	printf("[%d] - ", message_64words_block[i]);
+		// }
+		// printf("\n");
 	return (0);
 }

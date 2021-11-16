@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 21:20:06 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/15 23:54:58 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/16 20:41:42 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ static int	md5_copy_variables_to_hash(uint8_t **hash)
 	size_t		i;
 
 	i = 0;
-	while (i < NUMBER_OF_UINT32_VALUES)
+	while (i < MD5_NUMBER_OF_UINT32_VALUES)
 	{
-		value = get_buffer_variables(values_order[i]);
+		value = md5_get_buffer_variables(values_order[i]);
 		ft_memcpy((*hash) + NUMBER_OF_UINT32_VALUES_PARTS * i,
 			&value, NUMBER_OF_UINT32_VALUES_PARTS);
 		i++;
@@ -51,7 +51,7 @@ static char	*md5_make_string_from_hash(uint8_t *hash)
 	size_t	index_in_char;
 	size_t	blocks_in_hash;
 
-	blocks_in_hash = NUMBER_OF_UINT32_VALUES * NUMBER_OF_UINT32_VALUES_PARTS;
+	blocks_in_hash = MD5_NUMBER_OF_UINT32_VALUES * NUMBER_OF_UINT32_VALUES_PARTS;
 	hash_string = (char *)ft_xmalloc(sizeof(char)
 		* (blocks_in_hash * 2 + 1));
 	index_in_uint8 = 0;
@@ -72,7 +72,7 @@ int	md5_output_hash(void)
 	size_t		blocks_in_hash;
 	char		*hash_string;
 
-	blocks_in_hash = NUMBER_OF_UINT32_VALUES * NUMBER_OF_UINT32_VALUES_PARTS;
+	blocks_in_hash = MD5_NUMBER_OF_UINT32_VALUES * NUMBER_OF_UINT32_VALUES_PARTS;
 	hash = (uint8_t *)ft_xmalloc(sizeof(uint8_t)
 		* (blocks_in_hash + 1));
 	md5_copy_variables_to_hash(&hash);

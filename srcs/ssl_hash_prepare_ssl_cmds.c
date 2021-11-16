@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ssl_prepare_ssl_cmds.c                             :+:      :+:    :+:   */
+/*   ssl_hash_prepare_ssl_cmds.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 18:45:42 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/11 13:36:20 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/16 21:34:15 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int			ssl_save_available_commands(void)
 			return (ssl_errors_management(ERR_PROGRAMM, NULL, 0, 0));
 		i++;
 	}
-	ssl_save_commands_hashlist(); //TO DO delete printing
+	// ssl_save_commands_hashlist(); //TO DO delete printing
 	return (0);
 }
 

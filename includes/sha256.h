@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 11:38:59 by a18979859         #+#    #+#             */
-/*   Updated: 2021/11/15 22:00:22 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/16 20:42:42 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@
 # define	SHA256_temp2_s0_asecond_rotright		13
 # define	SHA256_temp2_s0_athird_rotright			22
 # define	SHA256_NUMBER_OF_UINT32_VALUES			8
-# define	SHA256_NUMBER_OF_UINT32_VALUES_PARTS	4
 
 /*
 ** File sha256_start.c

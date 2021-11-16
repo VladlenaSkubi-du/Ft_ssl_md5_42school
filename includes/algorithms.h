@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/13 20:55:47 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/15 18:13:43 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/16 20:41:59 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define ALGORITHMS_H
 
 # define	SIZEOF_UINT32_BIT				32
+# define	NUMBER_OF_UINT32_VALUES_PARTS	4
 
 /*
 ** File logic_bit_operations.c

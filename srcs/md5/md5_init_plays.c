@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/08 22:58:53 by sschmele          #+#    #+#             */
-/*   Updated: 2021/08/13 23:43:18 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/16 20:36:56 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ static uint32_t	count_T_and_message_block_by_k(uint32_t *message_512bit_block,
 ** the architecture in the code designed
 ** For numbers 4, 8, 12, 16 and so on we will have 0 after round_index % 4
 ** That is why we add +4 to get index 4.
-** Because of the Norm I can not send to play_the_round function
+** Because of the Norm I can not send to md5_play_the_round function
 ** more than 4 arguments. That is why I combine two arguments
 ** needed for the main formula into one called @sum_T_message_by_k
 */
 
-int	init_first_play_with_16_rounds(uint32_t round_index,
+int	md5_init_first_play_with_16_rounds(uint32_t round_index,
 		uint32_t *message_512bit_block)
 {
 	uint32_t	k_round_dependent;
@@ -54,8 +54,8 @@ int	init_first_play_with_16_rounds(uint32_t round_index,
 	index_from_four_letters = round_index % 4;
 	if (index_from_four_letters == 0)
 		index_from_four_letters += 4;
-	s_shift = get_shift_first_play_value(index_from_four_letters);
-	play_the_round(
+	s_shift = md5_get_shift_first_play_value(index_from_four_letters);
+	md5_play_the_round(
 		sum_T_message_by_k,
 		s_shift,
 		F_fun_function,
@@ -63,7 +63,7 @@ int	init_first_play_with_16_rounds(uint32_t round_index,
 	return (0);
 }
 
-int	init_second_play_with_16_rounds(uint32_t round_index,
+int	md5_init_second_play_with_16_rounds(uint32_t round_index,
 		uint32_t *message_512bit_block)
 {
 	uint32_t	k_round_dependent;
@@ -81,8 +81,8 @@ int	init_second_play_with_16_rounds(uint32_t round_index,
 	index_from_four_letters = round_index % 4;
 	if (index_from_four_letters == 0)
 		index_from_four_letters += 4;
-	s_shift = get_shift_second_play_value(index_from_four_letters);
-	play_the_round(
+	s_shift = md5_get_shift_second_play_value(index_from_four_letters);
+	md5_play_the_round(
 		sum_T_message_by_k, 
 		s_shift,
 		F_fun_function,
@@ -90,7 +90,7 @@ int	init_second_play_with_16_rounds(uint32_t round_index,
 	return (0);
 }
 
-int	init_third_play_with_16_rounds(uint32_t round_index,
+int	md5_init_third_play_with_16_rounds(uint32_t round_index,
 		uint32_t *message_512bit_block)
 {
 	uint32_t	k_round_dependent;
@@ -108,8 +108,8 @@ int	init_third_play_with_16_rounds(uint32_t round_index,
 	index_from_four_letters = round_index % 4;
 	if (index_from_four_letters == 0)
 		index_from_four_letters += 4;
-	s_shift = get_shift_third_play_value(index_from_four_letters);
-	play_the_round(
+	s_shift = md5_get_shift_third_play_value(index_from_four_letters);
+	md5_play_the_round(
 		sum_T_message_by_k,
 		s_shift,
 		F_fun_function,
@@ -117,7 +117,7 @@ int	init_third_play_with_16_rounds(uint32_t round_index,
 	return (0);
 }
 
-int	init_fourth_play_with_16_rounds(uint32_t round_index,
+int	md5_init_fourth_play_with_16_rounds(uint32_t round_index,
 		uint32_t *message_512bit_block)
 {
 	uint32_t	k_round_dependent;
@@ -135,8 +135,8 @@ int	init_fourth_play_with_16_rounds(uint32_t round_index,
 	index_from_four_letters = round_index % 4;
 	if (index_from_four_letters == 0)
 		index_from_four_letters += 4;
-	s_shift = get_shift_fourth_play_value(index_from_four_letters);
-	play_the_round(
+	s_shift = md5_get_shift_fourth_play_value(index_from_four_letters);
+	md5_play_the_round(
 		sum_T_message_by_k,
 		s_shift,
 		F_fun_function,

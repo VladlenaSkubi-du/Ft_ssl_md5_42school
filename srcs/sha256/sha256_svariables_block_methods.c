@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/13 17:42:54 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/13 21:29:25 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/16 20:28:04 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ int			sha256_save_buffer_before_block(void)
 	uint32_t	gg;
 	uint32_t	hh;
 	
-	aa = get_buffer_variables('a');
-	bb = get_buffer_variables('b');
-	cc = get_buffer_variables('c');
-	dd = get_buffer_variables('d');
-	ee = get_buffer_variables('e');
-	ff = get_buffer_variables('f');
-	gg = get_buffer_variables('g');
-	hh = get_buffer_variables('h');
+	aa = sha256_get_buffer_variables('a');
+	bb = sha256_get_buffer_variables('b');
+	cc = sha256_get_buffer_variables('c');
+	dd = sha256_get_buffer_variables('d');
+	ee = sha256_get_buffer_variables('e');
+	ff = sha256_get_buffer_variables('f');
+	gg = sha256_get_buffer_variables('g');
+	hh = sha256_get_buffer_variables('h');
 	g_sha256_a_before_block = aa;
 	g_sha256_b_before_block = bb;
 	g_sha256_c_before_block = cc;
@@ -54,13 +54,13 @@ int			sha256_save_buffer_before_block(void)
 
 int			sha256_save_buffer_after_block(void)
 {
-	add_to_buffer_variables(g_sha256_a_before_block, 'a');
-	add_to_buffer_variables(g_sha256_b_before_block, 'b');
-	add_to_buffer_variables(g_sha256_c_before_block, 'c');
-	add_to_buffer_variables(g_sha256_d_before_block, 'd');
-	add_to_buffer_variables(g_sha256_e_before_block, 'e');
-	add_to_buffer_variables(g_sha256_f_before_block, 'f');
-	add_to_buffer_variables(g_sha256_g_before_block, 'g');
-	add_to_buffer_variables(g_sha256_h_before_block, 'h');
+	sha256_add_to_buffer_variables(g_sha256_a_before_block, 'a');
+	sha256_add_to_buffer_variables(g_sha256_b_before_block, 'b');
+	sha256_add_to_buffer_variables(g_sha256_c_before_block, 'c');
+	sha256_add_to_buffer_variables(g_sha256_d_before_block, 'd');
+	sha256_add_to_buffer_variables(g_sha256_e_before_block, 'e');
+	sha256_add_to_buffer_variables(g_sha256_f_before_block, 'f');
+	sha256_add_to_buffer_variables(g_sha256_g_before_block, 'g');
+	sha256_add_to_buffer_variables(g_sha256_h_before_block, 'h');
 	return (0);
 }

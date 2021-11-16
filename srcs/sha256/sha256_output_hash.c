@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 16:03:51 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/15 23:56:00 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/16 21:31:00 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,19 @@ static int	sha256_copy_variables_to_hash(uint8_t **hash)
 	uint32_t	value;
 	char		values_order[8] = "abcdefgh";
 	size_t		i;
+	size_t		j;
 
 	i = 0;
 	while (i < SHA256_NUMBER_OF_UINT32_VALUES)
 	{
 		value = sha256_get_buffer_variables(values_order[i]);
-		// printf("value %c is %u\n", values_order[i], value);
-		ft_memcpy((*hash) + SHA256_NUMBER_OF_UINT32_VALUES_PARTS * i,
-			&value, SHA256_NUMBER_OF_UINT32_VALUES_PARTS);
+		(*hash)[NUMBER_OF_UINT32_VALUES_PARTS * i] = ((uint8_t*)&value)[3];
+		(*hash)[NUMBER_OF_UINT32_VALUES_PARTS * i + 1] = ((uint8_t*)&value)[2];
+		(*hash)[NUMBER_OF_UINT32_VALUES_PARTS * i + 2] = ((uint8_t*)&value)[1];
+		(*hash)[NUMBER_OF_UINT32_VALUES_PARTS * i + 3] = ((uint8_t*)&value)[0];
 		i++;
 	}
-	// for(i = 0; i < SHA256_NUMBER_OF_UINT32_VALUES * SHA256_NUMBER_OF_UINT32_VALUES_PARTS; i++)
+	// for(i = 0; i < SHA256_NUMBER_OF_UINT32_VALUES * NUMBER_OF_UINT32_VALUES_PARTS; i++)
 	// 	printf("hash of %zu is %u\n", i, (*hash)[i]);
 	return (0);
 }
@@ -54,7 +56,7 @@ static char	*sha256_make_string_from_hash(uint8_t *hash)
 	size_t	index_in_char;
 	size_t	blocks_in_hash;
 
-	blocks_in_hash = SHA256_NUMBER_OF_UINT32_VALUES * SHA256_NUMBER_OF_UINT32_VALUES_PARTS;
+	blocks_in_hash = SHA256_NUMBER_OF_UINT32_VALUES * NUMBER_OF_UINT32_VALUES_PARTS;
 	hash_string = (char *)ft_xmalloc(sizeof(char)
 		* (blocks_in_hash * 2 + 1));
 	index_in_uint8 = 0;
@@ -75,7 +77,7 @@ int sha256_output_hash(void)
 	size_t		blocks_in_hash;
 	char		*hash_string;
 
-	blocks_in_hash = SHA256_NUMBER_OF_UINT32_VALUES * SHA256_NUMBER_OF_UINT32_VALUES_PARTS;
+	blocks_in_hash = SHA256_NUMBER_OF_UINT32_VALUES * NUMBER_OF_UINT32_VALUES_PARTS;
 	// printf("blocks_in_hash = %zu\n", blocks_in_hash);
 	hash = (uint8_t *)ft_xmalloc(sizeof(uint8_t)
 		* (blocks_in_hash + 1));

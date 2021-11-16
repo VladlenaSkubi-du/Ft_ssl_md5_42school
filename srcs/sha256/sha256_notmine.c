@@ -51,6 +51,12 @@ void sha256_transform(SHA256_CTX *ctx, const BYTE data[])
 
 	for (i = 0, j = 0; i < 16; ++i, j += 4)
 		m[i] = (data[j] << 24) | (data[j + 1] << 16) | (data[j + 2] << 8) | (data[j + 3]);
+	printf("full 64 words:\n");
+	for(i = 0; i < 16; i++)
+	{
+		printf("[%d] - ", m[i]);
+	}
+	printf("\n");
 	for ( ; i < 64; ++i)
 	{
 		// printf("m[1] before = %d\n", m[i - 15]);
@@ -83,17 +89,32 @@ void sha256_transform(SHA256_CTX *ctx, const BYTE data[])
 	h = ctx->state[7];
 
 	for (i = 0; i < 64; ++i) {
+		//printf("round %i\n", i);
 		t1 = h + EP1(e) + CH(e,f,g) + k[i] + m[i];
+		// printf("inside t1: h=%u, s1=%u, ch=%u, k[i]=%u, m[i]=%u\n", h, EP1(e), CH(e,f,g), k[i], m[i]);
+		//printf("t1 = [%u], ", t1);
 		t2 = EP0(a) + MAJ(a,b,c);
+		//printf("t2 = [%u], ", t2);
 		h = g;
+		//printf("h = [%u], ", h);
 		g = f;
+		//printf("g = [%u], ", g);
 		f = e;
+		// printf("f = [%u], ", f);
 		e = d + t1;
+		// printf("e = [%u], ", e);
 		d = c;
+		// printf("d = [%u], ", d);
 		c = b;
+		// printf("c = [%u], ", c);
 		b = a;
+		// printf("b = [%u], ", b);
 		a = t1 + t2;
+		// printf("a = [%u]\n\n", a);
 	}
+
+	// printf("h0 = %u, h1 = %u, h2 = %u, h3 = %u, h4 = %u, h5 = %u, h6 = %u, h7 = %u\n",
+	// 	ctx->state[0], ctx->state[1], ctx->state[2], ctx->state[3], ctx->state[4], ctx->state[5], ctx->state[6], ctx->state[7]);
 
 	ctx->state[0] += a;
 	ctx->state[1] += b;
@@ -103,6 +124,7 @@ void sha256_transform(SHA256_CTX *ctx, const BYTE data[])
 	ctx->state[5] += f;
 	ctx->state[6] += g;
 	ctx->state[7] += h;
+
 }
 
 void sha256_init(SHA256_CTX *ctx)
@@ -168,6 +190,8 @@ void sha256_final(SHA256_CTX *ctx, BYTE hash[])
 
 	// Since this implementation uses little endian byte ordering and SHA uses big endian,
 	// reverse all the bytes when copying the final state to the output hash.
+	// printf("h0 = %u, h1 = %u, h2 = %u, h3 = %u, h4 = %u, h5 = %u, h6 = %u, h7 = %u\n",
+	// 	ctx->state[0], ctx->state[1], ctx->state[2], ctx->state[3], ctx->state[4], ctx->state[5], ctx->state[6], ctx->state[7]);
 	for (i = 0; i < 4; ++i) {
 		hash[i]      = (ctx->state[0] >> (24 - i * 8)) & 0x000000ff;
 		hash[i + 4]  = (ctx->state[1] >> (24 - i * 8)) & 0x000000ff;

@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 22:14:29 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/11 15:52:39 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/16 22:54:17 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static size_t	ssl_main_actions_with_possible_errors(int argc, char **argv,
 	answer = ssl_main_start(algo_name, cmd_data);
 	if (answer)
 		return (SIZET_MAX);
-			print_options(*flags); // TODO delete
+			// print_options(*flags); // TODO delete
 	return (0);
 }
 

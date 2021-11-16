@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/08 22:45:25 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/13 21:23:35 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/16 20:43:23 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,17 @@ int	md5_calculate_hash_by_algo(uint32_t *message,
 	size_t		index_of_512bit_block;
 
 	index_of_512bit_block = 0;
-	init_buffer0_variables();
-	init_buffer_variables();
+	md5_init_buffer0_variables();
+	md5_init_buffer_variables();
 	while (index_of_512bit_block < message_size_uint32)
 	{
-		save_buffer_before_block();
-		init_new_message_block_512bit(message + index_of_512bit_block, 16);
-		calculate_with_fun_functions();
-		free_new_message_block_512bit();
-		save_buffer_after_block();
+		md5_save_buffer_before_block();
+		md5_init_new_message_block_512bit(message + index_of_512bit_block, 16);
+		md5_calculate_with_fun_functions();
+		md5_free_new_message_block_512bit();
+		md5_save_buffer_after_block();
 		index_of_512bit_block += 16;
-		increase_block_number();
+		md5_increase_block_number();
 	}
 	return (0);
 }
@@ -48,27 +48,27 @@ int	md5_calculate_hash_by_algo(uint32_t *message,
 ** combine each 16 rounds with 1 fun function in a function
 */
 
-int	calculate_with_fun_functions(void)
+int	md5_calculate_with_fun_functions(void)
 {
 	uint32_t	*message_512bit_block;
 	uint32_t	round_index;
 
 	message_512bit_block = get_message_512bit_block();
 	round_index = 1;
-	while (round_index < (NUMBER_OF_ROUNDS + 1))
+	while (round_index < (MD5_NUMBER_OF_ROUNDS + 1))
 	{
 		if (round_index >= MD5_first_play_min &&
 				round_index <= MD5_first_play_max)
-			init_first_play_with_16_rounds(round_index, message_512bit_block);
+			md5_init_first_play_with_16_rounds(round_index, message_512bit_block);
 		else if (round_index >= MD5_second_play_min &&
 				round_index <= MD5_second_play_max)
-			init_second_play_with_16_rounds(round_index, message_512bit_block);
+			md5_init_second_play_with_16_rounds(round_index, message_512bit_block);
 		else if (round_index >= MD5_third_play_min &&
 				round_index <= MD5_third_play_max)
-			init_third_play_with_16_rounds(round_index, message_512bit_block);
+			md5_init_third_play_with_16_rounds(round_index, message_512bit_block);
 		else if (round_index >= MD5_fourth_play_min &&
 				round_index <= MD5_fourth_play_max)
-			init_fourth_play_with_16_rounds(round_index, message_512bit_block);
+			md5_init_fourth_play_with_16_rounds(round_index, message_512bit_block);
 		round_index++;
 	}
 	return (0);
@@ -98,7 +98,7 @@ int	calculate_with_fun_functions(void)
 **		uint32_t(*function)(uint32_t, uint32_t, uint32_t))
 */
 
-int	play_the_round(uint32_t sum_T_message_by_k,
+int	md5_play_the_round(uint32_t sum_T_message_by_k,
 		uint32_t s_shift,
 		uint32_t (*F_fun_function)(uint32_t, uint32_t, uint32_t),
 		uint32_t s_shift_index)
@@ -113,13 +113,13 @@ int	play_the_round(uint32_t sum_T_message_by_k,
 		s_shift_index = 2;
 	else if (s_shift_index == 2)
 		s_shift_index = 4;
-	aa = get_buffer_variables(values_orders_vars[s_shift_index]);
-	bb = get_buffer_variables(values_orders_vars[s_shift_index + 1]);
-	cc = get_buffer_variables(values_orders_vars[s_shift_index + 2]);
-	dd = get_buffer_variables(values_orders_vars[s_shift_index + 3]);
+	aa = md5_get_buffer_variables(values_orders_vars[s_shift_index]);
+	bb = md5_get_buffer_variables(values_orders_vars[s_shift_index + 1]);
+	cc = md5_get_buffer_variables(values_orders_vars[s_shift_index + 2]);
+	dd = md5_get_buffer_variables(values_orders_vars[s_shift_index + 3]);
 	aa += F_fun_function(bb, cc, dd) + sum_T_message_by_k;
 	aa = uint32_rotate_left_in_algo(aa, s_shift);
 	aa += bb;
-	save_buffer_variables(aa, values_orders_vars[s_shift_index]);
+	md5_save_buffer_variables(aa, values_orders_vars[s_shift_index]);
 	return (0);
 }
