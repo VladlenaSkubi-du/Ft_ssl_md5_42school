@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 21:05:14 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/21 14:46:06 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/21 17:25:05 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ int			sha256_init_64words_message_block(size_t block_size)
 	size_t		full_words_number_in_block;
 
 	message_512bit_block = sha256_get_message_512bit_block();
-	if (!message_512bit_block || !message_512bit_block[0])
+	// if (!message_512bit_block || !message_512bit_block[0])
+	if (!message_512bit_block)
 		return (1);
 	full_words_number_in_block = SHA256_FULL_NUMBER_OF_WORDS;
 	g_sha256_64words_block = (uint32_t*)ft_xmalloc(sizeof(uint32_t) *

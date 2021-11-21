@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 14:28:08 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/21 14:31:39 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/21 17:27:54 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ int				sha256_compress_64_words_block(void)
 	uint32_t	temp2;
 	
 	message_64words_block = sha256_get_64words_message_block();
-	if (!message_64words_block || !message_64words_block[0])
+	// if (!message_64words_block || !message_64words_block[0])
+	if (!message_64words_block)
 		return (0);
 	i = 0;
 	while (i < SHA256_FULL_NUMBER_OF_WORDS)

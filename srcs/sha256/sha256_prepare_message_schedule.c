@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 21:04:03 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/21 14:45:15 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/21 17:28:11 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,10 +100,11 @@ int				sha256_make_message_schedule_64words(void)
 	uint32_t	uint32_for_change;
 	size_t		i;
 
-	i = 16;
 	message_64words_block = sha256_get_64words_message_block();
-	if (!message_64words_block || !message_64words_block[0])
+	// if (!message_64words_block || !message_64words_block[0])
+	if (!message_64words_block)
 		return (1);
+	i = 16;
 	while (i < SHA256_FULL_NUMBER_OF_WORDS)
 	{
 		s0 = sha256_find_s0_const(message_64words_block, (int)i);

@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 11:36:41 by a18979859         #+#    #+#             */
-/*   Updated: 2021/11/21 14:47:40 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/21 17:28:49 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int				sha256_calculate_hash_by_algo(uint32_t *message,
 		sha256_init_64words_message_block(16);
 		sha256_free_new_message_block_512bit();
 		sha256_make_message_schedule_64words();
-		sha256_compress_64_words_block();	
+		sha256_compress_64_words_block();
 		sha256_save_buffer_after_block();
 		index_of_512bit_block += 16;
 		sha256_increase_block_number(0);
