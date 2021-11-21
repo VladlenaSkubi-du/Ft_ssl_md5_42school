@@ -18,7 +18,7 @@ fi
 
 if [ "$TYPE" == "stdin" ]
 then
-	if [ -z "$STRING"]
+	if [ -z "$STRING" ]
 	then
 		printf "Launching:\necho \"%s\" | ./ft_ssl %s -q > 1\n" "" $ALGO
 		printf "echo \"%s\" | openssl %s > 2\n" "" $ALGO
@@ -26,6 +26,7 @@ then
 
 		echo "" | ./ft_ssl $ALGO -q > 1
 		echo "" | openssl $ALGO > 2
+		diff 1 2
 	else
 		printf "Launching:\necho \"%s\" | ./ft_ssl %s -q > 1\n" $STRING $ALGO
 		printf "echo \"%s\" | openssl %s > 2\n" $STRING $ALGO
@@ -33,8 +34,8 @@ then
 
 		echo $STRING | ./ft_ssl $ALGO -q > 1
 		echo $STRING | openssl $ALGO > 2
+		diff 1 2
 	fi
-	diff 1 2
 elif [ "$TYPE" == "string" ]
 then
 	if [ "$ALGO" == "md5" ]
@@ -47,12 +48,12 @@ then
 		md5 -q -s $STRING > 2
 		diff 1 2
 	else
-		printf "Launching:\n./ft_ssl %s -q -s %s > 1\n" $ALGO $STRING
-		printf "echo \"%s\" | openssl %s > 2\n" $STRING $ALGO
+		printf "Launching:\n./ft_ssl %s -q -s \"%s\" > 1\n" $ALGO $STRING
+		printf "printf \"%s\" $STRING | openssl %s > 2\n" $STRING $ALGO
 		printf "diff 1 2\n"
 
 		./ft_ssl $ALGO -q -s $STRING > 1
-		echo $STRING | openssl $ALGO > 2
+		printf "%s" $STRING | openssl $ALGO > 2
 		diff 1 2
 	fi
 elif [ "$TYPE" == "file" ]
