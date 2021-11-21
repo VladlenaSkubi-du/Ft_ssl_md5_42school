@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/24 09:41:38 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/15 20:40:25 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/21 14:44:32 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,18 @@
 **
 ** For debug:
 ** Tried big-endian before
-** 	// i = 0x8000000000000000;
-**	// bit = 0;
-**	// while (i > 0)
-**	// {
-**	// 	if (mlength_bits_original & i)
-**	// 	{
-**	// 		index_of_byte = bit / 32;
-**	// 		mlength_bits_add[index_of_byte] |= 1UL << (bit % 32);
-**	// 	}
-**	// 	i = i / 2;
-**	// 	bit++;
-**	// }
+** 	i = 0x8000000000000000;
+**	bit = 0;
+**	while (i > 0)
+**	{
+**		if (mlength_bits_original & i)
+**		{
+**			index_of_byte = bit / 32;
+**			mlength_bits_add[index_of_byte] |= 1UL << (bit % 32);
+**		}
+**		i = i / 2;
+**		bit++;
+**	}
 */
 
 uint32_t 	*md5_get_64bit_mlength_of_message(
@@ -134,13 +134,13 @@ uint32_t 	*md5_add_64bit_mlength_to_message(uint32_t *message,
 ** print_bits_as_32uint_string_little_endian(message, data_size);
 ** ft_putendl("before we add 1 bit:");
 ** print_bits_as_32uint_little_endian(message[index_of_byte]);
-** 	// ft_putstr("index_of_uint32_block = ");
-**	// ft_putnbr(index_of_uint32_block);
-**	// ft_putstr("; find_index_of_bit = ");
-**	// ft_putnbr(index_of_bit);
-**	// ft_putchar('\n');
-**  // ft_putendl("after we add 1 bit:");
-**	// print_bits_as_32uint_little_endian(message[index_of_byte]);
+** 	ft_putstr("index_of_uint32_block = ");
+**	ft_putnbr(index_of_uint32_block);
+**	ft_putstr("; find_index_of_bit = ");
+**	ft_putnbr(index_of_bit);
+**	ft_putchar('\n');
+**  ft_putendl("after we add 1 bit:");
+**	print_bits_as_32uint_little_endian(message[index_of_byte]);
 */
 
 uint32_t 	*md5_make_padded_message(char *data, size_t data_size,
@@ -153,22 +153,11 @@ uint32_t 	*md5_make_padded_message(char *data, size_t data_size,
 	size_t		index_of_bit;
 
 	uint32_blocks_in_message = mlength_bits_padded / 8 / 4;
-				// printf("uint32_blocks_in_message = %d\n", uint32_blocks_in_message); // = 30 for "echo -n 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' | ./ft_ssl"
 	message = (uint32_t *)ft_xmalloc(sizeof(uint32_t) * (uint32_blocks_in_message + 1));
 	ft_memcpy(message, data, sizeof(char) * data_size);
-				// print_bits_as_32uint_string_little_endian(message, data_size);
 	index_of_uint32_block = data_size / 4;
-				// ft_putendl("before we add 1 bit:");
-				// print_bits_as_32uint_little_endian(message[index_of_byte]);
 	index_of_bit = (data_size * 8 + 7) % 32;
-				// ft_putstr("index_of_uint32_block = ");
-				// ft_putnbr(index_of_uint32_block);
-				// ft_putstr("; find_index_of_bit = ");
-				// ft_putnbr(index_of_bit);
-				// ft_putchar('\n');
 	message[index_of_uint32_block] |= 1UL << index_of_bit;
-				// ft_putendl("after we add 1 bit:");
-				// print_bits_as_32uint_little_endian(message[index_of_uint32_block]);
 	*message_size_uint32 = uint32_blocks_in_message;
 	return (message);
 }

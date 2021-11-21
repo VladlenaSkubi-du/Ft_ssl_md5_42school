@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/28 14:44:10 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/16 22:54:04 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/21 14:43:20 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,11 @@ static int		conditions_for_stdin(int *flags)
 	return (0);
 }
 
+/*
+** For debug:
+** printf("arg = %s\n", argv[i]);
+*/
+
 static size_t	define_default_options(char **argv, int *flags)
 {
 	int			i;
@@ -79,7 +84,6 @@ static size_t	define_default_options(char **argv, int *flags)
 	*flags = 0;
 	while (argv[++i])
 	{
-		// printf("arg = %s\n", argv[i]);
 		answer = cycle_to_check_arguments(argv, &i, flags);
 		if (answer == SIZET_MAX)
 			return (SIZET_MAX);

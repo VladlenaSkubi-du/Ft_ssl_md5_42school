@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 16:03:51 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/16 21:31:00 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/21 14:47:22 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,23 @@
 #include "sha256.h"
 
 /*
+** In sha256 we have big endian order in uint32_t array, therefore
+** we need to save each uint32_t part (there are 4 of them)
+** from the highest bytes to the lowest one in little endian order
+**
 ** For debug:
-** // printf("%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x\n",
-** // 	aa&0xff, (aa>>8)&0xff, (aa>>16)&0xff, (aa>>24)&0xff,
-** // 	bb&0xff, (bb>>8)&0xff, (bb>>16)&0xff, (bb>>24)&0xff,
-** // 	cc&0xff, (cc>>8)&0xff, (cc>>16)&0xff, (cc>>24)&0xff,
-** // 	dd&0xff, (dd>>8)&0xff, (dd>>16)&0xff, (dd>>24)&0xff);
-** // ft_memcpy((*hash), &aa, 4);
-** // ft_memcpy((*hash) + 4, &bb, 4);
-** // ft_memcpy((*hash) + 8, &cc, 4);
-** // ft_memcpy((*hash) + 12, &dd, 4);
+** printf("%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x\n",
+** 	aa&0xff, (aa>>8)&0xff, (aa>>16)&0xff, (aa>>24)&0xff,
+** 	bb&0xff, (bb>>8)&0xff, (bb>>16)&0xff, (bb>>24)&0xff,
+** 	cc&0xff, (cc>>8)&0xff, (cc>>16)&0xff, (cc>>24)&0xff,
+** 	dd&0xff, (dd>>8)&0xff, (dd>>16)&0xff, (dd>>24)&0xff);
+** ft_memcpy((*hash), &aa, 4);
+** ft_memcpy((*hash) + 4, &bb, 4);
+** ft_memcpy((*hash) + 8, &cc, 4);
+** ft_memcpy((*hash) + 12, &dd, 4);
+** for(i = 0; i < SHA256_NUMBER_OF_UINT32_VALUES * 
+** NUMBER_OF_UINT32_VALUES_PARTS; i++)
+** 	printf("hash of %zu is %u\n", i, (*hash)[i]);
 */
 
 static int	sha256_copy_variables_to_hash(uint8_t **hash)
@@ -31,7 +38,6 @@ static int	sha256_copy_variables_to_hash(uint8_t **hash)
 	uint32_t	value;
 	char		values_order[8] = "abcdefgh";
 	size_t		i;
-	size_t		j;
 
 	i = 0;
 	while (i < SHA256_NUMBER_OF_UINT32_VALUES)
@@ -43,8 +49,6 @@ static int	sha256_copy_variables_to_hash(uint8_t **hash)
 		(*hash)[NUMBER_OF_UINT32_VALUES_PARTS * i + 3] = ((uint8_t*)&value)[0];
 		i++;
 	}
-	// for(i = 0; i < SHA256_NUMBER_OF_UINT32_VALUES * NUMBER_OF_UINT32_VALUES_PARTS; i++)
-	// 	printf("hash of %zu is %u\n", i, (*hash)[i]);
 	return (0);
 }
 
@@ -78,7 +82,6 @@ int sha256_output_hash(void)
 	char		*hash_string;
 
 	blocks_in_hash = SHA256_NUMBER_OF_UINT32_VALUES * NUMBER_OF_UINT32_VALUES_PARTS;
-	// printf("blocks_in_hash = %zu\n", blocks_in_hash);
 	hash = (uint8_t *)ft_xmalloc(sizeof(uint8_t)
 		* (blocks_in_hash + 1));
 	sha256_copy_variables_to_hash(&hash);

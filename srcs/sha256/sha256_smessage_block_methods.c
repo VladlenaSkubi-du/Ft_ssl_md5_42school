@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/13 18:02:56 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/13 18:27:54 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/17 14:30:54 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,18 @@ uint32_t		*sha256_get_message_512bit_block(void)
 
 int				sha256_free_new_message_block_512bit(void)
 {
-	free(g_sha256_message_512bit_block);
+	if (g_sha256_message_512bit_block)
+		free(g_sha256_message_512bit_block);
 	g_sha256_message_512bit_block = NULL;
 	return (0);
 }
 
-int				sha256_increase_block_number(void)
+int				sha256_increase_block_number(int clean)
 {
-	g_sha256_block_number++;
+	if (clean == 1)
+		g_sha256_block_number = 0;
+	else
+		g_sha256_block_number++;
 	return (0);
 }
 

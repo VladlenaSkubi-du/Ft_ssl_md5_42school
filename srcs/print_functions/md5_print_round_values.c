@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/08 21:28:30 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/16 20:31:13 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/17 14:04:13 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void		md5_print_ksi(uint32_t k_round_dependent,
 	uint32_t	*message_block;
 	uint32_t	T_const;
 	
-	message_block = get_message_512bit_block();
+	message_block = md5_get_message_512bit_block();
 	T_const = get_const_table_sin_value(round_index);
 	ft_printf("Round %d from 64\n", (int)round_index);
 	ft_printf("		k value is %d\n", (int)k_round_dependent);
@@ -56,7 +56,7 @@ void		md5_print_abcd(void)
 	cc = md5_get_buffer_variables('c');
 	dd = md5_get_buffer_variables('d');
 	ft_printf("We deal with %d 512 bit block from the message\n",
-		(int)get_block_number());
+		(int)md5_get_block_number());
 	ft_printf("		a value is %d\n", (int)aa);
 	ft_printf("		b value is %d\n", (int)bb);
 	ft_printf("		c value is %d\n", (int)cc);

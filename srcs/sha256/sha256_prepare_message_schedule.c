@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 21:04:03 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/16 19:24:32 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/21 14:45:15 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,26 +70,26 @@ uint32_t		sha256_find_s1_const(uint32_t *message_64words_block, int i)
 ** This way we add 48 generated words
 **
 ** For debug:
-** 	// printf("w1 number = %d\n", message_64words_block[i - 15]);
-**	// printf("s0\n");
-**	// print_bits_as_32uint_little_endian(s0);
-**	// ft_putstr("\n");		
-**	// printf("s0 number = %d\n", s0);
+** 	printf("w1 number = %d\n", message_64words_block[i - 15]);
+**	printf("s0\n");
+**	print_bits_as_32uint_little_endian(s0);
+**	ft_putstr("\n");		
+**	printf("s0 number = %d\n", s0);
 **
-** 	// printf("s1\n");
-**	// print_bits_as_32uint_little_endian(s1);
-**	// ft_putstr("\n");		
-**	// printf("s1 number= %d\n", s1);
+** 	printf("s1\n");
+**	print_bits_as_32uint_little_endian(s1);
+**	ft_putstr("\n");		
+**	printf("s1 number= %d\n", s1);
 **
-**  // message_64words_block = sha256_get_64words_message_block();
-**  // printf("full 64 words block after change:\n");
-**  // print_bits_as_2_32uint_string_little_endian(message_64words_block, 64);
-**	// printf("full 64 words:\n");
-**	// for(i = 0; i < 64; i++)
-**	// {
-**	// 	printf("[%d] - ", message_64words_block[i]);
-**	// }
-**	// printf("\n");
+**  message_64words_block = sha256_get_64words_message_block();
+**  printf("full 64 words block after change:\n");
+**  print_bits_as_2_32uint_string_little_endian(message_64words_block, 64);
+**	printf("full 64 words:\n");
+**	for(i = 0; i < 64; i++)
+**	{
+**		printf("[%d] - ", message_64words_block[i]);
+**	}
+**	printf("\n");
 */
 
 int				sha256_make_message_schedule_64words(void)
@@ -102,22 +102,12 @@ int				sha256_make_message_schedule_64words(void)
 
 	i = 16;
 	message_64words_block = sha256_get_64words_message_block();
+	if (!message_64words_block || !message_64words_block[0])
+		return (1);
 	while (i < SHA256_FULL_NUMBER_OF_WORDS)
 	{
-	// 		printf("before\n");
-	// 		print_bits_as_32uint_little_endian(message_64words_block[i]);
-	// 		ft_putstr("\n");
 		s0 = sha256_find_s0_const(message_64words_block, (int)i);
-			// printf("w1 number = %d\n", message_64words_block[i - 15]);
-			// printf("s0\n");
-			// print_bits_as_32uint_little_endian(s0);
-			// ft_putstr("\n");		
-			// printf("s0 number = %d\n", s0);
 		s1 = sha256_find_s1_const(message_64words_block, (int)i);
-			// printf("s1\n");
-			// print_bits_as_32uint_little_endian(s1);
-			// ft_putstr("\n");		
-			// printf("s1 number= %d\n", s1);
 		uint32_for_change = message_64words_block[i - SHA256_word_first_index] +
 			s0 +
 			message_64words_block[i - SHA256_word_second_index] +
@@ -125,14 +115,5 @@ int				sha256_make_message_schedule_64words(void)
 		sha256_change_64words_message_block(i, uint32_for_change);
 		i++;
 	}
-		message_64words_block = sha256_get_64words_message_block();
-		// printf("full 64 words block after change:\n");
-		// print_bits_as_2_32uint_string_little_endian(message_64words_block, 64); //TODO delete
-		// printf("full 64 words:\n");
-		// for(i = 0; i < 64; i++)
-		// {
-		// 	printf("[%d] - ", message_64words_block[i]);
-		// }
-		// printf("\n");
 	return (0);
 }

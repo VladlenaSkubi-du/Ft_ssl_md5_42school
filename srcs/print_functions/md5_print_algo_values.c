@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/08 21:59:02 by sschmele          #+#    #+#             */
-/*   Updated: 2021/08/08 22:12:24 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/21 14:44:43 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,5 @@ void			md5_print_message_prepared(uint32_t *message,
 	ft_putstr(" and bits padded mlength_bits_padded = ");
 	ft_putnbr(mlength_bits_padded);
 	ft_putchar('\n');
-	print_bits_as_32uint_string_little_endian(message, message_size_uint32); // сделать условие на little-endian и big_endian
+	print_bits_as_32uint_string_little_endian(message, message_size_uint32);
 }

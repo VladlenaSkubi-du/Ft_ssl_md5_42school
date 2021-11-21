@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 11:20:43 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/16 20:43:32 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/21 14:41:03 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,13 +115,13 @@ uint32_t	get_const_table_sin_value(size_t index);
 
 int			md5_init_new_message_block_512bit(uint32_t *message_block,
 				size_t block_size);
-uint32_t	*get_message_512bit_block(void);
+uint32_t	*md5_get_message_512bit_block(void);
 int			md5_free_new_message_block_512bit(void);
-int			md5_increase_block_number(void);
-size_t		get_block_number(void);
+int			md5_increase_block_number(int clean);
+size_t		md5_get_block_number(void);
 
 /*
-** File md5_output_hash.c
+** File md5_output_hash.c (static functions)
 */
 
 int			md5_output_hash(void);

@@ -38,9 +38,10 @@ MD5 := \
 SHA256_DIR := sha256
 SHA256 := \
 			$(SHA256_DIR)/sha256_start.c \
-			$(SHA256_DIR)/sha256_notmine.c \
 			$(SHA256_DIR)/sha256_prepare_message.c \
 			$(SHA256_DIR)/sha256_prepare_message_schedule.c \
+			$(SHA256_DIR)/sha256_compress_64words_block.c \
+			$(SHA256_DIR)/sha256_compress_64words_block_steps.c \
 			$(SHA256_DIR)/sha256_svariables_block_methods.c \
 			$(SHA256_DIR)/sha256_svariables_buffer_methods.c \
 			$(SHA256_DIR)/sha256_smessage_block_methods.c \

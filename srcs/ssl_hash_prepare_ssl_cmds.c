@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 18:45:42 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/16 21:34:15 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/21 14:43:11 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,12 @@ size_t		ssl_check_command(char *cmd)
 	}
 	return (answer_cmd);
 }
+
+/*
+** For debug:
+** ssl_save_commands_hashlist();
+** in the end before return (0);
+*/
 
 int			ssl_save_available_commands(void)
 {
@@ -47,7 +53,6 @@ int			ssl_save_available_commands(void)
 			return (ssl_errors_management(ERR_PROGRAMM, NULL, 0, 0));
 		i++;
 	}
-	// ssl_save_commands_hashlist(); //TO DO delete printing
 	return (0);
 }
 

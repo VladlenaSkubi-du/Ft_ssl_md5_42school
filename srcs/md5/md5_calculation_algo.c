@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/08 22:45:25 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/16 20:43:23 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/17 14:27:02 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,12 @@ int	md5_calculate_hash_by_algo(uint32_t *message,
 		md5_save_buffer_before_block();
 		md5_init_new_message_block_512bit(message + index_of_512bit_block, 16);
 		md5_calculate_with_fun_functions();
-		md5_free_new_message_block_512bit();
 		md5_save_buffer_after_block();
 		index_of_512bit_block += 16;
-		md5_increase_block_number();
+		md5_increase_block_number(0);
+		md5_free_new_message_block_512bit();
 	}
+	md5_increase_block_number(1);
 	return (0);
 }
 
@@ -53,7 +54,9 @@ int	md5_calculate_with_fun_functions(void)
 	uint32_t	*message_512bit_block;
 	uint32_t	round_index;
 
-	message_512bit_block = get_message_512bit_block();
+	message_512bit_block = md5_get_message_512bit_block();
+	if (message_512bit_block == NULL)
+		return (0);
 	round_index = 1;
 	while (round_index < (MD5_NUMBER_OF_ROUNDS + 1))
 	{

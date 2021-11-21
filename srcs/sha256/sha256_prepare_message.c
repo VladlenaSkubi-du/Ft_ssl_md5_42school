@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 22:02:19 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/16 22:49:23 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/21 14:45:51 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ uint32_t 	*sha256_get_64bit_mlength_of_message(
 		bit++;
 		mlength_bits_original = mlength_bits_original >> 1;
 	}
-		// print_bits_as_32uint_string_little_endian(mlength_bits_add, 2);
 	return (mlength_bits_add);
 }
 
@@ -84,7 +83,6 @@ uint32_t 	*sha256_add_64bit_mlength_to_message(uint32_t *message,
 		(*message_size_uint32 + uint32_blocks_in_message_add + 1));
 	ft_memcpy(message_new, message, sizeof(uint32_t) * (*message_size_uint32));
 	free(message);
-	// printf("mlength_bits_original = %zu\n", mlength_bits_original);
 	mlength_bits_add = sha256_get_64bit_mlength_of_message((uint64_t)mlength_bits_original,
 		uint32_blocks_in_message_add);
 	if (mlength_bits_add == NULL)
@@ -156,18 +154,26 @@ uint32_t 	*sha256_big_endian_uint32_from_data(char *data, size_t data_size,
 **
 ** For debug:
 ** index_of_uint32_block = 2; find_index_of_bit = 7
-** printf("uint32_blocks_in_message = %zu\n", uint32_blocks_in_message);
-** 	// ft_putendl("before we add 1 bit:");
-**	// print_bits_as_32uint_little_endian(message[index_of_uint32_block]);
-**	// ft_putchar('\n');
-** 	// ft_putstr("index_of_uint32_block = ");
-**	// ft_putnbr(index_of_uint32_block);
-**	// ft_putstr("; find_index_of_bit = ");
-**	// ft_putnbr(index_of_bit);
-**	// ft_putchar('\n');
-** 	// ft_putendl("after we add 1 bit:");
-**	// print_bits_as_32uint_little_endian(message[index_of_uint32_block]);
-**	// ft_putchar('\n');
+** 	printf("uint32_blocks_in_message = %zu\n", uint32_blocks_in_message);
+**
+**  print_bits_as_32uint_string_little_endian(message, uint32_blocks_in_message);
+**
+** 	ft_putendl("before we add 1 bit:");
+**	print_bits_as_32uint_little_endian(message[index_of_uint32_block]);
+**	ft_putchar('\n');
+**
+** 	ft_putstr("index_of_uint32_block = ");
+**	ft_putnbr(index_of_uint32_block);
+**	ft_putstr("; find_index_of_bit = ");
+**	ft_putnbr(index_of_bit);
+**	ft_putchar('\n');
+**
+** 	ft_putendl("after we add 1 bit:");
+**	print_bits_as_32uint_little_endian(message[index_of_uint32_block]);
+**	ft_putchar('\n');
+**
+**	print_bits_as_32uint_string_little_endian(message, uint32_blocks_in_message);
+**	ft_putchar('\n');
 */
 
 uint32_t 	*sha256_make_padded_message(char *data, size_t data_size,
@@ -180,26 +186,10 @@ uint32_t 	*sha256_make_padded_message(char *data, size_t data_size,
 	size_t		index_of_bit;
 
 	uint32_blocks_in_message = mlength_bits_padded / 8 / 4;
-				// printf("uint32_blocks_in_message = %zu\n", uint32_blocks_in_message);
 	message = sha256_big_endian_uint32_from_data(data, data_size, uint32_blocks_in_message);
-		// print_bits_as_32uint_string_little_endian(message, uint32_blocks_in_message);
 	index_of_uint32_block = data_size / 4;
-				// ft_putendl("before we add 1 bit:");
-				// print_bits_as_32uint_little_endian(message[index_of_uint32_block]);
-				// ft_putchar('\n');
 	index_of_bit = 32 - (data_size * 8 % 32) - 1;
-				// ft_putstr("index_of_uint32_block = ");
-				// ft_putnbr(index_of_uint32_block);
-				// ft_putstr("; find_index_of_bit = ");
-				// ft_putnbr(index_of_bit);
-				// ft_putchar('\n');
 	message[index_of_uint32_block] |= 1UL << index_of_bit;
-		// 		ft_putendl("after we add 1 bit:");
-		// 		print_bits_as_32uint_little_endian(message[index_of_uint32_block]);
-		// 		ft_putchar('\n');
-		// 		ft_putchar('\n');
-		// print_bits_as_32uint_string_little_endian(message, uint32_blocks_in_message);
-		// ft_putchar('\n');
 	*message_size_uint32 = uint32_blocks_in_message;
 	return (message);
 }
@@ -211,6 +201,13 @@ uint32_t 	*sha256_make_padded_message(char *data, size_t data_size,
 ** For debug:
 ** printf("mlength_bits_original = %zu\n", mlength_bits_original);
 ** print_bits_as_32uint_string_little_endian(message, *message_size_uint32);
+** 	printf("ready message:\n");
+**	int i;
+**	for(i = 0; i < 16; i++)
+**	{
+**		printf("[%d] - ", message[i]);
+**	}
+**	printf("\n");
 */
 
 uint32_t	*sha256_prepare_message_for_algo(char *data, size_t data_size,
@@ -231,13 +228,6 @@ uint32_t	*sha256_prepare_message_for_algo(char *data, size_t data_size,
 		return (NULL);
 	message = sha256_add_64bit_mlength_to_message(message, message_size_uint32,
 		mlength_bits_original, mlength_bits_padded);
-		// printf("ready message:\n");
-		// int i;
-		// for(i = 0; i < 16; i++)
-		// {
-		// 	printf("[%d] - ", message[i]);
-		// }
-		// printf("\n");
 	if (message == NULL)
 		return (NULL);
 	return (message);

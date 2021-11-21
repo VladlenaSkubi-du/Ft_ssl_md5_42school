@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/06 11:26:43 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/16 20:39:31 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/17 14:06:36 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int				md5_init_new_message_block_512bit(uint32_t *message_block,
 	return (0);
 }
 
-uint32_t		*get_message_512bit_block(void)
+uint32_t		*md5_get_message_512bit_block(void)
 {
 	return (g_md5_message_512bit_block);
 }
@@ -38,13 +38,16 @@ int				md5_free_new_message_block_512bit(void)
 	return (0);
 }
 
-int				md5_increase_block_number(void)
+int				md5_increase_block_number(int clean)
 {
-	g_md5_block_number++;
+	if (clean == 1)
+		g_md5_block_number = 0;
+	else
+		g_md5_block_number++;
 	return (0);
 }
 
-size_t			get_block_number(void)
+size_t			md5_get_block_number(void)
 {
 	return (g_md5_block_number);
 }

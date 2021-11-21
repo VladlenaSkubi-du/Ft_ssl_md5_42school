@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ssl_prepare_output_results.c                       :+:      :+:    :+:   */
+/*   ssl_soutput_buffer_methods.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 12:29:31 by a18979859         #+#    #+#             */
-/*   Updated: 2021/11/11 15:31:08 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/17 14:48:50 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
 
 static char     **g_output_results;
-static size_t	bufindex;
+static size_t	g_bufindex;
 
 void			ssl_init_output_buffer(void)
 {
@@ -22,13 +22,18 @@ void			ssl_init_output_buffer(void)
 	ssl_get_dataarray_index(&output_results_buffer);
 	g_output_results = (char **)ft_xmalloc(sizeof(char *)
 		* (output_results_buffer + 1));
-	bufindex = 0;
+	g_bufindex = 0;
 }
 
 void			ssl_save_output(char *output_hash)
 {
-	g_output_results[bufindex] = output_hash;
-	bufindex++;
+	size_t		output_results_buffer;
+	
+	ssl_get_dataarray_index(&output_results_buffer);
+	if (g_bufindex == output_results_buffer)
+		return ;
+	g_output_results[g_bufindex] = output_hash;
+	g_bufindex++;
 }
 
 char			*ssl_get_output(int flag_from_beginning)
@@ -38,11 +43,11 @@ char			*ssl_get_output(int flag_from_beginning)
 	
 	ssl_get_dataarray_index(&output_results_buffer);
 	if (flag_from_beginning)
-		bufindex = 0;
-	if (bufindex == output_results_buffer || !g_output_results[bufindex])
+		g_bufindex = 0;
+	if (g_bufindex == output_results_buffer || !g_output_results[g_bufindex])
 		return (NULL);
-	hash_line = g_output_results[bufindex];
-	bufindex++;
+	hash_line = g_output_results[g_bufindex];
+	g_bufindex++;
 	return (hash_line);
 }
 

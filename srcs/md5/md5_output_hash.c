@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 21:20:06 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/16 20:41:42 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/21 14:43:33 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,15 @@
 
 /*
 ** For debug:
-** // printf("%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x\n",
-** // 	aa&0xff, (aa>>8)&0xff, (aa>>16)&0xff, (aa>>24)&0xff,
-** // 	bb&0xff, (bb>>8)&0xff, (bb>>16)&0xff, (bb>>24)&0xff,
-** // 	cc&0xff, (cc>>8)&0xff, (cc>>16)&0xff, (cc>>24)&0xff,
-** // 	dd&0xff, (dd>>8)&0xff, (dd>>16)&0xff, (dd>>24)&0xff);
-** // ft_memcpy((*hash), &aa, 4);
-** // ft_memcpy((*hash) + 4, &bb, 4);
-** // ft_memcpy((*hash) + 8, &cc, 4);
-** // ft_memcpy((*hash) + 12, &dd, 4);
+** printf("%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x\n",
+** 	aa&0xff, (aa>>8)&0xff, (aa>>16)&0xff, (aa>>24)&0xff,
+** 	bb&0xff, (bb>>8)&0xff, (bb>>16)&0xff, (bb>>24)&0xff,
+** 	cc&0xff, (cc>>8)&0xff, (cc>>16)&0xff, (cc>>24)&0xff,
+** 	dd&0xff, (dd>>8)&0xff, (dd>>16)&0xff, (dd>>24)&0xff);
+** ft_memcpy((*hash), &aa, 4);
+** ft_memcpy((*hash) + 4, &bb, 4);
+** ft_memcpy((*hash) + 8, &cc, 4);
+** ft_memcpy((*hash) + 12, &dd, 4);
 */
 
 static int	md5_copy_variables_to_hash(uint8_t **hash)

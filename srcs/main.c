@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 22:14:29 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/16 22:54:17 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/21 14:10:38 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,12 @@ static int		ssl_prepare_main_environment(void)
 	return (0);
 }
 
+/*
+** For debugging:
+** print_options(*flags);
+** in the end before return (0);
+*/
+
 static size_t	ssl_main_actions_with_possible_errors(int argc, char **argv,
 					char *algo_name, int *flags)
 {
@@ -54,15 +60,14 @@ static size_t	ssl_main_actions_with_possible_errors(int argc, char **argv,
 	answer = ssl_main_start(algo_name, cmd_data);
 	if (answer)
 		return (SIZET_MAX);
-			// print_options(*flags); // TODO delete
 	return (0);
 }
 
 static int		ssl_clean_main_environment(void)
 {
-	ssl_free_output_buffer();
 	ssl_free_data_buffer();
 	ssl_clean_saved_commands();
+	ssl_free_output_buffer();
 	return (0);
 }
 

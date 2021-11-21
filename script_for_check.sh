@@ -16,20 +16,24 @@ then
 	exit 1
 fi
 
-if [ -z "$STRING" ]
-then
-	printf "Please, define string as third argument\n"
-	exit 1
-fi
-
 if [ "$TYPE" == "stdin" ]
 then
-	printf "Launching:\necho \"%s\" | ./ft_ssl %s -q > 1\n" $STRING $ALGO
-	printf "echo \"%s\" | openssl %s > 2\n" $STRING $ALGO
-	printf "diff 1 2\n"
+	if [ -z "$STRING"]
+	then
+		printf "Launching:\necho \"%s\" | ./ft_ssl %s -q > 1\n" "" $ALGO
+		printf "echo \"%s\" | openssl %s > 2\n" "" $ALGO
+		printf "diff 1 2\n"
 
-	echo $STRING | ./ft_ssl $ALGO -q > 1
-	echo $STRING | openssl $ALGO > 2
+		echo "" | ./ft_ssl $ALGO -q > 1
+		echo "" | openssl $ALGO > 2
+	else
+		printf "Launching:\necho \"%s\" | ./ft_ssl %s -q > 1\n" $STRING $ALGO
+		printf "echo \"%s\" | openssl %s > 2\n" $STRING $ALGO
+		printf "diff 1 2\n"
+
+		echo $STRING | ./ft_ssl $ALGO -q > 1
+		echo $STRING | openssl $ALGO > 2
+	fi
 	diff 1 2
 elif [ "$TYPE" == "string" ]
 then
@@ -51,13 +55,23 @@ then
 		echo $STRING | openssl $ALGO > 2
 		diff 1 2
 	fi
-else
-	printf "Launching:\n./ft_ssl %s -q %s ... > 1\n" $ALGO $STRING
-	printf "openssl %s %s ... | awk \'BEGIN{FS=\"= \"} {print \$2}\' > 2\n" $ALGO $STRING
-	printf "diff 1 2\n"
+elif [ "$TYPE" == "file" ]
+then
+	if [ -z $STRING ]
+	then
+		printf "Please, define files as arguments\n"
+		exit 1
+	else
+		printf "Launching:\n./ft_ssl %s -q %s ... > 1\n" $ALGO $STRING
+		printf "openssl %s %s ... | awk \'BEGIN{FS=\"= \"} {print \$2}\' > 2\n" $ALGO $STRING
+		printf "diff 1 2\n"
 
-	./ft_ssl $ALGO -q ${@:3} > 1
-	openssl $ALGO ${@:3} | awk 'BEGIN{FS="= "} {print $2}' > 2
-	diff 1 2
+		./ft_ssl $ALGO -q ${@:3} > 1
+		openssl $ALGO ${@:3} | awk 'BEGIN{FS="= "} {print $2}' > 2
+		diff 1 2
+	fi
+else
+	printf "Not such type found: %s\n" $TYPE
+	printf "Please, define stdin/string/file as first argument\n"
 fi
 	
