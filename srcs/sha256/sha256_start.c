@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 11:36:41 by a18979859         #+#    #+#             */
-/*   Updated: 2021/11/21 17:28:49 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/28 16:12:36 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int		sha256_algorithm_start(size_t data_size)
 		sha256_calculate_hash_by_algo(message, message_size_uint32);
 		sha256_output_hash();
 		free(message);
+		data_size = 1;
 	}
 	return (0);
 }

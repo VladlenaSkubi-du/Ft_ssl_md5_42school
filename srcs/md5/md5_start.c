@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 11:07:56 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/17 14:36:02 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/28 16:12:17 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int		md5_algorithm_start(size_t data_size)
 		md5_calculate_hash_by_algo(message, message_size_uint32);
 		md5_output_hash();
 		free(message);
+		data_size = 1;
 	}
 	return (0);
 }

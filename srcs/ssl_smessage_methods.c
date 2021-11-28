@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/14 23:19:38 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/11 15:54:03 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/28 16:13:00 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,13 @@ char			*ssl_get_data_algo(size_t *data_size, int flag_from_beginning)
 	
 	if (flag_from_beginning)
 		g_bufindex = 0;
-	if (g_bufindex == g_data_buffer_size || !g_data_size[g_bufindex] ||
-			!g_data[g_bufindex])
+	if (g_bufindex == g_data_buffer_size)
 	{
 		*data_size = 0;
 		return (NULL);
 	}
 	*data_size = g_data_size[g_bufindex];
-	if (g_data[g_bufindex][0] == FILE_DATA)
+	if (g_data && g_data[g_bufindex] && g_data[g_bufindex][0] == FILE_DATA)
 	{
 		current_data = ssl_interpret_file_data_algo(g_data[g_bufindex],
 				data_size);
@@ -86,8 +85,7 @@ char			*ssl_get_data(size_t *data_size, int flag_from_beginning)
 	
 	if (flag_from_beginning)
 		g_bufindex = 0;
-	if (g_bufindex == g_data_buffer_size || !g_data_size[g_bufindex] ||
-			!g_data[g_bufindex])
+	if (g_bufindex == g_data_buffer_size)
 	{
 		*data_size = 0;
 		return (NULL);

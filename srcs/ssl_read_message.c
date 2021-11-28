@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 11:09:12 by a18979859         #+#    #+#             */
-/*   Updated: 2021/11/11 15:37:07 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/28 16:12:47 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ int			ssl_read_from_stdin(void)
 		free(data);
 		return (ERR_MESSAGE_LONG);
 	}
-	if (data_size > 0)
-		ssl_save_data(data, data_size, STDIN_DATA);
+	ssl_save_data(data, data_size, STDIN_DATA);
 	free(data);
 	return (0);
 }
