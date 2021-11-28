@@ -68,12 +68,12 @@ SOURCES := main.c \
 			ssl_soutput_buffer_methods.c \
 			ssl_error_management.c \
 			ssl_usage.c \
-			sha256_notmine.c \
 			$(MD5) \
 			$(SHA256) \
 			$(DGST) \
 			$(OVERALL) \
 			$(PRINT_FUNCTIONS)
+			# sha256_notmine.c
 
 # ------------  DIRECTORIES  ------------------------------------------------- #
 

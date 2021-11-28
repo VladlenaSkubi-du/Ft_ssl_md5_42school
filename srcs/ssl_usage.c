@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/14 22:59:57 by sschmele          #+#    #+#             */
-/*   Updated: 2021/10/28 19:25:28 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/28 15:01:05 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	ssl_usage_cipher_commands(void)
 
 /*
 ** 	ft_printf("(see the `enc' command for more details):\n");
+**	ft_printf("%5s%s [command] [--help]\n", "", PROGRAM_NAME);
 */
 
 void	ssl_usage(void)
@@ -51,5 +52,4 @@ void	ssl_usage(void)
 	ssl_usage_md_commands();
 	ft_printf("\nCipher commands:\n");
 	ssl_usage_cipher_commands();
-	ft_printf("%5s%s [command] [--help]\n", "", PROGRAM_NAME);
 }

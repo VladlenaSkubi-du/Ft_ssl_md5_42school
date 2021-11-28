@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 22:14:29 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/22 08:42:34 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/28 15:39:37 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,10 @@ static size_t	ssl_main_actions_with_possible_errors(int argc, char **argv,
 
 	answer = ssl_check_command(algo_name);
 	if (answer == SIZET_MAX)
+	{
+		ssl_usage();
 		return (SIZET_MAX);
+	}
 	cmd_data = ssl_get_data_from_hashtable(answer);
 	if (cmd_data == NULL)
 		return (SIZET_MAX);

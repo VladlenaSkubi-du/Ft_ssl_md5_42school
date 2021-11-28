@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 12:29:31 by a18979859         #+#    #+#             */
-/*   Updated: 2021/11/17 14:48:50 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/28 15:12:06 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,12 @@ void			ssl_init_output_buffer(void)
 	size_t		output_results_buffer;
 	
 	ssl_get_dataarray_index(&output_results_buffer);
+	if (output_results_buffer == 0)
+	{
+		g_output_results = NULL;
+		g_bufindex = 0;
+		return ;
+	}
 	g_output_results = (char **)ft_xmalloc(sizeof(char *)
 		* (output_results_buffer + 1));
 	g_bufindex = 0;

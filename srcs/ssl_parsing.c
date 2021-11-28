@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/28 14:44:10 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/21 14:43:20 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/28 15:26:52 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,8 @@ size_t	ssl_parse_arguments(int argc, char **argv,
 {
 	size_t		answer;
 
+	if (cmd_options == NULL)
+		return (0);
 	*flags = ssl_check_algo_options(argc, argv, cmd_options);
 	if (*flags < 0)
 		return (SIZET_MAX);

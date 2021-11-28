@@ -6,7 +6,7 @@
 /*   By: sschmele <sschmele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 22:14:49 by sschmele          #+#    #+#             */
-/*   Updated: 2021/11/13 20:56:32 by sschmele         ###   ########.fr       */
+/*   Updated: 2021/11/28 15:37:40 by sschmele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,8 @@ typedef struct s_celldata
 }		t_celldata;
 
 
-int		dgst_start(void);
+int			dgst_start(size_t data);
+int			dgst_output(void);
 
 /*
 ** File main.c (static functions)
@@ -190,20 +191,20 @@ void		ssl_free_output_buffer(void);
 ** File ssl_error_management.c
 */
 
-int		ssl_errors_management(int error_index, char *arg,
-			char end, int usage_needed);
-int		ssl_check_posix_option(char *arg, char *options,
-			int (error_function)(int error_index, char *arg,
-			char end, int usage_needed));
-size_t	error_lets_save_space(t_ssl_errors error, char *option);
+int			ssl_errors_management(int error_index, char *arg,
+				char end, int usage_needed);
+int			ssl_check_posix_option(char *arg, char *options,
+				int (error_function)(int error_index, char *arg,
+				char end, int usage_needed));
+size_t		error_lets_save_space(t_ssl_errors error, char *option);
 
 /*
 ** File ssl_usage.c
 */
 
-void	ssl_usage(void);
-void	ssl_usage_cipher_commands(void);
-void	ssl_usage_md_commands(void);
-void	ssl_usage_standard_commands(void);
+void		ssl_usage(void);
+void		ssl_usage_cipher_commands(void);
+void		ssl_usage_md_commands(void);
+void		ssl_usage_standard_commands(void);
 
 #endif
